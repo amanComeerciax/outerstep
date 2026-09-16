@@ -2,16 +2,14 @@
 
 import React, { useState } from "react";
 import {
-  FileCode2,
+  Ruler,
   Percent,
   Calendar,
   Code2,
-  Calculator,
-  ArrowRight,
+  BadgePercent,
   Smile,
-  Sparkles,
   ChevronRight,
-  Wand2,
+  Wallet,
 } from "lucide-react";
 
 interface ToolCard {
@@ -19,155 +17,156 @@ interface ToolCard {
   title: string;
   description: string;
   icon: React.ReactNode;
-  bgColor: string; // Pastel background for card top accent / icon container
+  bgGradient: string;
   iconBg: string;
-  rotation: string; // default tilt angle
+  defaultRotation: string;
+  defaultTranslateY: string;
+  zIndexDefault: number;
 }
 
 const TOOLS: ToolCard[] = [
   {
     id: "px-rem",
     title: "PX to REM Converter",
-    description: "Convert pixels to REM units easily with custom root size.",
-    icon: <FileCode2 className="w-6 h-6 text-purple-600" />,
-    bgColor: "from-purple-500/10 via-purple-500/5 to-white dark:to-gray-900",
-    iconBg: "bg-purple-500 text-white shadow-purple-500/30",
-    rotation: "-rotate-6 -translate-y-1",
+    description: "Convert pixels to REM units easily.",
+    icon: <Ruler className="w-7 h-7 text-white" />,
+    bgGradient: "bg-[#f3f0ff]",
+    iconBg: "bg-[#a855f7] shadow-lg shadow-purple-500/30",
+    defaultRotation: "-rotate-[12deg]",
+    defaultTranslateY: "translate-y-[18px]",
+    zIndexDefault: 10,
   },
   {
     id: "discount",
     title: "Discount Calculator",
-    description: "Calculate sale price and instant savings percentage.",
-    icon: <Percent className="w-6 h-6 text-emerald-600" />,
-    bgColor: "from-emerald-500/10 via-emerald-500/5 to-white dark:to-gray-900",
-    iconBg: "bg-emerald-500 text-white shadow-emerald-500/30",
-    rotation: "-rotate-3 translate-y-1",
+    description: "Calculate sale price savings instantly.",
+    icon: <Percent className="w-7 h-7 text-white" />,
+    bgGradient: "bg-[#ebfef5]",
+    iconBg: "bg-[#10b981] shadow-lg shadow-emerald-500/30",
+    defaultRotation: "-rotate-[6deg]",
+    defaultTranslateY: "translate-y-[6px]",
+    zIndexDefault: 15,
   },
   {
     id: "payday",
     title: "Biweekly Pay Date Calculator",
-    description: "Get to know your next payday and schedule instantly.",
-    icon: <Calendar className="w-6 h-6 text-amber-600" />,
-    bgColor: "from-amber-500/10 via-amber-500/5 to-white dark:to-gray-900",
-    iconBg: "bg-amber-500 text-white shadow-amber-500/30",
-    rotation: "rotate-0 -translate-y-2",
+    description: "Get to know your next payday instantly.",
+    icon: <Calendar className="w-7 h-7 text-white" />,
+    bgGradient: "bg-[#fff7ed]",
+    iconBg: "bg-[#f97316] shadow-lg shadow-orange-500/30",
+    defaultRotation: "rotate-0",
+    defaultTranslateY: "translate-y-0",
+    zIndexDefault: 20,
   },
   {
     id: "meta-checker",
     title: "Website Meta Tags Checker",
-    description: "Check your site information and preview social media share cards.",
-    icon: <Code2 className="w-6 h-6 text-rose-600" />,
-    bgColor: "from-rose-500/10 via-rose-500/5 to-white dark:to-gray-900",
-    iconBg: "bg-rose-500 text-white shadow-rose-500/30",
-    rotation: "rotate-3 translate-y-1",
+    description: "Check your site information from social media share.",
+    icon: <Code2 className="w-7 h-7 text-white" />,
+    bgGradient: "bg-[#fff0f3]",
+    iconBg: "bg-[#f43f5e] shadow-lg shadow-rose-500/30",
+    defaultRotation: "rotate-[6deg]",
+    defaultTranslateY: "translate-y-[6px]",
+    zIndexDefault: 15,
   },
   {
     id: "commission",
-    title: "Commission Calculator",
-    description: "Calculate sales commission after tax and platform deductions.",
-    icon: <Calculator className="w-6 h-6 text-blue-600" />,
-    bgColor: "from-blue-500/10 via-blue-500/5 to-white dark:to-gray-900",
-    iconBg: "bg-blue-500 text-white shadow-blue-500/30",
-    rotation: "rotate-6 -translate-y-1",
+    title: "Sales Commission Calculator",
+    description: "Check sales commission with tax deduction.",
+    icon: <Wallet className="w-7 h-7 text-white" />,
+    bgGradient: "bg-[#eff6ff]",
+    iconBg: "bg-[#3b82f6] shadow-lg shadow-blue-500/30",
+    defaultRotation: "rotate-[12deg]",
+    defaultTranslateY: "translate-y-[18px]",
+    zIndexDefault: 10,
   },
 ];
 
 export default function ToolsShowcase() {
-  const [activeId, setActiveId] = useState<string>("meta-checker");
+  const [activeId, setActiveId] = useState<string>("payday");
 
   return (
-    <section className="relative w-full py-24 px-4 overflow-hidden bg-slate-50 dark:bg-[#070a11] text-slate-900 dark:text-white transition-colors">
-      {/* Background Halftone Dotted Pattern */}
-      <div className="absolute inset-0 pointer-events-none opacity-40 dark:opacity-20">
+    <section className="relative w-full py-20 px-4 overflow-hidden bg-white text-slate-900 transition-colors">
+      {/* Halftone Dotted Background (Matches Image) */}
+      <div className="absolute inset-0 pointer-events-none opacity-40">
         {/* Left Halftone Grid */}
         <div
-          className="absolute left-0 top-0 bottom-0 w-1/3 bg-[radial-gradient(#3b82f6_1.5px,transparent_1.5px)] [background-size:16px_16px]"
+          className="absolute left-0 top-0 bottom-0 w-2/5 bg-[radial-gradient(#3b82f6_2px,transparent_2px)] [background-size:18px_18px]"
           style={{
-            maskImage: "linear-gradient(to right, rgba(0,0,0,1), rgba(0,0,0,0))",
+            maskImage:
+              "radial-gradient(ellipse at left, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 80%)",
             WebkitMaskImage:
-              "linear-gradient(to right, rgba(0,0,0,1), rgba(0,0,0,0))",
+              "radial-gradient(ellipse at left, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 80%)",
           }}
         />
         {/* Right Halftone Grid */}
         <div
-          className="absolute right-0 top-0 bottom-0 w-1/3 bg-[radial-gradient(#3b82f6_1.5px,transparent_1.5px)] [background-size:16px_16px]"
+          className="absolute right-0 top-0 bottom-0 w-2/5 bg-[radial-gradient(#3b82f6_2px,transparent_2px)] [background-size:18px_18px]"
           style={{
-            maskImage: "linear-gradient(to left, rgba(0,0,0,1), rgba(0,0,0,0))",
+            maskImage:
+              "radial-gradient(ellipse at right, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 80%)",
             WebkitMaskImage:
-              "linear-gradient(to left, rgba(0,0,0,1), rgba(0,0,0,0))",
+              "radial-gradient(ellipse at right, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 80%)",
           }}
         />
       </div>
 
       <div className="relative max-w-6xl mx-auto flex flex-col items-center text-center z-10">
         {/* Badge Pill */}
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white dark:bg-gray-800/80 border border-slate-200 dark:border-gray-700/80 text-xs font-medium shadow-sm hover:shadow-md transition-all cursor-pointer mb-6 group">
-          <span className="flex h-2 w-2 rounded-full bg-rose-500 animate-pulse" />
-          <span className="text-slate-700 dark:text-gray-300 font-serif tracking-wide">
-            Introducing Saveku
-          </span>
-          <ChevronRight className="w-3.5 h-3.5 text-slate-400 group-hover:translate-x-0.5 transition-transform" />
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-50 border border-slate-200 text-xs font-mono shadow-sm hover:shadow transition-all cursor-pointer mb-6">
+          <span className="text-rose-500">❤️</span>
+          <span className="text-slate-700 font-medium">Introducing Saveku</span>
+          <span className="text-slate-400 font-sans">›</span>
         </div>
 
-        {/* Main Title (Serif Style matching image) */}
-        <h2 className="text-4xl md:text-5xl font-serif font-normal tracking-tight text-slate-900 dark:text-gray-100 max-w-3xl mb-4">
+        {/* Main Title (Exact Serif Style) */}
+        <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-serif-heading font-medium tracking-tight text-[#22252a] max-w-3xl mb-4">
           Answer your curiosity right away
         </h2>
 
-        {/* Subtitle */}
-        <p className="text-sm md:text-base text-slate-500 dark:text-gray-400 font-mono tracking-tight max-w-xl mb-16">
+        {/* Subtitle (Exact font & wording) */}
+        <p className="text-sm md:text-base text-slate-600 font-mono tracking-tight max-w-2xl mb-14">
           Saveku is a free multi-purpose online tool hub for your daily needs.
         </p>
 
-        {/* Tilted / Fan-out Cards Container */}
-        <div className="relative w-full max-w-5xl py-8 mb-12 flex justify-center items-center">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4 md:gap-2 lg:gap-3 items-stretch justify-center w-full px-2">
+        {/* Overlapping Fan-Out Tool Cards Layout */}
+        <div className="relative w-full max-w-5xl h-[380px] my-4 flex justify-center items-center">
+          <div className="flex justify-center items-end -space-x-12 sm:-space-x-16 md:-space-x-20 lg:-space-x-24 w-full px-4">
             {TOOLS.map((tool) => {
-              const isSelected = activeId === tool.id;
+              const isHovered = activeId === tool.id;
 
               return (
                 <div
                   key={tool.id}
                   onMouseEnter={() => setActiveId(tool.id)}
-                  className={`relative cursor-pointer transition-all duration-300 ease-out transform ${
-                    isSelected
-                      ? "scale-105 -translate-y-6 z-30 shadow-2xl shadow-rose-500/10 rotate-0"
-                      : `${tool.rotation} opacity-90 hover:opacity-100 hover:-translate-y-3 z-10 hover:z-20`
+                  style={{
+                    zIndex: isHovered ? 40 : tool.zIndexDefault,
+                  }}
+                  className={`relative flex-shrink-0 w-52 sm:w-60 md:w-64 lg:w-68 h-[310px] sm:h-[330px] rounded-2xl p-6 transition-all duration-300 ease-out cursor-pointer ${
+                    tool.bgGradient
+                  } border border-white/80 shadow-[0_10px_30px_rgba(0,0,0,0.06)] flex flex-col justify-between text-left ${
+                    isHovered
+                      ? "scale-105 -translate-y-12 rotate-0 shadow-[0_20px_40px_rgba(0,0,0,0.12)] border-rose-300/80"
+                      : `${tool.defaultRotation} ${tool.defaultTranslateY} hover:-translate-y-4 hover:rotate-0`
                   }`}
                 >
-                  <div
-                    className={`h-full min-h-[260px] p-6 rounded-2xl bg-gradient-to-b ${tool.bgColor} border ${
-                      isSelected
-                        ? "border-rose-400/50 dark:border-rose-500/40 shadow-xl"
-                        : "border-slate-200 dark:border-gray-800 shadow-md"
-                    } flex flex-col justify-between text-left transition-all backdrop-blur-sm`}
-                  >
-                    {/* Top App Icon */}
-                    <div>
-                      <div
-                        className={`w-12 h-12 rounded-2xl ${tool.iconBg} flex items-center justify-center shadow-lg mb-6 transform transition-transform group-hover:scale-110`}
-                      >
-                        {tool.icon}
-                      </div>
-
-                      {/* Card Title */}
-                      <h3 className="font-serif font-semibold text-lg text-slate-900 dark:text-white leading-snug mb-2">
-                        {tool.title}
-                      </h3>
-
-                      {/* Card Description */}
-                      <p className="text-xs text-slate-500 dark:text-gray-400 leading-relaxed font-sans">
-                        {tool.description}
-                      </p>
+                  {/* Top Square Icon */}
+                  <div>
+                    <div
+                      className={`w-14 h-14 rounded-2xl ${tool.iconBg} flex items-center justify-center mb-8 shadow-md transform transition-transform duration-300`}
+                    >
+                      {tool.icon}
                     </div>
 
-                    {/* Bottom Indicator */}
-                    <div className="mt-4 pt-3 border-t border-slate-200/50 dark:border-gray-800/60 flex items-center justify-between text-[11px] font-mono text-slate-400">
-                      <span>Tool #01</span>
-                      <span className="opacity-0 group-hover:opacity-100 transition-opacity">
-                        Open →
-                      </span>
-                    </div>
+                    {/* Card Title */}
+                    <h3 className="font-serif font-semibold text-xl sm:text-2xl text-slate-800 leading-snug mb-3">
+                      {tool.title}
+                    </h3>
+
+                    {/* Description */}
+                    <p className="text-xs sm:text-sm text-slate-500 font-sans leading-relaxed">
+                      {tool.description}
+                    </p>
                   </div>
                 </div>
               );
@@ -175,24 +174,24 @@ export default function ToolsShowcase() {
           </div>
         </div>
 
-        {/* Bottom CTA Buttons & Note */}
-        <div className="flex flex-col items-center gap-4 z-10">
-          <div className="flex flex-wrap items-center justify-center gap-3">
+        {/* Action Buttons Below Cards */}
+        <div className="flex flex-col items-center gap-3 mt-8 z-20">
+          <div className="flex items-center justify-center gap-3">
             {/* View all tools button */}
-            <button className="px-6 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white dark:bg-white dark:text-slate-900 dark:hover:bg-gray-100 text-xs font-mono font-medium shadow-md flex items-center gap-2 transition-all hover:scale-105 active:scale-95">
+            <button className="px-5 py-2.5 rounded-xl bg-[#1e2025] hover:bg-black text-white text-xs font-mono font-medium shadow-md flex items-center gap-2 transition-all hover:scale-105 active:scale-95">
               <span>View all tools</span>
-              <Smile className="w-3.5 h-3.5" />
+              <Smile className="w-4 h-4 text-white" />
             </button>
 
             {/* Follow us button */}
-            <button className="px-6 py-2.5 rounded-xl bg-white dark:bg-gray-900 hover:bg-slate-50 dark:hover:bg-gray-800 text-slate-800 dark:text-gray-200 border border-slate-300 dark:border-gray-700 text-xs font-mono font-medium shadow-sm flex items-center gap-2 transition-all hover:scale-105 active:scale-95">
+            <button className="px-5 py-2.5 rounded-xl bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 text-xs font-mono font-medium shadow-sm flex items-center gap-2 transition-all hover:scale-105 active:scale-95">
               <span>Follow us</span>
-              <span className="font-serif font-bold text-xs">𝕏</span>
+              <span className="font-bold text-slate-800 text-xs">X</span>
             </button>
           </div>
 
           {/* Subtext info */}
-          <p className="text-[11px] font-mono text-slate-400 dark:text-gray-500 tracking-tight">
+          <p className="text-[11px] font-mono text-slate-400 tracking-tight mt-1">
             All tools are available for free. No account creation or login needed.
           </p>
         </div>
