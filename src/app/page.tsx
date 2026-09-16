@@ -1,9 +1,10 @@
 import React from "react";
 import { ArrowRight, Compass, Shield, Zap, Layers, Sparkles } from "lucide-react";
+import ToolsShowcase from "@/components/ToolsShowcase";
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen flex flex-col items-center justify-between p-6 md:p-24 overflow-hidden bg-radial from-slate-900 via-gray-950 to-black text-white">
+    <main className="relative min-h-screen flex flex-col items-center justify-between p-4 md:p-12 overflow-hidden bg-radial from-slate-900 via-gray-950 to-black text-white">
       {/* Background glow overlay */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-600/20 blur-[140px] rounded-full pointer-events-none" />
       <div className="absolute bottom-10 right-10 w-[400px] h-[400px] bg-purple-600/15 blur-[120px] rounded-full pointer-events-none" />
@@ -29,7 +30,7 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <section className="flex flex-col items-center text-center z-10 max-w-4xl my-20">
+      <section className="flex flex-col items-center text-center z-10 max-w-4xl my-16">
         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold mb-6">
           <Sparkles className="w-3.5 h-3.5" />
           <span>Next-Generation Platform Initialized</span>
@@ -54,8 +55,13 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Tools Showcase Section (Exact match to reference image) */}
+      <div className="w-full my-12 rounded-3xl overflow-hidden shadow-2xl border border-white/10">
+        <ToolsShowcase />
+      </div>
+
       {/* Feature Cards Grid */}
-      <section className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-6xl z-10">
+      <section className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-6xl z-10 my-12">
         <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md hover:border-white/20 transition group">
           <div className="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 mb-4 group-hover:scale-110 transition-transform">
             <Zap className="w-6 h-6" />
@@ -95,3 +101,4 @@ export default function Home() {
     </main>
   );
 }
+
