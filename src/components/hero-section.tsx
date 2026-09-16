@@ -1,0 +1,205 @@
+"use client"
+
+import React, { useState } from "react"
+import { ArrowRight, Menu, X } from "lucide-react"
+import { Globe, Marker, Arc } from "@/components/ui/cobe-globe"
+
+const markers: Marker[] = [
+  { id: "sf", location: [37.7595, -122.4367], label: "San Francisco" },
+  { id: "nyc", location: [40.7128, -74.006], label: "New York" },
+  { id: "tokyo", location: [35.6762, 139.6503], label: "Tokyo" },
+  { id: "london", location: [51.5074, -0.1278], label: "London" },
+  { id: "sydney", location: [-33.8688, 151.2093], label: "Sydney" },
+  { id: "capetown", location: [-33.9249, 18.4241], label: "Cape Town" },
+  { id: "dubai", location: [25.2048, 55.2708], label: "Dubai" },
+  { id: "paris", location: [48.8566, 2.3522], label: "Paris" },
+  { id: "saopaulo", location: [-23.5505, -46.6333], label: "São Paulo" },
+]
+
+const arcs: Arc[] = [
+  {
+    id: "sf-tokyo",
+    from: [37.7595, -122.4367],
+    to: [35.6762, 139.6503],
+    label: "SF → Tokyo",
+  },
+  {
+    id: "nyc-london",
+    from: [40.7128, -74.006],
+    to: [51.5074, -0.1278],
+    label: "NYC → London",
+  },
+]
+
+export function HeroSection() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
+  return (
+    <div className="relative min-h-screen w-full bg-[#edf2f2] text-[#0a3a40] overflow-hidden flex flex-col justify-between selection:bg-[#2a6369]/20 selection:text-[#0a3a40]">
+      {/* Subtle atmospheric ambient glow */}
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(42,99,105,0.06),transparent_65%)]" />
+
+      {/* TOP NAVIGATION BAR */}
+      <header className="relative z-50 w-full px-6 sm:px-10 lg:px-16 pt-6 pb-4">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          {/* Brand Logo */}
+          <a
+            href="#"
+            className="flex items-center gap-1.5 group select-none"
+            aria-label="Outerstep Home"
+          >
+            <span className="font-sans-clean font-bold text-2xl tracking-tight text-[#0a3a40]">
+              Outerstep
+            </span>
+            <span className="w-2 h-2 rounded-full bg-[#2a6369] -mt-2 group-hover:scale-125 transition-transform duration-200" />
+          </a>
+
+          {/* Desktop Navigation Links */}
+          <nav className="hidden md:flex items-center gap-8 lg:gap-10">
+            {["How It Works", "Industries", "Success Stories", "About"].map(
+              (item) => (
+                <a
+                  key={item}
+                  href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
+                  className="font-sans-clean text-sm font-medium text-[#2a6369] hover:text-[#0a3a40] transition-colors duration-200"
+                >
+                  {item}
+                </a>
+              ),
+            )}
+          </nav>
+
+          {/* Right CTA Button */}
+          <div className="hidden md:flex items-center">
+            <a
+              href="#book"
+              className="group font-sans-clean text-sm font-semibold px-5 py-2.5 rounded-full bg-[#0a3a40] text-white hover:bg-[#072a2e] transition-all duration-200 shadow-sm hover:shadow flex items-center gap-2"
+            >
+              <span>Book a Call</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+            </a>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <div className="md:hidden flex items-center">
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="p-2 text-[#0a3a40] hover:text-[#2a6369] transition-colors focus:outline-none"
+              aria-label="Toggle navigation menu"
+            >
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Dropdown Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden absolute top-full left-0 w-full bg-[#edf2f2]/95 backdrop-blur-md border-b border-[#2a6369]/20 px-6 py-6 shadow-xl flex flex-col gap-4 z-50">
+            {["How It Works", "Industries", "Success Stories", "About"].map(
+              (item) => (
+                <a
+                  key={item}
+                  href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="font-sans-clean text-base font-medium text-[#0a3a40] py-2 border-b border-[#2a6369]/10"
+                >
+                  {item}
+                </a>
+              ),
+            )}
+            <a
+              href="#book"
+              onClick={() => setMobileMenuOpen(false)}
+              className="font-sans-clean text-sm font-semibold px-5 py-3 rounded-full bg-[#0a3a40] text-white hover:bg-[#072a2e] text-center flex items-center justify-center gap-2 mt-2"
+            >
+              <span>Book a Call</span>
+              <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
+        )}
+      </header>
+
+      {/* HERO MAIN BODY */}
+      <main className="relative z-20 flex-1 flex flex-col items-center justify-start text-center px-4 sm:px-6 pt-6 sm:pt-10 md:pt-12">
+        {/* Flanking Editorial Labels (Desktop) */}
+        <div className="hidden xl:block absolute left-8 lg:left-14 top-24 text-left pointer-events-none select-none">
+          <div className="font-mono-tech text-[10px] sm:text-[11px] font-medium tracking-[0.22em] text-[#2a6369]/75 uppercase space-y-1">
+            <div>EXPORT</div>
+            <div>GROW</div>
+            <div>BEYOND BORDERS</div>
+          </div>
+        </div>
+
+        <div className="hidden xl:block absolute right-8 lg:right-14 top-24 text-right pointer-events-none select-none">
+          <div className="font-mono-tech text-[10px] sm:text-[11px] font-medium tracking-[0.22em] text-[#2a6369]/75 uppercase space-y-1">
+            <div>GLOBAL</div>
+            <div>OPPORTUNITIES</div>
+            <div>REAL CONNECTIONS</div>
+          </div>
+        </div>
+
+        {/* Central Content Container */}
+        <div className="max-w-4xl lg:max-w-5xl mx-auto flex flex-col items-center">
+          {/* Main Headline */}
+          <h1 className="font-headline text-5xl sm:text-6xl md:text-7xl lg:text-[84px] xl:text-[90px] font-semibold leading-[1.05] tracking-[-0.03em] text-[#0a3a40]">
+            You bring the product.
+            <br />
+            We bring the{" "}
+            <span className="italic text-[#2a6369] font-semibold inline-block hover:opacity-95 transition-opacity">
+              buyers.
+            </span>
+          </h1>
+
+          {/* Subtitle Description */}
+          <p className="font-sans-clean text-base sm:text-lg md:text-[18px] text-[#2a6369] leading-relaxed max-w-2xl lg:max-w-3xl mt-5 sm:mt-7 font-normal">
+            We find companies already importing what you make, run the outreach,
+            <br className="hidden sm:inline" />
+            and hand you the ones who reply asking to buy, with the quantity, port and
+            <br className="hidden sm:inline" />
+            timeline already pulled out of their message.
+          </p>
+
+          {/* Dual Action Buttons */}
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-5 mt-8 sm:mt-10">
+            {/* Primary CTA */}
+            <a
+              href="#book-call"
+              className="group font-sans-clean text-sm sm:text-base font-semibold px-8 py-3.5 rounded-full bg-[#0a3a40] text-white hover:bg-[#06262a] transition-all duration-200 shadow-md hover:shadow-lg flex items-center gap-2.5 active:scale-[0.98]"
+            >
+              <span>Book a call</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </a>
+
+            {/* Secondary CTA */}
+            <a
+              href="#platform"
+              className="font-sans-clean text-sm sm:text-base font-medium px-8 py-3.5 rounded-full border border-[#2a6369]/35 bg-[#edf2f2]/60 hover:bg-white/80 hover:border-[#2a6369]/70 text-[#0a3a40] transition-all duration-200 active:scale-[0.98]"
+            >
+              See the Platform
+            </a>
+          </div>
+        </div>
+      </main>
+
+      {/* GLOBE HORIZON CONTAINER: Cut bottom of map and only use top of map (unzoomed) */}
+      <div className="relative w-full overflow-hidden h-[340px] sm:h-[420px] md:h-[500px] lg:h-[580px] -mt-6 sm:-mt-8 select-none pointer-events-auto">
+        {/* Soft atmospheric radial gradient behind globe */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-full bg-[radial-gradient(ellipse_at_50%_120%,rgba(42,99,105,0.15),transparent_70%)]" />
+
+        {/* Unzoomed Globe Sphere with bottom half clipped by overflow-hidden */}
+        <div className="absolute left-1/2 -translate-x-1/2 top-4 sm:top-2 md:top-0 w-[860px] sm:w-[1100px] md:w-[1300px] lg:w-[1450px]">
+          <Globe
+            className="w-full"
+            markers={markers}
+            arcs={arcs}
+            markerColor={[10 / 255, 58 / 255, 64 / 255]}
+            arcColor={[10 / 255, 58 / 255, 64 / 255]}
+          />
+        </div>
+
+        {/* Bottom Horizon Fade for seamless transition */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#edf2f2] to-transparent" />
+      </div>
+    </div>
+  )
+}
