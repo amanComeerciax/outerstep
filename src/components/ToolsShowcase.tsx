@@ -6,9 +6,7 @@ import {
   Percent,
   Calendar,
   Code2,
-  BadgePercent,
   Smile,
-  ChevronRight,
   Wallet,
 } from "lucide-react";
 
@@ -30,7 +28,7 @@ const TOOLS: ToolCard[] = [
     title: "PX to REM Converter",
     description: "Convert pixels to REM units easily.",
     icon: <Ruler className="w-7 h-7 text-white" />,
-    bgGradient: "bg-[#f3f0ff]",
+    bgGradient: "bg-[#f5f3ff]",
     iconBg: "bg-[#a855f7] shadow-lg shadow-purple-500/30",
     defaultRotation: "-rotate-[12deg]",
     defaultTranslateY: "translate-y-[18px]",
@@ -41,7 +39,7 @@ const TOOLS: ToolCard[] = [
     title: "Discount Calculator",
     description: "Calculate sale price savings instantly.",
     icon: <Percent className="w-7 h-7 text-white" />,
-    bgGradient: "bg-[#ebfef5]",
+    bgGradient: "bg-[#ecfdf5]",
     iconBg: "bg-[#10b981] shadow-lg shadow-emerald-500/30",
     defaultRotation: "-rotate-[6deg]",
     defaultTranslateY: "translate-y-[6px]",
@@ -63,7 +61,7 @@ const TOOLS: ToolCard[] = [
     title: "Website Meta Tags Checker",
     description: "Check your site information from social media share.",
     icon: <Code2 className="w-7 h-7 text-white" />,
-    bgGradient: "bg-[#fff0f3]",
+    bgGradient: "bg-[#fff1f2]",
     iconBg: "bg-[#f43f5e] shadow-lg shadow-rose-500/30",
     defaultRotation: "rotate-[6deg]",
     defaultTranslateY: "translate-y-[6px]",
@@ -86,12 +84,12 @@ export default function ToolsShowcase() {
   const [activeId, setActiveId] = useState<string>("payday");
 
   return (
-    <section className="relative w-full py-20 px-4 overflow-hidden bg-white text-slate-900 transition-colors">
-      {/* Halftone Dotted Background (Matches Image) */}
+    <section className="relative w-full py-20 px-4 overflow-hidden bg-[#0b3a3f] text-white transition-colors">
+      {/* Halftone Dotted Background tuned for #0b3a3f */}
       <div className="absolute inset-0 pointer-events-none opacity-40">
         {/* Left Halftone Grid */}
         <div
-          className="absolute left-0 top-0 bottom-0 w-2/5 bg-[radial-gradient(#3b82f6_2px,transparent_2px)] [background-size:18px_18px]"
+          className="absolute left-0 top-0 bottom-0 w-2/5 bg-[radial-gradient(#38bdf8_2px,transparent_2px)] [background-size:18px_18px]"
           style={{
             maskImage:
               "radial-gradient(ellipse at left, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 80%)",
@@ -101,7 +99,7 @@ export default function ToolsShowcase() {
         />
         {/* Right Halftone Grid */}
         <div
-          className="absolute right-0 top-0 bottom-0 w-2/5 bg-[radial-gradient(#3b82f6_2px,transparent_2px)] [background-size:18px_18px]"
+          className="absolute right-0 top-0 bottom-0 w-2/5 bg-[radial-gradient(#38bdf8_2px,transparent_2px)] [background-size:18px_18px]"
           style={{
             maskImage:
               "radial-gradient(ellipse at right, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 80%)",
@@ -113,19 +111,19 @@ export default function ToolsShowcase() {
 
       <div className="relative max-w-6xl mx-auto flex flex-col items-center text-center z-10">
         {/* Badge Pill */}
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-50 border border-slate-200 text-xs font-mono shadow-sm hover:shadow transition-all cursor-pointer mb-6">
-          <span className="text-rose-500">❤️</span>
-          <span className="text-slate-700 font-medium">Introducing Saveku</span>
-          <span className="text-slate-400 font-sans">›</span>
+        <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#072a2e] border border-teal-500/30 text-xs font-mono shadow-sm hover:shadow transition-all cursor-pointer mb-6">
+          <span className="text-rose-400">❤️</span>
+          <span className="text-teal-100 font-medium">Introducing Saveku</span>
+          <span className="text-teal-400/70 font-sans">›</span>
         </div>
 
-        {/* Main Title (Exact Serif Style) */}
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-serif-heading font-medium tracking-tight text-[#22252a] max-w-3xl mb-4">
+        {/* Main Title (Serif Style) */}
+        <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-serif-heading font-medium tracking-tight text-white max-w-3xl mb-4 drop-shadow-sm">
           Answer your curiosity right away
         </h2>
 
-        {/* Subtitle (Exact font & wording) */}
-        <p className="text-sm md:text-base text-slate-600 font-mono tracking-tight max-w-2xl mb-14">
+        {/* Subtitle */}
+        <p className="text-sm md:text-base text-teal-100/70 font-mono tracking-tight max-w-2xl mb-14">
           Saveku is a free multi-purpose online tool hub for your daily needs.
         </p>
 
@@ -144,9 +142,9 @@ export default function ToolsShowcase() {
                   }}
                   className={`relative flex-shrink-0 w-52 sm:w-60 md:w-64 lg:w-68 h-[310px] sm:h-[330px] rounded-2xl p-6 transition-all duration-300 ease-out cursor-pointer ${
                     tool.bgGradient
-                  } border border-white/80 shadow-[0_10px_30px_rgba(0,0,0,0.06)] flex flex-col justify-between text-left ${
+                  } border border-white/90 shadow-[0_15px_35px_rgba(0,0,0,0.25)] flex flex-col justify-between text-left ${
                     isHovered
-                      ? "scale-105 -translate-y-12 rotate-0 shadow-[0_20px_40px_rgba(0,0,0,0.12)] border-rose-300/80"
+                      ? "scale-105 -translate-y-12 rotate-0 shadow-[0_25px_50px_rgba(0,0,0,0.4)] border-rose-300"
                       : `${tool.defaultRotation} ${tool.defaultTranslateY} hover:-translate-y-4 hover:rotate-0`
                   }`}
                 >
@@ -178,20 +176,20 @@ export default function ToolsShowcase() {
         <div className="flex flex-col items-center gap-3 mt-8 z-20">
           <div className="flex items-center justify-center gap-3">
             {/* View all tools button */}
-            <button className="px-5 py-2.5 rounded-xl bg-[#1e2025] hover:bg-black text-white text-xs font-mono font-medium shadow-md flex items-center gap-2 transition-all hover:scale-105 active:scale-95">
+            <button className="px-5 py-2.5 rounded-xl bg-black hover:bg-slate-900 text-white text-xs font-mono font-medium shadow-lg flex items-center gap-2 transition-all hover:scale-105 active:scale-95 border border-teal-800/40">
               <span>View all tools</span>
               <Smile className="w-4 h-4 text-white" />
             </button>
 
             {/* Follow us button */}
-            <button className="px-5 py-2.5 rounded-xl bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 text-xs font-mono font-medium shadow-sm flex items-center gap-2 transition-all hover:scale-105 active:scale-95">
+            <button className="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-teal-300/30 text-xs font-mono font-medium shadow-sm backdrop-blur-md flex items-center gap-2 transition-all hover:scale-105 active:scale-95">
               <span>Follow us</span>
-              <span className="font-bold text-slate-800 text-xs">X</span>
+              <span className="font-bold text-white text-xs">X</span>
             </button>
           </div>
 
           {/* Subtext info */}
-          <p className="text-[11px] font-mono text-slate-400 tracking-tight mt-1">
+          <p className="text-[11px] font-mono text-teal-200/60 tracking-tight mt-1">
             All tools are available for free. No account creation or login needed.
           </p>
         </div>
