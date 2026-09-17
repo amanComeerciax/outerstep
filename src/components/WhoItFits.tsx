@@ -1,224 +1,184 @@
 "use client";
 
-import React from "react";
-import { Check, X, Building2, UserX } from "lucide-react";
+import React, { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export default function WhoItFits() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+    
+    gsap.registerPlugin(ScrollTrigger);
+    
+    const ctx = gsap.context(() => {
+      // Header Animation
+      gsap.from(".reveal-header", {
+        scrollTrigger: {
+          trigger: ".reveal-header",
+          start: "top 85%",
+        },
+        y: 40,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out",
+      });
+
+      // Sticky Stacked Cards Animation
+      const wrappers = gsap.utils.toArray(".sticky-wrapper");
+      const cards = gsap.utils.toArray(".stacked-card");
+      
+      cards.forEach((card: any, index) => {
+        // We don't animate the last card pushing back
+        if (index === cards.length - 1) return;
+        
+        // As the NEXT wrapper comes up, push THIS card back and fade it completely out
+        gsap.to(card, {
+          scale: 0.9,
+          opacity: 0, // Fade completely to 0 to prevent any bleed-through bugs
+          y: -30, // push it slightly up
+          transformOrigin: "top center",
+          ease: "none",
+          scrollTrigger: {
+            trigger: wrappers[index + 1], // The next wrapper triggers it
+            start: "top 85%", // Start fading when next card enters
+            end: "top 20%",   // Finish fading when next card is near top
+            scrub: true,
+          }
+        });
+      });
+
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
     <section
+      ref={containerRef}
       id="fit"
       style={{
-        padding: "100px 0",
+        padding: "120px 0 160px 0",
         background: "var(--os-paper)",
         position: "relative",
       }}
     >
-      <div className="container">
-        {/* Section Header */}
-        <div style={{ maxWidth: "720px", marginBottom: "60px" }}>
-          <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "8px",
-              padding: "5px 12px",
-              background: "var(--os-teal-wash)",
-              border: "1px solid var(--os-teal-edge)",
-              borderRadius: "var(--os-radius-pill)",
-              marginBottom: "16px",
-            }}
-          >
-            <span
-              style={{
-                fontFamily: "var(--os-font-mono)",
-                fontSize: "11px",
-                fontWeight: 600,
-                color: "var(--os-deep-water)",
-                letterSpacing: "0.08em",
-              }}
-            >
-              QUALIFICATION
-            </span>
-          </div>
-
+      <div className="container mx-auto" style={{ maxWidth: "1000px", padding: "0 24px" }}>
+        
+        {/* Header Section */}
+        <div style={{ marginBottom: "100px", maxWidth: "800px", margin: "0 auto 100px auto", textAlign: "center" }}>
           <h2
+            className="reveal-header"
             style={{
               fontFamily: "var(--os-font-sans)",
-              fontSize: "clamp(34px, 4vw, 50px)",
-              fontWeight: 750,
-              lineHeight: 1.15,
+              fontSize: "clamp(36px, 5vw, 56px)",
+              fontWeight: 600,
+              lineHeight: 1.1,
               letterSpacing: "-0.03em",
               color: "var(--os-deep-water)",
-              marginBottom: "18px",
             }}
           >
             Exporters doing $1M to $50M a year.
           </h2>
-
-          <p
-            style={{
-              fontSize: "clamp(16px, 1.8vw, 19px)",
-              lineHeight: 1.6,
-              color: "var(--os-ink-secondary)",
-            }}
-          >
-            We align directly with commercial results. That means we only partner with exporters
-            who have physical product ready to quote and allocate.
-          </p>
         </div>
 
-        {/* Comparison Split Columns */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1.1fr 1fr",
-            gap: "32px",
-          }}
-          className="fit-grid"
-        >
-          {/* Who It Fits (Positive) */}
-          <div
-            style={{
-              background: "var(--os-white)",
-              border: "2px solid var(--os-seam-teal)",
-              borderRadius: "var(--os-radius-2xl)",
-              padding: "40px",
-              boxShadow: "0 16px 40px rgba(79, 192, 174, 0.12)",
-            }}
-          >
-            <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "24px" }}>
-              <div
-                style={{
-                  width: "44px",
-                  height: "44px",
-                  borderRadius: "var(--os-radius-lg)",
-                  background: "var(--os-teal-wash)",
-                  color: "var(--os-deep-water)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <Building2 size={22} />
+        {/* Stacked Cards Section */}
+        <div style={{ position: "relative", display: "flex", flexDirection: "column", gap: "24px" }}>
+          
+          {/* Card 1 */}
+          <div className="sticky-wrapper" style={{ position: "sticky", top: "120px", zIndex: 1 }}>
+            <div 
+              className="stacked-card" 
+              style={{ 
+                background: "#ffffff",
+                padding: "60px",
+                borderRadius: "32px",
+                boxShadow: "0 20px 40px rgba(0,0,0,0.04)",
+                border: "1px solid rgba(0,0,0,0.05)",
+                display: "flex",
+                flexDirection: "column",
+                gap: "24px",
+                willChange: "transform, opacity",
+              }}
+            >
+              <div style={{ fontFamily: "var(--os-font-mono)", fontSize: "80px", fontWeight: 700, color: "var(--os-deep-water)", lineHeight: 0.8 }}>
+                01
               </div>
               <div>
-                <h3 style={{ fontSize: "20px", fontWeight: 700, color: "var(--os-deep-water)" }}>
-                  Who Outerstep is built for
+                <h3 style={{ fontSize: "32px", fontWeight: 500, color: "var(--os-deep-water)", marginBottom: "16px", letterSpacing: "-0.02em" }}>
+                  You sell a specifiable product
                 </h3>
-                <span style={{ fontSize: "13px", color: "var(--os-ink-muted)" }}>
-                  Ideal fit for our automated inquiry engine
-                </span>
+                <p style={{ fontSize: "20px", color: "var(--os-ink-secondary)", margin: 0, lineHeight: 1.6 }}>
+                  A grade, a spec sheet, an HS code. Something a buyer can price without a meeting first.
+                </p>
               </div>
-            </div>
-
-            <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-              {[
-                "Direct manufacturers & factory producers with verified physical production capacity.",
-                "Authorized allocation holders for fertilizers, petrochemicals, minerals, metals, or agri-commodities.",
-                "Exporters shipping full container loads (FCL) or bulk vessel shipments ($1M - $50M/yr).",
-                "Teams able to quote FOB or CIF pricing and provide standard Certificates of Analysis (COA).",
-                "Companies looking to open new international export corridors without hiring local sales reps in every country.",
-              ].map((item, idx) => (
-                <div key={idx} style={{ display: "flex", alignItems: "flex-start", gap: "12px" }}>
-                  <div
-                    style={{
-                      width: "22px",
-                      height: "22px",
-                      borderRadius: "50%",
-                      background: "var(--os-teal-wash)",
-                      color: "var(--os-seam-teal)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexShrink: 0,
-                      marginTop: "2px",
-                    }}
-                  >
-                    <Check size={14} strokeWidth={3} />
-                  </div>
-                  <span style={{ fontSize: "14px", lineHeight: 1.55, color: "var(--os-ink)" }}>
-                    {item}
-                  </span>
-                </div>
-              ))}
             </div>
           </div>
 
-          {/* Who It Is NOT For (Negative) */}
-          <div
-            style={{
-              background: "rgba(255, 255, 255, 0.6)",
-              border: "1px solid var(--os-hairline)",
-              borderRadius: "var(--os-radius-2xl)",
-              padding: "40px",
-            }}
-          >
-            <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "24px" }}>
-              <div
-                style={{
-                  width: "44px",
-                  height: "44px",
-                  borderRadius: "var(--os-radius-lg)",
-                  background: "rgba(11, 58, 63, 0.05)",
-                  color: "var(--os-ink-muted)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <UserX size={22} />
+          {/* Card 2 */}
+          <div className="sticky-wrapper" style={{ position: "sticky", top: "140px", zIndex: 2 }}>
+            <div 
+              className="stacked-card" 
+              style={{ 
+                background: "#ffffff",
+                padding: "60px",
+                borderRadius: "32px",
+                boxShadow: "0 -20px 40px rgba(0,0,0,0.08)",
+                border: "1px solid rgba(0,0,0,0.05)",
+                display: "flex",
+                flexDirection: "column",
+                gap: "24px",
+                willChange: "transform, opacity",
+              }}
+            >
+              <div style={{ fontFamily: "var(--os-font-mono)", fontSize: "80px", fontWeight: 700, color: "var(--os-deep-water)", lineHeight: 0.8 }}>
+                02
               </div>
               <div>
-                <h3 style={{ fontSize: "20px", fontWeight: 700, color: "var(--os-deep-water)" }}>
-                  Who it is NOT for
+                <h3 style={{ fontSize: "32px", fontWeight: 500, color: "var(--os-deep-water)", marginBottom: "16px", letterSpacing: "-0.02em" }}>
+                  Your buyers already import it
                 </h3>
-                <span style={{ fontSize: "13px", color: "var(--os-ink-muted)" }}>
-                  Cases where our platform will not create value
-                </span>
+                <p style={{ fontSize: "20px", color: "var(--os-ink-secondary)", margin: 0, lineHeight: 1.6 }}>
+                  They exist, they buy this today, and they appear in customs and trade records. We find them there.
+                </p>
               </div>
             </div>
+          </div>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-              {[
-                "Unlicensed brokers or daisy-chain intermediaries without verified supplier mandate.",
-                "B2C e-commerce, consumer retail products, dropshipping, or single-carton parcels.",
-                "Companies without established commercial export documentation or banking facilities.",
-                "Products without clear harmonized tariff (HS) classification or laboratory specifications.",
-              ].map((item, idx) => (
-                <div key={idx} style={{ display: "flex", alignItems: "flex-start", gap: "12px" }}>
-                  <div
-                    style={{
-                      width: "22px",
-                      height: "22px",
-                      borderRadius: "50%",
-                      background: "rgba(223, 88, 70, 0.1)",
-                      color: "var(--os-tier-hot)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexShrink: 0,
-                      marginTop: "2px",
-                    }}
-                  >
-                    <X size={14} strokeWidth={3} />
-                  </div>
-                  <span style={{ fontSize: "14px", lineHeight: 1.55, color: "var(--os-ink-secondary)" }}>
-                    {item}
-                  </span>
-                </div>
-              ))}
+          {/* Card 3 */}
+          <div className="sticky-wrapper" style={{ position: "sticky", top: "160px", zIndex: 3 }}>
+            <div 
+              className="stacked-card" 
+              style={{ 
+                background: "#ffffff",
+                padding: "60px",
+                borderRadius: "32px",
+                boxShadow: "0 -20px 40px rgba(0,0,0,0.08)",
+                border: "1px solid rgba(0,0,0,0.05)",
+                display: "flex",
+                flexDirection: "column",
+                gap: "24px",
+                willChange: "transform, opacity",
+              }}
+            >
+              <div style={{ fontFamily: "var(--os-font-mono)", fontSize: "80px", fontWeight: 700, color: "var(--os-deep-water)", lineHeight: 0.8 }}>
+                03
+              </div>
+              <div>
+                <h3 style={{ fontSize: "32px", fontWeight: 500, color: "var(--os-deep-water)", marginBottom: "16px", letterSpacing: "-0.02em" }}>
+                  You have capacity you are not filling
+                </h3>
+                <p style={{ fontSize: "20px", color: "var(--os-ink-secondary)", margin: 0, lineHeight: 1.6 }}>
+                  Real tonnage, real certifications, and room to take an order that lands next quarter.
+                </p>
+              </div>
             </div>
           </div>
+
         </div>
+
       </div>
-
-      <style jsx>{`
-        @media (max-width: 900px) {
-          .fit-grid {
-            grid-template-columns: 1fr !important;
-          }
-        }
-      `}</style>
     </section>
   );
 }
