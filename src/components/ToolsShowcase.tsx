@@ -197,9 +197,8 @@ export default function ToolsShowcase() {
       if (!sectionRef.current) return;
       const rect = sectionRef.current.getBoundingClientRect();
 
-      // Trigger card opening animation just after reaching this section
-      const triggerThreshold = window.innerHeight * 0.45;
-      if (rect.top <= triggerThreshold && rect.bottom >= 100) {
+      // Trigger spread when section is well within viewport (e.g. top is at 60% of window height)
+      if (rect.top <= window.innerHeight * 0.6 && rect.bottom > 200) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
@@ -221,43 +220,22 @@ export default function ToolsShowcase() {
       ref={sectionRef}
       className="relative w-full min-h-screen py-10 sm:py-16 md:py-24 px-3 sm:px-6 overflow-hidden bg-[#0b3536] text-white transition-colors flex flex-col justify-center items-center"
     >
-      {/* Mint Halftone Dotted Background */}
-      <div className="absolute inset-0 pointer-events-none opacity-30">
-        {/* Left Halftone Grid */}
-        <div
-          className="absolute left-0 top-0 bottom-0 w-2/5 bg-[radial-gradient(#2dd4bf_2px,transparent_2px)] [background-size:16px_16px] sm:[background-size:18px_18px]"
-          style={{
-            maskImage:
-              "radial-gradient(ellipse at left, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 80%)",
-            WebkitMaskImage:
-              "radial-gradient(ellipse at left, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 80%)",
-          }}
-        />
-        {/* Right Halftone Grid */}
-        <div
-          className="absolute right-0 top-0 bottom-0 w-2/5 bg-[radial-gradient(#2dd4bf_2px,transparent_2px)] [background-size:16px_16px] sm:[background-size:18px_18px]"
-          style={{
-            maskImage:
-              "radial-gradient(ellipse at right, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 80%)",
-            WebkitMaskImage:
-              "radial-gradient(ellipse at right, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 80%)",
-          }}
-        />
-      </div>
+      {/* Clean Ambient Gradient Glow Accent */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-[#2dd4bf]/5 blur-[140px] rounded-full pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto flex flex-col items-center text-center z-10 w-full">
         {/* Top Tagline */}
-        <div className="text-[10px] sm:text-[11px] font-mono tracking-widest text-[#2dd4bf] uppercase mb-2">
+        <div className="text-[10px] sm:text-[11px] font-mono-tech tracking-widest text-[#2dd4bf] uppercase mb-2">
           THE PLATFORM
         </div>
 
         {/* Section Heading */}
-        <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-medium tracking-tight text-white max-w-3xl mb-6 sm:mb-12 leading-tight">
+        <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-headline font-medium tracking-tight text-white max-w-3xl mb-6 sm:mb-12 leading-tight">
           Five screens, in the order you meet them.
         </h2>
 
         {/* Swipe Hint Indicator for Mobile */}
-        <div className="flex md:hidden items-center justify-center gap-1.5 text-[10px] font-mono text-[#2dd4bf] mb-4 bg-[#0d4546] px-3 py-1 rounded-full border border-[#2dd4bf]/30">
+        <div className="flex md:hidden items-center justify-center gap-1.5 text-[10px] font-mono-tech text-[#2dd4bf] mb-4 bg-[#0d4546] px-3 py-1 rounded-full border border-[#2dd4bf]/30">
           <span>← Swipe to explore cards →</span>
         </div>
 
@@ -270,12 +248,12 @@ export default function ToolsShowcase() {
             className={`flex items-end transition-all duration-700 ease-out justify-start md:justify-center px-6 md:px-0 min-w-max ${
               isScrolled
                 ? "gap-2 sm:gap-3 lg:gap-3.5 xl:gap-4"
-                : "-space-x-8 sm:-space-x-12 md:-space-x-16 lg:-space-x-20"
+                : "gap-2 sm:gap-3 md:-space-x-16 lg:-space-x-20"
             }`}
           >
             {TOOLS.map((tool) => {
               const isHovered = activeId === tool.id;
-              const showDetails = isHovered && isScrolled;
+              const showKeyPoints = isHovered && isScrolled;
 
               const currentRotation = isScrolled ? 0 : tool.defaultRotation;
               const currentTranslateY = isScrolled ? 0 : tool.defaultTranslateY;
@@ -304,363 +282,40 @@ export default function ToolsShowcase() {
                 >
                   <div>
                     {/* Step Badge Pill */}
-                    <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-[#0b3536] text-[#2dd4bf] text-[9.5px] sm:text-[10px] font-mono font-bold tracking-wider mb-3 sm:mb-4">
+                    <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-[#0b3536] text-[#2dd4bf] text-[9.5px] sm:text-[10px] font-mono-tech font-bold tracking-wider mb-3 sm:mb-4">
                       {tool.badge}
                     </div>
 
                     {/* Card Title */}
-                    <h3 className="font-serif font-bold text-base sm:text-lg md:text-xl text-slate-900 leading-snug mb-2 sm:mb-3">
+                    <h3 className="font-headline font-bold text-base sm:text-lg md:text-xl text-slate-900 leading-snug mb-2 sm:mb-3">
                       {tool.title}
                     </h3>
 
                     {/* Card Description */}
-                    <p className="text-xs text-slate-600 font-sans leading-relaxed">
+                    <p className="text-xs text-slate-600 font-sans-clean leading-relaxed">
                       {tool.description}
                     </p>
 
-                    {/* Reveal detailed product setup data ONLY when HOVERED & UN-TILTED */}
-                    {tool.id === "setup" && (
+                    {/* Key Points / Bullet Features: ONLY when cards are separated (isScrolled) AND hovered (isHovered) */}
+                    {tool.features && tool.features.length > 0 && (
                       <div
-                        className={`transition-all duration-500 ease-in-out ${
-                          showDetails
-                            ? "opacity-100 max-h-96 mt-3 sm:mt-4 pointer-events-auto"
+                        className={`transition-all duration-400 ease-in-out ${
+                          showKeyPoints
+                            ? "opacity-100 max-h-40 mt-3.5 pt-3 border-t border-slate-200/80 pointer-events-auto"
                             : "opacity-0 max-h-0 overflow-hidden pointer-events-none"
                         }`}
                       >
-                        <div className="p-3 sm:p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 font-mono text-[10.5px] sm:text-[11px] space-y-2 text-slate-700 shadow-inner">
-                          <div className="flex items-center justify-between pb-1.5 border-b border-slate-200">
-                            <span className="font-semibold text-slate-900 text-xs">
-                              {tool.productName}
-                            </span>
-                            <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold">
-                              100%
-                            </span>
-                          </div>
-
-                          <div className="flex justify-between items-center text-[9.5px] sm:text-[10px]">
-                            <span className="text-slate-400 uppercase">HS CODE</span>
-                            <span className="font-medium text-slate-800 flex items-center gap-1">
-                              {tool.hsCode}
-                              <span className="px-1 py-0.2 rounded bg-emerald-100 text-[#0b3536] text-[8.5px] sm:text-[9px] font-bold">
-                                {tool.hsSuggested}
-                              </span>
-                            </span>
-                          </div>
-
-                          <div className="flex justify-between items-center text-[9.5px] sm:text-[10px]">
-                            <span className="text-slate-400 uppercase">CAPACITY</span>
-                            <span className="font-medium text-slate-800">{tool.capacity}</span>
-                          </div>
-
-                          <div className="flex justify-between items-center text-[9.5px] sm:text-[10px]">
-                            <span className="text-slate-400 uppercase">MIN ORDER</span>
-                            <span className="font-medium text-slate-800">{tool.minOrder}</span>
-                          </div>
-
-                          {/* Target Markets */}
-                          <div className="pt-1.5 border-t border-slate-200">
-                            <div className="text-[8.5px] sm:text-[9px] text-slate-400 uppercase mb-1">
-                              TARGET MARKETS
-                            </div>
-                            <div className="flex flex-wrap gap-1">
-                              {tool.targetMarkets?.map((market, idx) => (
-                                <span
-                                  key={idx}
-                                  className="px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[8.5px] sm:text-[9px] text-slate-700"
-                                >
-                                  {idx + 1} {market}
-                                </span>
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Feature Bullets */}
-                        {tool.features && (
-                          <div className="mt-3 pt-2 border-t border-slate-200/60 space-y-1">
-                            {tool.features.map((feat, idx) => (
-                              <div
-                                key={idx}
-                                className="flex items-center gap-1.5 text-[10.5px] sm:text-[11px] text-slate-600 font-sans"
-                              >
-                                <span className="w-1.5 h-1.5 rounded-full bg-[#2dd4bf] shrink-0" />
-                                <span>{feat}</span>
-                              </div>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    )}
-
-                    {/* Reveal detailed buyer inquiry data ONLY when HOVERED & UN-TILTED */}
-                    {tool.id === "inbox" && (
-                      <div
-                        className={`transition-all duration-500 ease-in-out ${
-                          showDetails
-                            ? "opacity-100 max-h-96 mt-3 sm:mt-4 pointer-events-auto"
-                            : "opacity-0 max-h-0 overflow-hidden pointer-events-none"
-                        }`}
-                      >
-                        <div className="p-3 sm:p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 font-mono text-[10.5px] sm:text-[11px] space-y-2 text-slate-700 shadow-inner">
-                          <div className="flex items-center justify-between pb-1.5 border-b border-slate-200">
-                            <span className="text-[9.5px] sm:text-[10px] text-rose-600 bg-rose-100 px-1.5 py-0.5 rounded font-bold uppercase">
-                              HOT INQUIRY
-                            </span>
-                            <span className="text-[9.5px] sm:text-[10px] text-slate-400">
-                              confidence {tool.confidence}
-                            </span>
-                          </div>
-
-                          <p className="text-[9.5px] sm:text-[10px] italic text-slate-600 font-sans leading-snug border-l-2 border-teal-500 pl-2">
-                            {tool.quoteText}
-                          </p>
-
-                          <div className="grid grid-cols-2 gap-1.5 text-[9px] sm:text-[9.5px] pt-1">
-                            <div>
-                              <span className="text-slate-400 block uppercase">QUANTITY</span>
-                              <span className="font-bold text-slate-900">{tool.quantity}</span>
-                            </div>
-                            <div>
-                              <span className="text-slate-400 block uppercase">INCOTERM</span>
-                              <span className="font-bold text-slate-900">{tool.incoterm}</span>
-                            </div>
-                            <div>
-                              <span className="text-slate-400 block uppercase">DESTINATION</span>
-                              <span className="font-bold text-slate-900">{tool.destination}</span>
-                            </div>
-                            <div>
-                              <span className="text-slate-400 block uppercase">TIMELINE</span>
-                              <span className="font-bold text-slate-900">{tool.timeline}</span>
-                            </div>
-                          </div>
-
-                          <div className="pt-1.5 border-t border-slate-200">
-                            <div className="font-bold text-slate-900 text-[10.5px] sm:text-[11px]">
-                              {tool.buyerType}
-                            </div>
-                            <div className="text-[9px] sm:text-[9.5px] text-slate-500 font-sans">
-                              {tool.buyerVolume}
-                            </div>
-                          </div>
-
-                          <div className="pt-1 flex items-center justify-between">
-                            <button className="px-2.5 py-1 rounded-lg bg-[#2dd4bf] hover:bg-[#14b8a6] text-[#0b3536] text-[9.5px] sm:text-[10px] font-bold shadow-sm transition">
-                              Unlock introduction
-                            </button>
-                            <span className="text-[9px] text-slate-400">Not for me</span>
-                          </div>
-                        </div>
-
-                        {/* Feature Bullets */}
-                        {tool.features && (
-                          <div className="mt-3 pt-2 border-t border-slate-200/60 space-y-1">
-                            {tool.features.map((feat, idx) => (
-                              <div
-                                key={idx}
-                                className="flex items-center gap-1.5 text-[10.5px] sm:text-[11px] text-slate-600 font-sans"
-                              >
-                                <span className="w-1.5 h-1.5 rounded-full bg-[#2dd4bf] shrink-0" />
-                                <span>{feat}</span>
-                              </div>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    )}
-
-                    {/* Reveal detailed introduction terms ONLY when HOVERED & UN-TILTED */}
-                    {tool.id === "introduction" && (
-                      <div
-                        className={`transition-all duration-500 ease-in-out ${
-                          showDetails
-                            ? "opacity-100 max-h-96 mt-3 sm:mt-4 pointer-events-auto"
-                            : "opacity-0 max-h-0 overflow-hidden pointer-events-none"
-                        }`}
-                      >
-                        <div className="p-3 sm:p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 font-mono text-[10px] sm:text-[10.5px] space-y-2 text-slate-700 shadow-inner">
-                          <div className="text-[9px] uppercase tracking-wider text-slate-400 font-semibold pb-1 border-b border-slate-200">
-                            INTRODUCTION
-                          </div>
-                          <div className="text-[9.5px] text-slate-500 italic">
-                            Name revealed once terms are accepted
-                          </div>
-
-                          <div className="space-y-1 text-[9px] sm:text-[9.5px] pt-1">
-                            {tool.terms?.map((term, idx) => (
-                              <div key={idx} className="flex items-start gap-1.5">
-                                <span className="w-3.5 h-3.5 rounded bg-slate-200 text-slate-700 flex items-center justify-center text-[8.5px] font-bold shrink-0">
-                                  {idx + 1}
-                                </span>
-                                <div className="flex-1 leading-tight text-slate-800">
-                                  <span>{term} </span>
-                                  {idx < 2 && (
-                                    <span className="border border-dashed border-amber-500/80 text-amber-700 bg-amber-50 px-1 py-0.2 rounded text-[8px] font-bold ml-1">
-                                      RATE-TBD
-                                    </span>
-                                  )}
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-
-                          <div className="mt-2 p-1.5 rounded border border-emerald-300 bg-emerald-50/60 flex items-start gap-1.5 text-[9px] text-slate-700">
-                            <div className="w-3 h-3 rounded bg-emerald-500 text-white flex items-center justify-center shrink-0 mt-0.5">
-                              <Check className="w-2 h-2 stroke-[3]" />
-                            </div>
-                            <span className="leading-tight">{tool.acceptanceText}</span>
-                          </div>
-
-                          <div className="pt-1 flex items-center gap-2">
-                            <button className="px-2.5 py-1 rounded-lg bg-[#2dd4bf] hover:bg-[#14b8a6] text-[#0b3536] text-[9.5px] font-bold shadow-sm transition">
-                              Agree & unlock
-                            </button>
-                            <span className="text-[9px] text-slate-400">Not for me</span>
-                          </div>
-                        </div>
-
-                        {/* Feature Bullets */}
-                        {tool.features && (
-                          <div className="mt-3 pt-2 border-t border-slate-200/60 space-y-1">
-                            {tool.features.map((feat, idx) => (
-                              <div
-                                key={idx}
-                                className="flex items-center gap-1.5 text-[10.5px] sm:text-[11px] text-slate-600 font-sans"
-                              >
-                                <span className="w-1.5 h-1.5 rounded-full bg-[#2dd4bf] shrink-0" />
-                                <span>{feat}</span>
-                              </div>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    )}
-
-                    {/* Reveal detailed email reply draft ONLY when HOVERED & UN-TILTED */}
-                    {tool.id === "reply" && (
-                      <div
-                        className={`transition-all duration-500 ease-in-out ${
-                          showDetails
-                            ? "opacity-100 max-h-96 mt-3 sm:mt-4 pointer-events-auto"
-                            : "opacity-0 max-h-0 overflow-hidden pointer-events-none"
-                        }`}
-                      >
-                        <div className="p-3 sm:p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 font-mono text-[10px] sm:text-[10.5px] space-y-2 text-slate-700 shadow-inner">
-                          <div className="flex items-center justify-between pb-1 border-b border-slate-200">
-                            <span className="text-[9px] uppercase tracking-wider text-slate-400 font-semibold">
-                              YOUR REPLY
-                            </span>
-                            <span className="text-[8.5px] bg-slate-200 text-slate-700 px-1.5 py-0.5 rounded font-bold">
-                              AI DRAFT
-                            </span>
-                          </div>
-
-                          <div className="p-2 rounded bg-white border border-slate-200 font-sans text-[9.5px] text-slate-700 space-y-1 leading-relaxed">
-                            <p className="font-semibold text-slate-900">{tool.recipientName}</p>
-                            <p>{tool.replyParagraph1}</p>
-                            <p>
-                              Our price for this volume is{" "}
-                              <span className="border border-dashed border-amber-500/80 text-amber-800 bg-amber-50 px-1 py-0.2 rounded font-mono text-[8.5px] font-semibold">
-                                {tool.missingTermPlaceholder}
-                              </span>{" "}
-                              per MT CIF Santos, valid 14 days.
-                            </p>
-                          </div>
-
-                          <div className="text-[8.5px] sm:text-[9px] text-amber-700 flex items-center gap-1">
-                            <span className="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0" />
-                            <span>{tool.warningNote}</span>
-                          </div>
-
-                          <div className="pt-1 flex items-center justify-between">
-                            <button
-                              disabled
-                              className="px-2.5 py-1 rounded-lg bg-slate-200 text-slate-400 text-[9.5px] font-bold cursor-not-allowed"
+                        <div className="space-y-1.5">
+                          {tool.features.map((feat, idx) => (
+                            <div
+                              key={idx}
+                              className="flex items-center gap-2 text-[10.5px] sm:text-[11px] text-slate-700 font-sans-clean leading-snug"
                             >
-                              Send reply
-                            </button>
-                            <span className="text-[8px] text-slate-400 uppercase font-mono tracking-tighter">
-                              NEVER SENT WITHOUT YOUR APPROVAL
-                            </span>
-                          </div>
-                        </div>
-
-                        {/* Feature Bullets */}
-                        {tool.features && (
-                          <div className="mt-3 pt-2 border-t border-slate-200/60 space-y-1">
-                            {tool.features.map((feat, idx) => (
-                              <div
-                                key={idx}
-                                className="flex items-center gap-1.5 text-[10.5px] sm:text-[11px] text-slate-600 font-sans"
-                              >
-                                <span className="w-1.5 h-1.5 rounded-full bg-[#2dd4bf] shrink-0" />
-                                <span>{feat}</span>
-                              </div>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    )}
-
-                    {/* Reveal detailed deal timeline ONLY when HOVERED & UN-TILTED */}
-                    {tool.id === "dealroom" && (
-                      <div
-                        className={`transition-all duration-500 ease-in-out ${
-                          showDetails
-                            ? "opacity-100 max-h-96 mt-3 sm:mt-4 pointer-events-auto"
-                            : "opacity-0 max-h-0 overflow-hidden pointer-events-none"
-                        }`}
-                      >
-                        <div className="p-3 sm:p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 font-mono text-[10px] sm:text-[10.5px] space-y-2 text-slate-700 shadow-inner">
-                          <div className="flex items-center justify-between pb-1.5 border-b border-slate-200">
-                            <span className="font-bold text-slate-900 text-xs">
-                              {tool.dealCompany}
-                            </span>
-                            <span className="text-[9.5px] font-bold text-slate-900">
-                              {tool.dealValue}
-                            </span>
-                          </div>
-
-                          <div className="pt-1">
-                            <div className="grid grid-cols-4 sm:grid-cols-8 gap-1 text-[8px] text-slate-400 text-center mb-1">
-                              {tool.stages?.map((stage, idx) => (
-                                <span
-                                  key={idx}
-                                  className={
-                                    idx === tool.activeStageIdx
-                                      ? "font-bold text-[#0b3536] border-b-2 border-[#2dd4bf] pb-0.5"
-                                      : ""
-                                  }
-                                >
-                                  {stage}
-                                </span>
-                              ))}
+                              <span className="w-1.5 h-1.5 rounded-full bg-[#2dd4bf] shrink-0" />
+                              <span>{feat}</span>
                             </div>
-                          </div>
-
-                          <div className="p-1.5 rounded bg-white border border-slate-200 flex items-start gap-1.5 text-[9px]">
-                            <span className="text-slate-400 shrink-0 font-bold">
-                              {tool.eventDate}
-                            </span>
-                            <span className="text-slate-700 leading-snug">
-                              {tool.eventDescription}
-                            </span>
-                          </div>
+                          ))}
                         </div>
-
-                        {/* Feature Bullets */}
-                        {tool.features && (
-                          <div className="mt-3 pt-2 border-t border-slate-200/60 space-y-1">
-                            {tool.features.map((feat, idx) => (
-                              <div
-                                key={idx}
-                                className="flex items-center gap-1.5 text-[10.5px] sm:text-[11px] text-slate-600 font-sans"
-                              >
-                                <span className="w-1.5 h-1.5 rounded-full bg-[#2dd4bf] shrink-0" />
-                                <span>{feat}</span>
-                              </div>
-                            ))}
-                          </div>
-                        )}
                       </div>
                     )}
                   </div>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import "./globals.css"
 import { AgentationWrapper } from "@/components/agentation-wrapper"
+import { ModalProvider } from "@/components/ModalProvider"
 
 export const metadata: Metadata = {
   title: "Outerstep — You bring the product. We bring the buyers.",
@@ -16,8 +17,10 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className="min-h-screen bg-[#edf2f2] text-[#0a3a40] antialiased">
-        {children}
-        <AgentationWrapper />
+        <ModalProvider>
+          {children}
+          <AgentationWrapper />
+        </ModalProvider>
       </body>
     </html>
   )

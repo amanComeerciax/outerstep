@@ -3,6 +3,7 @@
 import React, { useState } from "react"
 import { ArrowRight, Menu, X } from "lucide-react"
 import { Globe, Marker, Arc } from "@/components/ui/cobe-globe"
+import { useModal } from "@/components/ModalProvider"
 
 const markers: Marker[] = [
   { id: "sf", location: [37.7595, -122.4367], label: "San Francisco" },
@@ -31,12 +32,9 @@ const arcs: Arc[] = [
   },
 ]
 
-interface HeroSectionProps {
-  onOpenBookCall?: () => void;
-}
-
-export function HeroSection({ onOpenBookCall }: HeroSectionProps) {
+export function HeroSection() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const { openModal } = useModal()
 
   return (
     <div className="relative min-h-screen w-full bg-[#edf2f2] text-[#0a3a40] overflow-hidden flex flex-col justify-between selection:bg-[#2a6369]/20 selection:text-[#0a3a40]">
@@ -75,14 +73,13 @@ export function HeroSection({ onOpenBookCall }: HeroSectionProps) {
 
           {/* Right CTA Button */}
           <div className="hidden md:flex items-center">
-            <a
-              href="#book"
-              onClick={(e) => { e.preventDefault(); onOpenBookCall?.(); }}
+            <button
+              onClick={() => openModal()}
               className="group font-sans-clean text-sm font-semibold px-5 py-2.5 rounded-full bg-[#0a3a40] text-white hover:bg-[#072a2e] transition-all duration-200 shadow-sm hover:shadow flex items-center gap-2"
             >
               <span>Book a Call</span>
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-            </a>
+            </button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -112,14 +109,16 @@ export function HeroSection({ onOpenBookCall }: HeroSectionProps) {
                 </a>
               ),
             )}
-            <a
-              href="#book"
-              onClick={(e) => { e.preventDefault(); setMobileMenuOpen(false); onOpenBookCall?.(); }}
-              className="font-sans-clean text-sm font-semibold px-5 py-3 rounded-full bg-[#0a3a40] text-white hover:bg-[#072a2e] text-center flex items-center justify-center gap-2 mt-2"
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                openModal();
+              }}
+              className="mt-6 w-full font-sans-clean text-sm font-semibold px-5 py-3 rounded-full bg-[#0a3a40] text-white hover:bg-[#072a2e] transition-colors flex items-center justify-center gap-2"
             >
               <span>Book a Call</span>
               <ArrowRight className="w-4 h-4" />
-            </a>
+            </button>
           </div>
         )}
       </header>
@@ -167,14 +166,13 @@ export function HeroSection({ onOpenBookCall }: HeroSectionProps) {
           {/* Dual Action Buttons */}
           <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-5 mt-8 sm:mt-10">
             {/* Primary CTA */}
-            <a
-              href="#book-call"
-              onClick={(e) => { e.preventDefault(); onOpenBookCall?.(); }}
-              className="group font-sans-clean text-sm sm:text-base font-semibold px-8 py-3.5 rounded-full bg-[#0a3a40] text-white hover:bg-[#06262a] transition-all duration-200 shadow-md hover:shadow-lg flex items-center gap-2.5 active:scale-[0.98]"
-            >
-              <span>Book a call</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </a>
+            <button
+            onClick={() => openModal()}
+            className="group font-sans-clean font-semibold text-[15px] px-8 py-3.5 rounded-full bg-[#2a6369] text-white hover:bg-[#205156] transition-all duration-200 shadow-[0_4px_14px_0_rgba(42,99,105,0.2)] hover:shadow-[0_6px_20px_rgba(42,99,105,0.3)] hover:-translate-y-0.5 flex items-center gap-2.5 max-w-fit"
+          >
+            <span>Book a Call</span>
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </button>
 
             {/* Secondary CTA */}
             <a
@@ -198,6 +196,8 @@ export function HeroSection({ onOpenBookCall }: HeroSectionProps) {
             className="w-full"
             markers={markers}
             arcs={arcs}
+            baseColor={[237 / 255, 242 / 255, 242 / 255]}
+            glowColor={[215 / 255, 230 / 255, 230 / 255]}
             markerColor={[10 / 255, 58 / 255, 64 / 255]}
             arcColor={[10 / 255, 58 / 255, 64 / 255]}
           />

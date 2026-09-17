@@ -2,17 +2,13 @@
 
 import React from "react";
 
-interface FooterProps {
-  onOpenBookCall?: () => void;
-}
-
-export default function Footer({ onOpenBookCall }: FooterProps) {
+export default function Footer() {
   return (
     <footer
       style={{
-        background: "var(--os-deep-water)",
-        color: "var(--os-white)",
-        padding: "120px 0 0 0",
+        background: "#0a3a40",
+        color: "#ffffff",
+        padding: "80px 0 0 0",
         position: "relative",
         overflow: "hidden",
       }}
@@ -26,9 +22,9 @@ export default function Footer({ onOpenBookCall }: FooterProps) {
           transform: "translateX(-50%)",
           width: "1000px",
           height: "400px",
-          background: "var(--os-seam-teal)",
+          background: "#2dd4bf",
           filter: "blur(200px)",
-          opacity: 0.15,
+          opacity: 0.12,
           pointerEvents: "none",
           borderRadius: "50%",
         }}
@@ -36,15 +32,13 @@ export default function Footer({ onOpenBookCall }: FooterProps) {
 
       <div className="container mx-auto px-6 md:px-12 relative z-10" style={{ maxWidth: "1300px" }}>
         
-
-
         {/* Links Grid */}
         <div
           style={{
             display: "grid",
             gridTemplateColumns: "1.5fr 1fr 1fr 1fr",
             gap: "48px",
-            marginBottom: "100px",
+            marginBottom: "80px",
           }}
           className="footer-grid"
         >
@@ -52,17 +46,17 @@ export default function Footer({ onOpenBookCall }: FooterProps) {
           <div>
             <div style={{ display: "inline-flex", alignItems: "center", gap: "12px", marginBottom: "24px" }}>
               <svg width="32" height="32" viewBox="0 0 120 120" fill="none">
-                <rect x="0" y="0" width="120" height="120" rx="24" fill="var(--os-seam-teal)" />
-                <rect x="20" y="76" width="24" height="24" rx="6" fill="var(--os-deep-water)" />
-                <rect x="48" y="48" width="24" height="24" rx="6" fill="var(--os-deep-water)" />
-                <rect x="76" y="20" width="24" height="24" rx="6" fill="var(--os-deep-water)" opacity="0.55" />
+                <rect x="0" y="0" width="120" height="120" rx="24" fill="#2dd4bf" />
+                <rect x="20" y="76" width="24" height="24" rx="6" fill="#0a3a40" />
+                <rect x="48" y="48" width="24" height="24" rx="6" fill="#0a3a40" />
+                <rect x="76" y="20" width="24" height="24" rx="6" fill="#0a3a40" opacity="0.55" />
               </svg>
-              <span style={{ fontWeight: 600, fontSize: "24px", letterSpacing: "-0.03em" }}>
+              <span style={{ fontWeight: 600, fontSize: "24px", letterSpacing: "-0.03em", color: "#ffffff" }}>
                 Outerstep
               </span>
             </div>
 
-            <p style={{ fontSize: "16px", lineHeight: 1.6, maxWidth: "320px", color: "rgba(255, 255, 255, 0.6)", margin: 0 }}>
+            <p style={{ fontSize: "15px", lineHeight: 1.6, maxWidth: "320px", color: "rgba(255, 255, 255, 0.65)", margin: 0 }}>
               Automated buyer inquiries for exporters. We find companies already importing what you make,
               run the outreach, and hand you qualified deals.
             </p>
@@ -70,7 +64,7 @@ export default function Footer({ onOpenBookCall }: FooterProps) {
 
           {/* Col 2: Product */}
           <div>
-            <div style={{ fontFamily: "var(--os-font-mono)", fontSize: "12px", color: "var(--os-white)", letterSpacing: "0.1em", marginBottom: "24px", opacity: 0.4 }}>
+            <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "12px", color: "#ffffff", letterSpacing: "0.1em", marginBottom: "24px", opacity: 0.5 }}>
               PRODUCT
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: "16px", fontSize: "15px" }}>
@@ -84,7 +78,7 @@ export default function Footer({ onOpenBookCall }: FooterProps) {
 
           {/* Col 3: Corridors */}
           <div>
-            <div style={{ fontFamily: "var(--os-font-mono)", fontSize: "12px", color: "var(--os-white)", letterSpacing: "0.1em", marginBottom: "24px", opacity: 0.4 }}>
+            <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "12px", color: "#ffffff", letterSpacing: "0.1em", marginBottom: "24px", opacity: 0.5 }}>
               KEY CORRIDORS
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: "16px", fontSize: "15px" }}>
@@ -98,7 +92,7 @@ export default function Footer({ onOpenBookCall }: FooterProps) {
 
           {/* Col 4: Legal & Contact */}
           <div>
-            <div style={{ fontFamily: "var(--os-font-mono)", fontSize: "12px", color: "var(--os-white)", letterSpacing: "0.1em", marginBottom: "24px", opacity: 0.4 }}>
+            <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "12px", color: "#ffffff", letterSpacing: "0.1em", marginBottom: "24px", opacity: 0.5 }}>
               LEGAL & SECURITY
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: "16px", fontSize: "15px" }}>
@@ -111,11 +105,10 @@ export default function Footer({ onOpenBookCall }: FooterProps) {
         </div>
 
         {/* Bottom Bar */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: "32px", paddingBottom: "32px", fontFamily: "var(--os-font-mono)", fontSize: "12px", color: "rgba(255,255,255,0.4)", flexWrap: "wrap", gap: "16px" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: "32px", paddingBottom: "32px", fontFamily: "'IBM Plex Mono', monospace", fontSize: "12px", color: "rgba(255,255,255,0.4)", flexWrap: "wrap", gap: "16px" }}>
           <div>© {new Date().getFullYear()} Outerstep Ltd. All rights reserved.</div>
           <div>Automated Buyer Inquiries for Exporters. No cold calls, no scrapers.</div>
         </div>
-
 
       </div>
 
@@ -126,7 +119,7 @@ export default function Footer({ onOpenBookCall }: FooterProps) {
           transition: color 0.2s ease;
         }
         .f-link:hover {
-          color: var(--os-seam-teal);
+          color: #2dd4bf;
         }
         .f-text {
           color: rgba(255, 255, 255, 0.5);

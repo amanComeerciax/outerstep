@@ -283,13 +283,16 @@ function CircularSplitRollComp({
 
         render(0);
 
+        // Set the section height for desktop sticky scrolling track
+        if (rootRef.current) {
+          rootRef.current.style.height = `${sectionHeight * safeItems.length}vh`;
+        }
+
         const scrollTrigger = ScrollTrigger.create({
           trigger: rootRef.current,
           start: "top top",
-          end: `+=${sectionHeight * safeItems.length}%`,
-          pin: stickyRef.current,
+          end: "bottom bottom",
           scrub,
-          pinSpacing,
           invalidateOnRefresh: true,
           onUpdate: (self) => {
             // An item is perfectly centered when its localProgress reaches 0.75.
@@ -364,7 +367,7 @@ function CircularSplitRollComp({
       <div
         ref={stickyRef}
         aria-hidden="true"
-        className={`relative h-screen w-full flex-col justify-center items-center hidden md:flex ${
+        className={`sticky top-0 h-screen w-full flex-col justify-center items-center hidden md:flex ${
           reducedMotion ? "!hidden" : ""
         }`}
         style={{ display: reducedMotion ? "none" : undefined }}
@@ -408,7 +411,7 @@ function CircularSplitRollComp({
                     whiteSpace: "nowrap",
                     textAlign: "center",
                     fontSize: "var(--css-title-size, clamp(28px, 3vw, 56px))",
-                    fontFamily: "var(--os-font-sans)",
+                    fontFamily: "'Instrument Sans', sans-serif",
                     fontWeight: 700,
                     lineHeight: 1,
                     letterSpacing: "-0.04em",

@@ -2,6 +2,11 @@
 
 import React, { useEffect, useRef, useState, useCallback } from "react"
 import gsap from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger)
+}
 
 interface SystemItem {
   id: string
@@ -76,14 +81,18 @@ const systems: SystemItem[] = [
   },
 ]
 
+// The traveling dot completes its journey at 0.82 progress, leaving 0.82 to 1.00 as a resting/dwell buffer
+const ANIM_END_PROGRESS = 0.82
+
 // Activation thresholds with hysteresis for smooth bidirectional scrolling
+// Calibrated so each bullet opens just as the glowing traveling dot arrives at it
 const THRESHOLDS = [
   { open: 0.0, close: 0.0 }, // Bullet 01 stays open as the base anchor
-  { open: 0.18, close: 0.14 },
-  { open: 0.38, close: 0.34 },
-  { open: 0.58, close: 0.54 },
-  { open: 0.78, close: 0.74 },
-  { open: 0.94, close: 0.90 },
+  { open: 0.15, close: 0.12 }, // Bullet 02 (dot arrives at ~0.164)
+  { open: 0.31, close: 0.28 }, // Bullet 03 (dot arrives at ~0.328)
+  { open: 0.47, close: 0.44 }, // Bullet 04 (dot arrives at ~0.492)
+  { open: 0.63, close: 0.60 }, // Bullet 05 (dot arrives at ~0.656)
+  { open: 0.79, close: 0.76 }, // Bullet 06 (dot arrives at ~0.820)
 ]
 
 export function SixSystemsSection() {
@@ -121,8 +130,11 @@ export function SixSystemsSection() {
       const endY = dotY[dotY.length - 1]
       const totalSegments = dotY.length - 1
 
+      // Scale progress against ANIM_END_PROGRESS so all 5 segments complete by 0.82
+      const animProgress = Math.min(Math.max(progress / ANIM_END_PROGRESS, 0), 1)
+
       // Piecewise interpolation between adjacent dots
-      const segmentFloat = progress * totalSegments
+      const segmentFloat = animProgress * totalSegments
       const segIndex = Math.min(Math.floor(segmentFloat), totalSegments - 1)
       const segFrac = segmentFloat - segIndex
 
@@ -285,6 +297,11 @@ export function SixSystemsSection() {
 
     // Initial positioning calculation
     handleScroll()
+    ScrollTrigger.refresh()
+
+    const refreshTimer = setTimeout(() => {
+      ScrollTrigger.refresh()
+    }, 200)
 
     // Smooth scroll listener
     let ticking = false
@@ -298,12 +315,18 @@ export function SixSystemsSection() {
       }
     }
 
+    const onResize = () => {
+      handleScroll()
+      ScrollTrigger.refresh()
+    }
+
     window.addEventListener("scroll", onScroll, { passive: true })
-    window.addEventListener("resize", handleScroll)
+    window.addEventListener("resize", onResize)
 
     return () => {
+      clearTimeout(refreshTimer)
       window.removeEventListener("scroll", onScroll)
-      window.removeEventListener("resize", handleScroll)
+      window.removeEventListener("resize", onResize)
     }
   }, [handleScroll])
 
@@ -312,15 +335,16 @@ export function SixSystemsSection() {
       ref={sectionRef}
       id="underneath-systems"
       suppressHydrationWarning
-      className="relative w-full h-[260vh] bg-[#edf2f2]"
+      className="relative w-full bg-[#edf2f2]"
+      style={{ height: "300vh" }}
     >
       {/* 
         Sticky Viewport Container:
-        Locks neatly to the viewport while you scroll through the 260vh parent track,
+        Locks neatly to the viewport while you scroll through the 300vh parent track,
         giving ample scroll distance so the dot travels steadily and reveals each
-        bullet precisely upon arrival without jumping or interfering with How It Works.
+        bullet precisely upon arrival without jumping or prematurely surpassing the section.
       */}
-      <div className="sticky top-0 h-screen w-full flex flex-col justify-center py-10 sm:py-14 px-6 sm:px-10 lg:px-16 overflow-hidden select-none">
+      <div className="sticky top-0 h-screen w-full flex flex-col justify-center py-6 sm:py-8 lg:py-10 px-6 sm:px-10 lg:px-16 overflow-hidden select-none">
         <div className="max-w-4xl mx-auto w-full">
           {/* Header Tagline */}
           <div className="mb-2">
@@ -330,12 +354,12 @@ export function SixSystemsSection() {
           </div>
 
           {/* Main Section Heading */}
-          <h2 className="font-headline text-3xl sm:text-4xl md:text-[38px] font-bold text-[#0a3a40] tracking-tight leading-tight mb-2.5">
+          <h2 className="font-headline text-3xl sm:text-4xl md:text-[38px] font-bold text-[#0a3a40] tracking-tight leading-tight mb-2">
             Six systems you never have to think about.
           </h2>
 
           {/* Subtitle Paragraph */}
-          <p className="font-sans text-sm sm:text-base text-[#4a7277] max-w-2xl leading-relaxed mb-8 sm:mb-10">
+          <p className="font-sans text-xs sm:text-sm md:text-base text-[#4a7277] max-w-2xl leading-relaxed mb-4 sm:mb-6">
             Three screens and a queue for you. This is everything between them, and
             where 2,400 companies become the handful worth your time.
           </p>
@@ -361,7 +385,7 @@ export function SixSystemsSection() {
             </div>
 
             {/* 6 Bullet Items */}
-            <div className="flex flex-col space-y-3.5 sm:space-y-4">
+            <div className="flex flex-col space-y-2.5 sm:space-y-3">
               {systems.map((item, idx) => {
                 const isItemActive = activeItems[idx]
 
@@ -415,8 +439,8 @@ export function SixSystemsSection() {
                           opacity: idx === 0 ? 1 : 0,
                         }}
                       >
-                        <div className="pt-2 pb-0.5 pl-8 sm:pl-10">
-                          <p className="font-sans text-xs sm:text-sm text-[#4a7277] leading-relaxed max-w-xl mb-2">
+                        <div className="pt-1.5 pb-0.5 pl-8 sm:pl-10">
+                          <p className="font-sans text-xs sm:text-sm text-[#4a7277] leading-relaxed max-w-xl mb-1.5">
                             {item.description}
                           </p>
 

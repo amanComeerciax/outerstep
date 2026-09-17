@@ -34,16 +34,16 @@ function FeatureCard({
     >
       <div>
         <div style={{ marginBottom: "24px" }}>
-          <Icon size={40} color="var(--os-seam-teal)" strokeWidth={1.5} />
+          <Icon size={40} color="#48b5a5" strokeWidth={1.5} />
         </div>
 
         <div
           style={{
-            fontFamily: "var(--os-font-mono)",
+            fontFamily: "'IBM Plex Mono', monospace",
             fontSize: "16px",
             fontWeight: 700,
             letterSpacing: "0.1em",
-            color: "var(--os-seam-teal)",
+            color: "#48b5a5",
             marginBottom: "20px",
           }}
         >
@@ -73,7 +73,7 @@ function FeatureCard({
           marginTop: "28px",
         }}
       >
-        <CheckCircle2 size={26} color="var(--os-seam-teal)" strokeWidth={2.5} />
+        <CheckCircle2 size={26} color="#48b5a5" strokeWidth={2.5} />
         <span
           style={{
             fontSize: "18px",
@@ -131,7 +131,7 @@ export default function WhyDifferent() {
   return (
     <CircularSplitRoll
       items={whyDifferentItems}
-      background="var(--os-deep-water)"
+      background="#0a3a40"
       titleColor="#ffffff"
       radius={450}
       cardSize={400}

@@ -1,48 +1,28 @@
-"use client"
-
-import React, { useState } from "react"
+import React from "react"
+import dynamic from "next/dynamic"
 import { HeroSection } from "@/components/hero-section"
-import { TrackRecordSection } from "@/components/track-record-section"
-import HowItWorksSection from "@/components/HowItWorksSection"
-import ToolsShowcase from "@/components/ToolsShowcase"
-import { SixSystemsSection } from "@/components/six-systems-section"
-import WhyDifferent from "@/components/WhyDifferent"
-import WhoItFits from "@/components/WhoItFits"
-import CtaSection from "@/components/CtaSection"
-import Footer from "@/components/Footer"
-import BookCallModal from "@/components/BookCallModal"
+
+const TrackRecordSection = dynamic(() => import("@/components/track-record-section").then((mod) => mod.TrackRecordSection))
+const HowItWorksSection = dynamic(() => import("@/components/HowItWorksSection"))
+const ToolsShowcase = dynamic(() => import("@/components/ToolsShowcase"))
+const SixSystemsSection = dynamic(() => import("@/components/six-systems-section").then((mod) => mod.SixSystemsSection))
+const WhyDifferent = dynamic(() => import("@/components/WhyDifferent"))
+const WhoItFits = dynamic(() => import("@/components/WhoItFits"))
+const CtaSection = dynamic(() => import("@/components/CtaSection"))
+const Footer = dynamic(() => import("@/components/Footer"))
 
 export default function Home() {
-  const [modalOpen, setModalOpen] = useState(false)
-  const [selectedProduct, setSelectedProduct] = useState("")
-
-  const handleOpenBookCall = (productName?: string) => {
-    if (productName && typeof productName === "string") {
-      setSelectedProduct(productName)
-    }
-    setModalOpen(true)
-  }
-
-  const handleCloseBookCall = () => {
-    setModalOpen(false)
-  }
-
   return (
     <main className="min-h-screen bg-[#edf2f2]">
-      <HeroSection onOpenBookCall={() => handleOpenBookCall()} />
+      <HeroSection />
       <TrackRecordSection />
       <HowItWorksSection />
       <ToolsShowcase />
       <SixSystemsSection />
       <WhyDifferent />
       <WhoItFits />
-      <CtaSection onOpenBookCall={() => handleOpenBookCall()} />
-      <Footer onOpenBookCall={() => handleOpenBookCall()} />
-      <BookCallModal
-        isOpen={modalOpen}
-        onClose={handleCloseBookCall}
-        initialProduct={selectedProduct}
-      />
+      <CtaSection />
+      <Footer />
     </main>
   )
 }
