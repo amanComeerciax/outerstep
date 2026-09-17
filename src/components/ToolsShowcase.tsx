@@ -8,6 +8,11 @@ import {
   Check,
   Send,
   GitCommit,
+  Ruler,
+  Percent,
+  Calendar,
+  Code2,
+  Wallet,
 } from "lucide-react";
 
 interface ToolCard {
@@ -176,7 +181,7 @@ const TOOLS: ToolCard[] = [
     dealCompany: "Terranova Agro Ltda",
     dealValue: "USD 1,065,000.00",
     stages: ["1 Pros.", "2 Eng.", "3 Qual.", "4 Quot.", "5 Neg.", "6 Contr.", "7 Ship.", "8 Recr."],
-    activeStageIdx: 1, // 2 Eng.
+    activeStageIdx: 1,
     eventDate: "18 Aug",
     eventDescription: "Introduction unlocked, deal created, protection window opened",
     features: [
@@ -196,7 +201,8 @@ export default function ToolsShowcase() {
     const handleScroll = () => {
       if (!sectionRef.current) return;
       const rect = sectionRef.current.getBoundingClientRect();
-      if (rect.top < 150) {
+      // When scrolled down into the section (top < 200px), trigger straight layout
+      if (rect.top < 200) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
@@ -248,7 +254,10 @@ export default function ToolsShowcase() {
           Five screens, in the order you meet them.
         </h2>
 
-        {/* Cards Container */}
+        {/* Cards Container:
+            Without scrolling (!isScrolled): Tilted fan arrangement with overlapping cards (-space-x-12).
+            With scrolling (isScrolled): Straightened cards (0deg) with spaced layout (gap-4).
+        */}
         <div className="relative w-full max-w-6xl min-h-[420px] my-4 flex justify-center items-center">
           <div
             className={`flex justify-center items-end transition-all duration-700 ease-out w-full px-2 ${
@@ -260,6 +269,9 @@ export default function ToolsShowcase() {
             {TOOLS.map((tool) => {
               const isHovered = activeId === tool.id;
 
+              // Rotation & translateY logic:
+              // Unscrolled (!isScrolled): Use tilted defaultRotation (-12deg to +12deg) & defaultTranslateY
+              // Scrolled (isScrolled): Straighten to 0deg and 0px translateY
               const currentRotation = isScrolled ? 0 : tool.defaultRotation;
               const currentTranslateY = isScrolled ? 0 : tool.defaultTranslateY;
 
@@ -591,7 +603,6 @@ export default function ToolsShowcase() {
                         }`}
                       >
                         <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 font-mono text-[10.5px] space-y-2 text-slate-700 shadow-inner">
-                          {/* Deal Company & Value */}
                           <div className="flex items-center justify-between pb-1.5 border-b border-slate-200">
                             <span className="font-bold text-slate-900 text-xs">
                               {tool.dealCompany}
@@ -601,7 +612,6 @@ export default function ToolsShowcase() {
                             </span>
                           </div>
 
-                          {/* 8-stage progress timeline */}
                           <div className="pt-1">
                             <div className="grid grid-cols-4 sm:grid-cols-8 gap-1 text-[8.5px] text-slate-400 text-center mb-1">
                               {tool.stages?.map((stage, idx) => (
@@ -619,7 +629,6 @@ export default function ToolsShowcase() {
                             </div>
                           </div>
 
-                          {/* Event Timeline Item */}
                           <div className="p-2 rounded bg-white border border-slate-200 flex items-start gap-2 text-[9.5px]">
                             <span className="text-slate-400 shrink-0 font-bold">
                               {tool.eventDate}
