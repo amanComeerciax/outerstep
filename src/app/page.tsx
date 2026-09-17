@@ -6,6 +6,7 @@ import { TrackRecordSection } from "@/components/track-record-section"
 import HowItWorksSection from "@/components/HowItWorksSection"
 import ToolsShowcase from "@/components/ToolsShowcase"
 import { SixSystemsSection } from "@/components/six-systems-section"
+import WhyDifferent from "@/components/WhyDifferent"
 import WhoItFits from "@/components/WhoItFits"
 import CtaSection from "@/components/CtaSection"
 import Footer from "@/components/Footer"
@@ -33,6 +34,7 @@ export default function Home() {
       <HowItWorksSection />
       <ToolsShowcase />
       <SixSystemsSection />
+      <WhyDifferent />
       <WhoItFits />
       <CtaSection onOpenBookCall={() => handleOpenBookCall()} />
       <Footer onOpenBookCall={() => handleOpenBookCall()} />
