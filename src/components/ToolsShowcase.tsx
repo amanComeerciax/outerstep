@@ -221,7 +221,7 @@ export default function ToolsShowcase() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full min-h-screen py-12 sm:py-20 md:py-24 px-3 sm:px-6 overflow-hidden bg-[#0b3536] text-white transition-colors flex flex-col justify-center items-center"
+      className="relative w-full min-h-screen py-10 sm:py-16 md:py-24 px-3 sm:px-6 overflow-hidden bg-[#0b3536] text-white transition-colors flex flex-col justify-center items-center"
     >
       {/* Mint Halftone Dotted Background */}
       <div className="absolute inset-0 pointer-events-none opacity-30">
@@ -254,16 +254,21 @@ export default function ToolsShowcase() {
         </div>
 
         {/* Section Heading */}
-        <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-medium tracking-tight text-white max-w-3xl mb-8 sm:mb-12 leading-tight">
+        <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-medium tracking-tight text-white max-w-3xl mb-6 sm:mb-12 leading-tight">
           Five screens, in the order you meet them.
         </h2>
 
-        {/* Responsive Cards Wrapper */}
-        <div className="relative w-full min-h-[460px] sm:min-h-[440px] my-2 sm:my-4 flex justify-center items-center overflow-x-auto md:overflow-x-visible pb-8 pt-4 md:pb-0 scrollbar-none">
+        {/* Swipe Hint Indicator for Mobile */}
+        <div className="flex md:hidden items-center justify-center gap-1.5 text-[10px] font-mono text-[#2dd4bf] mb-4 bg-[#0d4546] px-3 py-1 rounded-full border border-[#2dd4bf]/30">
+          <span>← Swipe to explore cards →</span>
+        </div>
+
+        {/* Responsive Cards Wrapper with justify-start on mobile to prevent left-cropping */}
+        <div className="relative w-full min-h-[460px] sm:min-h-[440px] my-2 sm:my-4 flex items-center overflow-x-auto pb-8 pt-4 scrollbar-none snap-x snap-mandatory">
           <div
-            className={`flex items-end transition-all duration-700 ease-out px-4 md:px-2 min-w-max md:min-w-0 ${
+            className={`flex items-end transition-all duration-700 ease-out w-full justify-start md:justify-center px-6 md:px-2 min-w-max ${
               isScrolled
-                ? "gap-3 sm:gap-4 md:gap-5"
+                ? "gap-4 sm:gap-5"
                 : "-space-x-8 sm:-space-x-12 md:-space-x-16 lg:-space-x-20"
             }`}
           >
@@ -285,7 +290,7 @@ export default function ToolsShowcase() {
                       ? `translateY(-24px) rotate(0deg) scale(1.02)`
                       : `translateY(${currentTranslateY}px) rotate(${currentRotation}deg)`,
                   }}
-                  className={`relative flex-shrink-0 w-60 sm:w-68 md:w-72 lg:w-[310px] min-h-[300px] sm:min-h-[320px] rounded-2xl p-5 sm:p-6 transition-all duration-500 ease-out cursor-pointer ${
+                  className={`relative flex-shrink-0 snap-center w-60 sm:w-68 md:w-72 lg:w-[310px] min-h-[300px] sm:min-h-[320px] rounded-2xl p-5 sm:p-6 transition-all duration-500 ease-out cursor-pointer ${
                     tool.bgGradient
                   } border border-white/90 shadow-[0_12px_30px_rgba(0,0,0,0.35)] flex flex-col justify-between text-left ${
                     isHovered
