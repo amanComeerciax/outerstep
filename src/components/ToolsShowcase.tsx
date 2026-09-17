@@ -28,6 +28,17 @@ interface ToolCard {
   minOrder?: string;
   targetMarkets?: string[];
   features?: string[];
+  // Specific data for card 2 (Inbox) reveal on hover
+  inquiryStatus?: string;
+  hotInquiry?: boolean;
+  confidence?: string;
+  quoteText?: string;
+  quantity?: string;
+  incoterm?: string;
+  destination?: string;
+  timeline?: string;
+  buyerType?: string;
+  buyerVolume?: string;
 }
 
 const TOOLS: ToolCard[] = [
@@ -59,13 +70,29 @@ const TOOLS: ToolCard[] = [
     id: "inbox",
     badge: "02 INBOX",
     title: "Only real buyer replies reach you.",
-    description: "AI filters spam and matches verified buyer inquiries directly with your sales desk.",
-    icon: <Inbox className="w-6 h-6 text-white" />,
-    bgGradient: "bg-[#ecfdf5]",
-    iconBg: "bg-[#10b981] shadow-lg shadow-emerald-500/30",
+    description: "Bounces, out-of-offices and polite declines are handled before you see them. What lands is a buyer asking about your product, with quantity, incoterm and destination extracted.",
+    icon: <Inbox className="w-6 h-6 text-[#0b3536]" />,
+    bgGradient: "bg-white",
+    iconBg: "bg-[#2dd4bf] shadow-lg shadow-[#2dd4bf]/30",
     defaultRotation: -6,
     defaultTranslateY: 6,
     zIndexDefault: 15,
+    inquiryStatus: "1 AWAITING YOU",
+    hotInquiry: true,
+    confidence: "93%",
+    quoteText:
+      '"Prezados, recebemos seu contato. Temos interesse em ureia granulada 46% N para a safra. Poderiam cotar 3.000 MT CIF Santos, embarque outubro?"',
+    quantity: "3,000 MT",
+    incoterm: "CIF",
+    destination: "Santos, Brazil",
+    timeline: "October shipment",
+    buyerType: "Mid-market importer",
+    buyerVolume: "35-45 containers / month · $18M–$30M imports",
+    features: [
+      "Their own words, with a translation",
+      "Quantity, port and timeline extracted",
+      "Estimated buyer size and volume",
+    ],
   },
   {
     id: "pipeline",
@@ -204,7 +231,7 @@ export default function ToolsShowcase() {
                       {tool.description}
                     </p>
 
-                    {/* Reveal detailed product setup data ONLY when HOVERED */}
+                    {/* Reveal detailed product setup data ONLY when HOVERED for Card 1 (Setup) */}
                     {tool.id === "setup" && (
                       <div
                         className={`transition-all duration-500 ease-in-out ${
@@ -258,6 +285,87 @@ export default function ToolsShowcase() {
                                 </span>
                               ))}
                             </div>
+                          </div>
+                        </div>
+
+                        {/* Feature Bullets */}
+                        {tool.features && (
+                          <div className="mt-3 pt-2 border-t border-slate-200/60 space-y-1">
+                            {tool.features.map((feat, idx) => (
+                              <div
+                                key={idx}
+                                className="flex items-center gap-1.5 text-[11px] text-slate-600 font-sans"
+                              >
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#2dd4bf]" />
+                                <span>{feat}</span>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {/* Reveal detailed buyer inquiry data ONLY when HOVERED for Card 2 (Inbox) */}
+                    {tool.id === "inbox" && (
+                      <div
+                        className={`transition-all duration-500 ease-in-out ${
+                          isHovered
+                            ? "opacity-100 max-h-96 mt-4 pointer-events-auto"
+                            : "opacity-0 max-h-0 overflow-hidden pointer-events-none"
+                        }`}
+                      >
+                        <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 font-mono text-[11px] space-y-2.5 text-slate-700 shadow-inner">
+                          {/* Header bar */}
+                          <div className="flex items-center justify-between pb-1.5 border-b border-slate-200">
+                            <span className="text-[10px] text-rose-600 bg-rose-100 px-1.5 py-0.5 rounded font-bold uppercase">
+                              HOT INQUIRY
+                            </span>
+                            <span className="text-[10px] text-slate-400">
+                              confidence {tool.confidence}
+                            </span>
+                          </div>
+
+                          {/* Buyer message quote */}
+                          <p className="text-[10px] italic text-slate-600 font-sans leading-snug border-l-2 border-teal-500 pl-2">
+                            {tool.quoteText}
+                          </p>
+
+                          {/* Extracted Metrics Table */}
+                          <div className="grid grid-cols-2 gap-1.5 text-[9.5px] pt-1">
+                            <div>
+                              <span className="text-slate-400 block uppercase">QUANTITY</span>
+                              <span className="font-bold text-slate-900">{tool.quantity}</span>
+                            </div>
+                            <div>
+                              <span className="text-slate-400 block uppercase">INCOTERM</span>
+                              <span className="font-bold text-slate-900">{tool.incoterm}</span>
+                            </div>
+                            <div>
+                              <span className="text-slate-400 block uppercase">DESTINATION</span>
+                              <span className="font-bold text-slate-900">{tool.destination}</span>
+                            </div>
+                            <div>
+                              <span className="text-slate-400 block uppercase">TIMELINE</span>
+                              <span className="font-bold text-slate-900">{tool.timeline}</span>
+                            </div>
+                          </div>
+
+                          {/* Buyer Profile Box */}
+                          <div className="pt-2 border-t border-slate-200">
+                            <div className="font-bold text-slate-900 text-[11px]">
+                              {tool.buyerType}
+                            </div>
+                            <div className="text-[9.5px] text-slate-500 font-sans">
+                              {tool.buyerVolume}
+                            </div>
+                          </div>
+
+                          {/* Unlock Introduction button */}
+                          <div className="pt-1 flex items-center justify-between">
+                            <button className="px-3 py-1 rounded-lg bg-[#2dd4bf] hover:bg-[#14b8a6] text-[#0b3536] text-[10px] font-bold shadow-sm transition">
+                              Unlock introduction
+                            </button>
+                            <span className="text-[9.5px] text-slate-400">Not for me</span>
                           </div>
                         </div>
 
