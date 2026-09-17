@@ -89,8 +89,6 @@ export default function ToolsShowcase() {
     const handleScroll = () => {
       if (!sectionRef.current) return;
       const rect = sectionRef.current.getBoundingClientRect();
-
-      // Trigger scroll effect when user scrolls into the section (e.g. top < 150px)
       if (rect.top < 150) {
         setIsScrolled(true);
       } else {
@@ -99,22 +97,20 @@ export default function ToolsShowcase() {
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll(); // Initial check
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <section
       ref={sectionRef}
-      className={`relative w-full py-20 px-4 overflow-hidden transition-colors duration-700 ease-in-out ${
-        isScrolled ? "bg-[#fafafa] text-slate-900" : "bg-[#0b3a3f] text-white"
-      }`}
+      className="relative w-full py-20 px-4 overflow-hidden bg-[#0b3536] text-white transition-colors"
     >
-      {/* Halftone Dotted Background */}
-      <div className="absolute inset-0 pointer-events-none opacity-40">
+      {/* Mint Halftone Dotted Background tuned for Outerstep #0b3536 teal theme */}
+      <div className="absolute inset-0 pointer-events-none opacity-30">
         {/* Left Halftone Grid */}
         <div
-          className="absolute left-0 top-0 bottom-0 w-2/5 bg-[radial-gradient(#38bdf8_2px,transparent_2px)] [background-size:18px_18px]"
+          className="absolute left-0 top-0 bottom-0 w-2/5 bg-[radial-gradient(#2dd4bf_2px,transparent_2px)] [background-size:18px_18px]"
           style={{
             maskImage:
               "radial-gradient(ellipse at left, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 80%)",
@@ -124,7 +120,7 @@ export default function ToolsShowcase() {
         />
         {/* Right Halftone Grid */}
         <div
-          className="absolute right-0 top-0 bottom-0 w-2/5 bg-[radial-gradient(#38bdf8_2px,transparent_2px)] [background-size:18px_18px]"
+          className="absolute right-0 top-0 bottom-0 w-2/5 bg-[radial-gradient(#2dd4bf_2px,transparent_2px)] [background-size:18px_18px]"
           style={{
             maskImage:
               "radial-gradient(ellipse at right, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 80%)",
@@ -135,40 +131,26 @@ export default function ToolsShowcase() {
       </div>
 
       <div className="relative max-w-6xl mx-auto flex flex-col items-center text-center z-10">
-        {/* Badge Pill */}
-        <div
-          className={`inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-mono shadow-sm transition-all duration-500 cursor-pointer mb-6 ${
-            isScrolled
-              ? "bg-white border border-slate-200 text-slate-700"
-              : "bg-[#072a2e] border border-teal-500/30 text-teal-100"
-          }`}
-        >
-          <span className="text-rose-400">❤️</span>
-          <span className="font-medium">Introducing Saveku</span>
-          <span className={isScrolled ? "text-slate-400 font-sans" : "text-teal-400/70 font-sans"}>
-            ›
+        {/* Badge Pill in Outerstep Mint/Teal style */}
+        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded bg-[#0d4546] border border-[#2dd4bf]/40 text-xs font-mono shadow-sm cursor-pointer mb-6 tracking-wider">
+          <span className="w-2 h-2 rounded-full bg-[#2dd4bf] animate-pulse" />
+          <span className="text-[#5eead4] font-semibold uppercase text-[11px] tracking-widest">
+            01 TOOLS HUB
           </span>
+          <span className="text-[#2dd4bf]/70 font-sans">›</span>
         </div>
 
-        {/* Main Title (Serif Style) */}
-        <h2
-          className={`text-4xl md:text-5xl lg:text-6xl font-serif font-medium tracking-tight max-w-3xl mb-4 transition-colors duration-500 ${
-            isScrolled ? "text-[#1d2026]" : "text-white drop-shadow-sm"
-          }`}
-        >
+        {/* Main Title (Serif Style in Crisp White) */}
+        <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-medium tracking-tight text-white max-w-3xl mb-4 drop-shadow-sm">
           Answer your curiosity right away
         </h2>
 
-        {/* Subtitle */}
-        <p
-          className={`text-sm md:text-base font-mono tracking-tight max-w-2xl mb-14 transition-colors duration-500 ${
-            isScrolled ? "text-slate-500" : "text-teal-100/70"
-          }`}
-        >
+        {/* Subtitle (Soft Mint Gray) */}
+        <p className="text-sm md:text-base font-mono tracking-tight text-[#93c5fd]/70 max-w-2xl mb-14">
           Saveku is a free multi-purpose online tool hub for your daily needs.
         </p>
 
-        {/* Cards Container - Smoothly morphs on Scroll */}
+        {/* Overlapping / Straight Cards Container */}
         <div className="relative w-full max-w-6xl h-[380px] my-4 flex justify-center items-center">
           <div
             className={`flex justify-center items-end transition-all duration-700 ease-out w-full px-2 ${
@@ -180,8 +162,6 @@ export default function ToolsShowcase() {
             {TOOLS.map((tool) => {
               const isHovered = activeId === tool.id;
 
-              // Without scrolling (isScrolled === false): Keep default tilted fan layout & overlap
-              // When scrolling (isScrolled === true): Straighten to 0deg and space out cleanly
               const currentRotation = isScrolled ? 0 : tool.defaultRotation;
               const currentTranslateY = isScrolled ? 0 : tool.defaultTranslateY;
 
@@ -197,9 +177,9 @@ export default function ToolsShowcase() {
                   }}
                   className={`relative flex-shrink-0 w-48 sm:w-56 md:w-60 lg:w-64 h-[310px] sm:h-[330px] rounded-2xl p-6 transition-all duration-500 ease-out cursor-pointer ${
                     tool.bgGradient
-                  } border border-white/90 shadow-[0_12px_32px_rgba(0,0,0,0.1)] flex flex-col justify-between text-left ${
+                  } border border-white/90 shadow-[0_15px_35px_rgba(0,0,0,0.35)] flex flex-col justify-between text-left ${
                     isHovered
-                      ? "shadow-[0_22px_45px_rgba(0,0,0,0.18)] border-rose-300"
+                      ? "shadow-[0_25px_50px_rgba(0,0,0,0.5)] border-[#2dd4bf]"
                       : "hover:border-slate-300"
                   }`}
                 >
@@ -227,40 +207,24 @@ export default function ToolsShowcase() {
           </div>
         </div>
 
-        {/* Action Buttons Below Cards */}
+        {/* Action Buttons Below Cards in Outerstep Mint/Teal style */}
         <div className="flex flex-col items-center gap-3 mt-8 z-20">
           <div className="flex items-center justify-center gap-3">
             {/* View all tools button */}
-            <button
-              className={`px-5 py-2.5 rounded-xl text-xs font-mono font-medium shadow-md flex items-center gap-2 transition-all hover:scale-105 active:scale-95 ${
-                isScrolled
-                  ? "bg-[#1e2025] hover:bg-black text-white"
-                  : "bg-black hover:bg-slate-900 text-white border border-teal-800/40"
-              }`}
-            >
+            <button className="px-5 py-2.5 rounded-xl bg-[#062627] hover:bg-black text-white text-xs font-mono font-medium shadow-lg flex items-center gap-2 transition-all hover:scale-105 active:scale-95 border border-[#2dd4bf]/30">
               <span>View all tools</span>
-              <Smile className="w-4 h-4 text-white" />
+              <Smile className="w-4 h-4 text-[#5eead4]" />
             </button>
 
             {/* Follow us button */}
-            <button
-              className={`px-5 py-2.5 rounded-xl text-xs font-mono font-medium shadow-sm backdrop-blur-md flex items-center gap-2 transition-all hover:scale-105 active:scale-95 ${
-                isScrolled
-                  ? "bg-white hover:bg-slate-50 text-slate-700 border border-slate-300"
-                  : "bg-white/10 hover:bg-white/20 text-white border border-teal-300/30"
-              }`}
-            >
+            <button className="px-5 py-2.5 rounded-xl bg-[#0d4546]/80 hover:bg-[#0d4546] text-white border border-[#2dd4bf]/40 text-xs font-mono font-medium shadow-sm backdrop-blur-md flex items-center gap-2 transition-all hover:scale-105 active:scale-95">
               <span>Follow us</span>
-              <span className="font-bold text-xs">X</span>
+              <span className="font-bold text-[#5eead4] text-xs">X</span>
             </button>
           </div>
 
-          {/* Subtext info */}
-          <p
-            className={`text-[11px] font-mono tracking-tight mt-1 transition-colors duration-500 ${
-              isScrolled ? "text-slate-400" : "text-teal-200/60"
-            }`}
-          >
+          {/* Subtext info in Mint Cyan */}
+          <p className="text-[11px] font-mono text-[#5eead4]/70 tracking-tight mt-1">
             All tools are available for free. No account creation or login needed.
           </p>
         </div>
