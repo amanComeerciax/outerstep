@@ -629,25 +629,43 @@ function CardThreeVisual() {
 export default function HowItWorksSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
-  const [activeStep, setActiveStep] = useState(0); // 0, 1, 2
+  const [activeStep, setActiveStep] = useState(0);
+  // Use BOTH state (for JSX re-render) and ref (for real-time scroll reads without re-subscribing)
   const [isDesktopPinned, setIsDesktopPinned] = useState(false);
+  const isDesktopPinnedRef = useRef(false);
 
-  // Check screen size to toggle desktop/tablet pinned horizontal scroll vs mobile native swipe
+  // Check screen size — runs on mount and every resize
   useEffect(() => {
     const checkBreakpoint = () => {
       const isLarge = window.innerWidth >= 768;
       const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      setIsDesktopPinned(isLarge && !prefersReducedMotion);
+      const shouldPin = isLarge && !prefersReducedMotion;
+
+      const prev = isDesktopPinnedRef.current;
+      isDesktopPinnedRef.current = shouldPin;
+      setIsDesktopPinned(shouldPin);
+
+      // When switching TO mobile: reset any stuck transform on the track
+      if (prev && !shouldPin && trackRef.current) {
+        trackRef.current.style.transform = "translate3d(0, 0, 0)";
+      }
+      // When switching TO desktop: recalculate immediately
+      if (!prev && shouldPin) {
+        // Small rAF delay so the DOM has updated its layout
+        requestAnimationFrame(handleScroll);
+      }
     };
 
     checkBreakpoint();
-    window.addEventListener("resize", checkBreakpoint);
+    window.addEventListener("resize", checkBreakpoint, { passive: true });
     return () => window.removeEventListener("resize", checkBreakpoint);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Desktop/Tablet: Pinned vertical-scroll-to-horizontal-translation calculation
+  // Desktop/Tablet: Pinned vertical-scroll-to-horizontal-translation
   const handleScroll = useCallback(() => {
-    if (!isDesktopPinned || !sectionRef.current || !trackRef.current) return;
+    // Read from ref so this callback never becomes stale between re-renders
+    if (!isDesktopPinnedRef.current || !sectionRef.current || !trackRef.current) return;
 
     const section = sectionRef.current;
     const track = trackRef.current;
@@ -658,25 +676,26 @@ export default function HowItWorksSection() {
 
     if (scrollableDistance <= 0) return;
 
-    // Calculate progress between 0 and 1
     const scrolled = -rect.top;
     const progress = Math.min(Math.max(scrolled / scrollableDistance, 0), 1);
 
-    // Max translation distance so Card 03 is completely revealed at progress = 1
-    const maxTranslate = track.scrollWidth - window.innerWidth + (window.innerWidth >= 1200 ? 100 : 40);
+    // Max translation: how many px the track needs to move so Card 03 fully appears
+    // Add a small right-margin buffer so last card isn't clipped against the viewport edge
+    const rightBuffer = window.innerWidth >= 1200 ? 80 : 32;
+    const maxTranslate = Math.max(0, track.scrollWidth - window.innerWidth + rightBuffer);
     const currentTranslate = progress * maxTranslate;
 
     track.style.transform = `translate3d(-${currentTranslate}px, 0, 0)`;
 
-    // Update active step indicator
     if (progress < 0.33) setActiveStep(0);
     else if (progress < 0.66) setActiveStep(1);
     else setActiveStep(2);
-  }, [isDesktopPinned]);
+  }, []);
 
   useEffect(() => {
     if (!isDesktopPinned) return;
     window.addEventListener("scroll", handleScroll, { passive: true });
+    // Run immediately so initial position is correct
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isDesktopPinned, handleScroll]);
@@ -711,37 +730,17 @@ export default function HowItWorksSection() {
     }
   };
 
-  // Convert mouse wheel vertical scroll to horizontal scroll over container
-  useEffect(() => {
-    const el = trackRef.current;
-    if (!el) return;
-
-    const onWheel = (e: WheelEvent) => {
-      // On mobile or when horizontal scroll is native
-      if (!isDesktopPinned && el.scrollWidth > el.clientWidth) {
-        if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-          const maxScroll = el.scrollWidth - el.clientWidth;
-          const isAtStart = el.scrollLeft <= 2 && e.deltaY < 0;
-          const isAtEnd = el.scrollLeft >= maxScroll - 2 && e.deltaY > 0;
-
-          if (!isAtStart && !isAtEnd) {
-            e.preventDefault();
-            el.scrollLeft += e.deltaY * 1.3;
-          }
-        }
-      }
-    };
-
-    el.addEventListener("wheel", onWheel, { passive: false });
-    return () => el.removeEventListener("wheel", onWheel);
-  }, [isDesktopPinned]);
+  // NOTE: No wheel event hijacking.
+  // Desktop pinned mode drives the horizontal translate via window scroll (passive).
+  // Mobile uses native overflow-x scroll + touch gestures — no interception needed.
+  // Intercepting wheel events with passive:false was the primary cause of scroll sticking.
 
   return (
     <section
       ref={sectionRef}
       id="how-it-works"
       aria-label="How It Works"
-      className={`w-full bg-[#F2F4F2] relative ${
+      className={`w-full bg-[#F2F4F2] relative contain-layout ${
         isDesktopPinned ? "h-[300vh]" : "py-16 sm:py-20"
       }`}
     >

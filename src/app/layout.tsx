@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import "./globals.css"
 import { AgentationWrapper } from "@/components/agentation-wrapper"
 import { ModalProvider } from "@/components/ModalProvider"
+import { SmoothScrollProvider } from "@/components/SmoothScrollProvider"
 
 export const metadata: Metadata = {
   title: "Outerstep — You bring the product. We bring the buyers.",
@@ -15,9 +16,10 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en">
       <body className="min-h-screen bg-[#edf2f2] text-[#0a3a40] antialiased">
         <ModalProvider>
+          <SmoothScrollProvider />
           {children}
           <AgentationWrapper />
         </ModalProvider>
@@ -25,3 +27,4 @@ export default function RootLayout({
     </html>
   )
 }
+

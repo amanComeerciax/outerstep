@@ -13,10 +13,10 @@ export default function WhoItFits() {
     gsap.registerPlugin(ScrollTrigger);
     
     const ctx = gsap.context(() => {
-      // Header Animation
-      gsap.from(".reveal-header", {
+      // Header Animation — scoped to containerRef so it doesn't bleed
+      gsap.from(".who-reveal-header", {
         scrollTrigger: {
-          trigger: ".reveal-header",
+          trigger: ".who-reveal-header",
           start: "top 85%",
         },
         y: 40,
@@ -30,20 +30,18 @@ export default function WhoItFits() {
       const cards = gsap.utils.toArray(".stacked-card") as Element[];
       
       cards.forEach((card: any, index) => {
-        // We don't animate the last card pushing back
         if (index === cards.length - 1) return;
         
-        // As the NEXT wrapper comes up, push THIS card back and fade it completely out
         gsap.to(card, {
           scale: 0.9,
-          opacity: 0, // Fade completely to 0 to prevent any bleed-through bugs
-          y: -30, // push it slightly up
+          opacity: 0,
+          y: -30,
           transformOrigin: "top center",
           ease: "none",
           scrollTrigger: {
-            trigger: wrappers[index + 1], // The next wrapper triggers it
-            start: "top 85%", // Start fading when next card enters
-            end: "top 20%",   // Finish fading when next card is near top
+            trigger: wrappers[index + 1],
+            start: "top 85%",
+            end: "top 20%",
             scrub: true,
           }
         });
@@ -51,7 +49,16 @@ export default function WhoItFits() {
 
     }, containerRef);
 
-    return () => ctx.revert();
+    // Refresh on resize for responsiveness
+    const handleResize = () => {
+      ScrollTrigger.refresh(true);
+    };
+    window.addEventListener("resize", handleResize, { passive: true });
+
+    return () => {
+      ctx.revert();
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   return (
@@ -59,17 +66,17 @@ export default function WhoItFits() {
       ref={containerRef}
       id="fit"
       style={{
-        padding: "120px 0 160px 0",
+        padding: "clamp(60px, 10vw, 120px) 0 clamp(80px, 15vw, 160px) 0",
         background: "var(--os-paper)",
         position: "relative",
       }}
     >
-      <div className="container mx-auto" style={{ maxWidth: "1000px", padding: "0 24px" }}>
+      <div className="container mx-auto" style={{ maxWidth: "1000px", padding: "0 clamp(16px, 4vw, 24px)" }}>
         
         {/* Header Section */}
         <div style={{ marginBottom: "100px", maxWidth: "800px", margin: "0 auto 100px auto", textAlign: "center" }}>
           <h2
-            className="reveal-header"
+            className="who-reveal-header"
             style={{
               fontFamily: "var(--os-font-sans)",
               fontSize: "clamp(36px, 5vw, 56px)",
@@ -84,32 +91,32 @@ export default function WhoItFits() {
         </div>
 
         {/* Stacked Cards Section */}
-        <div style={{ position: "relative", display: "flex", flexDirection: "column", gap: "24px" }}>
+        <div style={{ position: "relative", display: "flex", flexDirection: "column", gap: "clamp(16px, 3vw, 24px)" }}>
           
           {/* Card 1 */}
-          <div className="sticky-wrapper" style={{ position: "sticky", top: "120px", zIndex: 1 }}>
+          <div className="sticky-wrapper" style={{ position: "sticky", top: "calc(var(--header-height, 80px) + clamp(20px, 4vw, 40px))", zIndex: 1 }}>
             <div 
               className="stacked-card" 
               style={{ 
                 background: "#ffffff",
-                padding: "60px",
-                borderRadius: "32px",
+                padding: "clamp(24px, 5vw, 60px)",
+                borderRadius: "clamp(20px, 4vw, 32px)",
                 boxShadow: "0 20px 40px rgba(0,0,0,0.04)",
                 border: "1px solid rgba(0,0,0,0.05)",
                 display: "flex",
                 flexDirection: "column",
-                gap: "24px",
+                gap: "clamp(16px, 3vw, 24px)",
                 willChange: "transform, opacity",
               }}
             >
-              <div style={{ fontFamily: "var(--os-font-mono)", fontSize: "80px", fontWeight: 700, color: "var(--os-deep-water)", lineHeight: 0.8 }}>
+              <div style={{ fontFamily: "var(--os-font-mono)", fontSize: "clamp(48px, 8vw, 80px)", fontWeight: 700, color: "var(--os-deep-water)", lineHeight: 0.8 }}>
                 01
               </div>
               <div>
-                <h3 style={{ fontSize: "32px", fontWeight: 500, color: "var(--os-deep-water)", marginBottom: "16px", letterSpacing: "-0.02em" }}>
+                <h3 style={{ fontSize: "clamp(24px, 4vw, 32px)", fontWeight: 500, color: "var(--os-deep-water)", marginBottom: "clamp(12px, 2vw, 16px)", letterSpacing: "-0.02em" }}>
                   You sell a specifiable product
                 </h3>
-                <p style={{ fontSize: "20px", color: "var(--os-ink-secondary)", margin: 0, lineHeight: 1.6 }}>
+                <p style={{ fontSize: "clamp(16px, 2.5vw, 20px)", color: "var(--os-ink-secondary)", margin: 0, lineHeight: 1.6 }}>
                   A grade, a spec sheet, an HS code. Something a buyer can price without a meeting first.
                 </p>
               </div>
@@ -117,29 +124,29 @@ export default function WhoItFits() {
           </div>
 
           {/* Card 2 */}
-          <div className="sticky-wrapper" style={{ position: "sticky", top: "140px", zIndex: 2 }}>
+          <div className="sticky-wrapper" style={{ position: "sticky", top: "calc(var(--header-height, 80px) + clamp(30px, 6vw, 60px))", zIndex: 2 }}>
             <div 
               className="stacked-card" 
               style={{ 
                 background: "#ffffff",
-                padding: "60px",
-                borderRadius: "32px",
+                padding: "clamp(24px, 5vw, 60px)",
+                borderRadius: "clamp(20px, 4vw, 32px)",
                 boxShadow: "0 -20px 40px rgba(0,0,0,0.08)",
                 border: "1px solid rgba(0,0,0,0.05)",
                 display: "flex",
                 flexDirection: "column",
-                gap: "24px",
+                gap: "clamp(16px, 3vw, 24px)",
                 willChange: "transform, opacity",
               }}
             >
-              <div style={{ fontFamily: "var(--os-font-mono)", fontSize: "80px", fontWeight: 700, color: "var(--os-deep-water)", lineHeight: 0.8 }}>
+              <div style={{ fontFamily: "var(--os-font-mono)", fontSize: "clamp(48px, 8vw, 80px)", fontWeight: 700, color: "var(--os-deep-water)", lineHeight: 0.8 }}>
                 02
               </div>
               <div>
-                <h3 style={{ fontSize: "32px", fontWeight: 500, color: "var(--os-deep-water)", marginBottom: "16px", letterSpacing: "-0.02em" }}>
+                <h3 style={{ fontSize: "clamp(24px, 4vw, 32px)", fontWeight: 500, color: "var(--os-deep-water)", marginBottom: "clamp(12px, 2vw, 16px)", letterSpacing: "-0.02em" }}>
                   Your buyers already import it
                 </h3>
-                <p style={{ fontSize: "20px", color: "var(--os-ink-secondary)", margin: 0, lineHeight: 1.6 }}>
+                <p style={{ fontSize: "clamp(16px, 2.5vw, 20px)", color: "var(--os-ink-secondary)", margin: 0, lineHeight: 1.6 }}>
                   They exist, they buy this today, and they appear in customs and trade records. We find them there.
                 </p>
               </div>
@@ -147,29 +154,29 @@ export default function WhoItFits() {
           </div>
 
           {/* Card 3 */}
-          <div className="sticky-wrapper" style={{ position: "sticky", top: "160px", zIndex: 3 }}>
+          <div className="sticky-wrapper" style={{ position: "sticky", top: "calc(var(--header-height, 80px) + clamp(40px, 8vw, 80px))", zIndex: 3 }}>
             <div 
               className="stacked-card" 
               style={{ 
                 background: "#ffffff",
-                padding: "60px",
-                borderRadius: "32px",
+                padding: "clamp(24px, 5vw, 60px)",
+                borderRadius: "clamp(20px, 4vw, 32px)",
                 boxShadow: "0 -20px 40px rgba(0,0,0,0.08)",
                 border: "1px solid rgba(0,0,0,0.05)",
                 display: "flex",
                 flexDirection: "column",
-                gap: "24px",
+                gap: "clamp(16px, 3vw, 24px)",
                 willChange: "transform, opacity",
               }}
             >
-              <div style={{ fontFamily: "var(--os-font-mono)", fontSize: "80px", fontWeight: 700, color: "var(--os-deep-water)", lineHeight: 0.8 }}>
+              <div style={{ fontFamily: "var(--os-font-mono)", fontSize: "clamp(48px, 8vw, 80px)", fontWeight: 700, color: "var(--os-deep-water)", lineHeight: 0.8 }}>
                 03
               </div>
               <div>
-                <h3 style={{ fontSize: "32px", fontWeight: 500, color: "var(--os-deep-water)", marginBottom: "16px", letterSpacing: "-0.02em" }}>
+                <h3 style={{ fontSize: "clamp(24px, 4vw, 32px)", fontWeight: 500, color: "var(--os-deep-water)", marginBottom: "clamp(12px, 2vw, 16px)", letterSpacing: "-0.02em" }}>
                   You have capacity you are not filling
                 </h3>
-                <p style={{ fontSize: "20px", color: "var(--os-ink-secondary)", margin: 0, lineHeight: 1.6 }}>
+                <p style={{ fontSize: "clamp(16px, 2.5vw, 20px)", color: "var(--os-ink-secondary)", margin: 0, lineHeight: 1.6 }}>
                   Real tonnage, real certifications, and room to take an order that lands next quarter.
                 </p>
               </div>

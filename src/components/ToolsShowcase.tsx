@@ -190,24 +190,33 @@ const TOOLS: ToolCard[] = [
 export default function ToolsShowcase() {
   const [activeId, setActiveId] = useState<string>("");
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile, { passive: true });
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  useEffect(() => {
+    const evaluate = () => {
       if (!sectionRef.current) return;
       const rect = sectionRef.current.getBoundingClientRect();
-
-      // Trigger spread when section is well within viewport (e.g. top is at 60% of window height)
-      if (rect.top <= window.innerHeight * 0.6 && rect.bottom > 200) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
+      // Trigger spread when the section top is within 75% of the viewport height
+      // This gives the animation enough time regardless of screen height
+      const inView = rect.top <= window.innerHeight * 0.75 && rect.bottom > 100;
+      setIsScrolled(inView);
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", evaluate, { passive: true });
+    window.addEventListener("resize", evaluate, { passive: true });
+    evaluate();
+    return () => {
+      window.removeEventListener("scroll", evaluate);
+      window.removeEventListener("resize", evaluate);
+    };
   }, []);
 
   // Toggle card active state for mobile tap
@@ -217,6 +226,7 @@ export default function ToolsShowcase() {
 
   return (
     <section
+      id="platform"
       ref={sectionRef}
       className="relative w-full min-h-screen py-10 sm:py-16 md:py-24 px-3 sm:px-6 overflow-hidden bg-[#0b3536] text-white transition-colors flex flex-col justify-center items-center"
     >
@@ -240,23 +250,36 @@ export default function ToolsShowcase() {
         </div>
 
         {/* Cards Container:
-            - On Mobile (< md): justify-start + px-6 so 1st & 2nd cards start at left boundary and can be swiped.
-            - On Laptop (>= md): justify-center + px-0 so all 5 cards remain perfectly centered on laptop screen.
+            - Mobile (<md): native horizontal snap scroll, cards always spread, no stacking
+            - Desktop (>=md): cards stack when off-screen and spread on scroll-in
         */}
-        <div className="relative w-full min-h-[460px] sm:min-h-[440px] my-2 sm:my-4 flex items-center justify-start md:justify-center overflow-x-auto pb-8 pt-4 scrollbar-none snap-x snap-mandatory">
+        <div
+          className={`relative w-full ${
+            isMobile
+              ? "min-h-[380px]"
+              : "min-h-[460px] sm:min-h-[440px]"
+          } my-2 sm:my-4 flex items-center ${
+            isMobile ? "justify-start overflow-x-auto" : "justify-center overflow-visible"
+          } pb-8 pt-4 scrollbar-none ${
+            isMobile ? "snap-x snap-mandatory" : ""
+          }`}
+        >
           <div
-            className={`flex items-end transition-all duration-700 ease-out justify-start md:justify-center px-6 md:px-0 min-w-max ${
-              isScrolled
-                ? "gap-2 sm:gap-3 lg:gap-3.5 xl:gap-4"
-                : "gap-2 sm:gap-3 md:-space-x-16 lg:-space-x-20"
+            className={`flex items-end ${
+              isMobile
+                ? "gap-3 px-6 min-w-max" // mobile: always spread, swipeable
+                : isScrolled
+                ? "gap-2 sm:gap-3 lg:gap-3.5 xl:gap-4 transition-all duration-700 ease-out justify-center" // desktop spread
+                : "md:-space-x-16 lg:-space-x-20 transition-all duration-700 ease-out justify-center" // desktop stacked
             }`}
           >
             {TOOLS.map((tool) => {
               const isHovered = activeId === tool.id;
-              const showKeyPoints = isHovered && isScrolled;
+              const showKeyPoints = isHovered && (isScrolled || isMobile);
 
-              const currentRotation = isScrolled ? 0 : tool.defaultRotation;
-              const currentTranslateY = isScrolled ? 0 : tool.defaultTranslateY;
+              // On mobile or when scrolled-in: cards are always flat/spread
+              const currentRotation = (isScrolled || isMobile) ? 0 : tool.defaultRotation;
+              const currentTranslateY = (isScrolled || isMobile) ? 0 : tool.defaultTranslateY;
 
               return (
                 <div
@@ -267,12 +290,14 @@ export default function ToolsShowcase() {
                   style={{
                     zIndex: isHovered ? 40 : tool.zIndexDefault,
                     transform: isHovered
-                      ? isScrolled
+                      ? (isScrolled || isMobile)
                         ? `translateY(-24px) rotate(0deg) scale(1.02)`
                         : `translateY(${currentTranslateY - 10}px) rotate(${currentRotation}deg)`
                       : `translateY(${currentTranslateY}px) rotate(${currentRotation}deg)`,
                   }}
-                  className={`relative flex-shrink-0 snap-center w-[230px] sm:w-[240px] md:w-[220px] lg:w-[230px] xl:w-[245px] min-h-[300px] sm:min-h-[320px] rounded-2xl p-4 sm:p-5 transition-all duration-500 ease-out cursor-pointer ${
+                  className={`relative flex-shrink-0 ${
+                  isMobile ? "snap-center" : ""
+                } w-[220px] sm:w-[235px] md:w-[220px] lg:w-[230px] xl:w-[245px] min-h-[300px] sm:min-h-[320px] rounded-2xl p-4 sm:p-5 transition-all duration-500 ease-out cursor-pointer ${
                     tool.bgGradient
                   } border border-white/90 shadow-[0_12px_30px_rgba(0,0,0,0.35)] flex flex-col justify-between text-left ${
                     isHovered

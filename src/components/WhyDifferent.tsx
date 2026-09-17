@@ -52,7 +52,7 @@ function FeatureCard({
 
         <p
           style={{
-            fontSize: "24px",
+            fontSize: "clamp(15px, 2vw, 24px)",
             lineHeight: 1.4,
             color: "rgba(255, 255, 255, 0.95)",
             margin: 0,
@@ -76,7 +76,7 @@ function FeatureCard({
         <CheckCircle2 size={26} color="#48b5a5" strokeWidth={2.5} />
         <span
           style={{
-            fontSize: "18px",
+            fontSize: "clamp(13px, 1.5vw, 18px)",
             fontWeight: 700,
             color: "#ffffff",
           }}

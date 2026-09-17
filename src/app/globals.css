@@ -17,6 +17,12 @@
     --border: rgba(42, 99, 105, 0.2);
   }
 
+  html {
+    /* Do NOT set scroll-behavior:smooth here — it fights GSAP scrub animations.
+       JS-driven smooth scrolling is handled in SmoothScrollProvider. */
+    overflow-anchor: none;
+  }
+
   * {
     border-color: var(--border);
   }
@@ -93,6 +99,11 @@
   }
 }
 
+/* CSS containment: isolates layout/paint so browser doesn't repaint siblings */
+@utility contain-layout {
+  contain: layout;
+}
+
 /* Subtle grid pattern for How It Works Card 02 */
 .bg-teal-grid {
   background-image: 
@@ -131,3 +142,54 @@
   animation: signalFlow 2.4s linear infinite;
 }
 
+/* =====================================================================
+   SCROLL REVEAL SYSTEM
+   Add data-reveal to any element for a smooth fade-in-up animation.
+   Add data-reveal-delay="0.15" (seconds) to stagger items.
+   Variants: data-reveal="up" (default) | "fade" | "slide-left" | "slide-right"
+   ===================================================================== */
+
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+[data-reveal="fade"] {
+  transform: none;
+  transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-reveal="slide-left"] {
+  transform: translateX(-28px);
+  transition:
+    opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-reveal="slide-right"] {
+  transform: translateX(28px);
+  transition:
+    opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-reveal].revealed {
+  opacity: 1;
+  transform: none;
+}
+
+/* Respect reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}

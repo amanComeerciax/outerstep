@@ -140,7 +140,7 @@ export function TrackRecordSection() {
 
       <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-10 lg:px-12">
         {/* Top Tagline: — TRACK RECORD — */}
-        <div className="flex items-center justify-center gap-4 mb-6">
+        <div data-reveal="fade" className="flex items-center justify-center gap-4 mb-6">
           <div className="w-8 sm:w-12 h-[1px] bg-[#48b5a5]/50" />
           <span className="font-mono-tech text-[11px] sm:text-xs tracking-[0.25em] text-[#80bfc4] uppercase">
             TRACK RECORD
@@ -149,14 +149,14 @@ export function TrackRecordSection() {
         </div>
 
         {/* Section Heading: The System, Already Proven. */}
-        <h2 className="text-center font-headline text-3xl sm:text-4xl md:text-5xl lg:text-[54px] tracking-tight leading-[1.15] max-w-3xl mx-auto">
+        <h2 data-reveal className="text-center font-headline text-3xl sm:text-4xl md:text-5xl lg:text-[54px] tracking-tight leading-[1.15] max-w-3xl mx-auto">
           <span className="font-normal text-white">The System, </span>
           <span className="font-bold text-white">Already </span>
           <span className="font-bold text-[#48b5a5]">Proven.</span>
         </h2>
 
         {/* Subtitle description */}
-        <p className="text-center text-sm sm:text-base md:text-[16px] text-[#c2dfdf]/85 max-w-2xl mx-auto mt-5 leading-relaxed font-sans">
+        <p data-reveal data-reveal-delay="0.1" className="text-center text-sm sm:text-base md:text-[16px] text-[#c2dfdf]/85 max-w-2xl mx-auto mt-5 leading-relaxed font-sans">
           We ran this exact sequence for an Egyptian fertiliser and industrial chemicals exporter. Sourcing, outreach, replies read and qualified, deals closed. Same steps, now running continuously.
         </p>
 

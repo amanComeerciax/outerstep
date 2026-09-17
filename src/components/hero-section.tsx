@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { ArrowRight, Menu, X } from "lucide-react"
 import { Globe, Marker, Arc } from "@/components/ui/cobe-globe"
 import { useModal } from "@/components/ModalProvider"
@@ -34,7 +34,14 @@ const arcs: Arc[] = [
 
 export function HeroSection() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
   const { openModal } = useModal()
+
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 20)
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
 
   return (
     <div className="relative min-h-screen w-full bg-[#edf2f2] text-[#0a3a40] overflow-hidden flex flex-col justify-between selection:bg-[#2a6369]/20 selection:text-[#0a3a40]">
@@ -42,7 +49,7 @@ export function HeroSection() {
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(42,99,105,0.06),transparent_65%)]" />
 
       {/* TOP NAVIGATION BAR */}
-      <header className="relative z-50 w-full px-6 sm:px-10 lg:px-16 pt-6 pb-4">
+      <header className={`fixed top-0 left-0 right-0 z-[100] w-full px-6 sm:px-10 lg:px-16 transition-all duration-300 ${isScrolled ? "pt-4 pb-4 bg-[#edf2f2]/95 backdrop-blur-md shadow-sm border-b border-[#2a6369]/10" : "pt-6 pb-4 bg-transparent"}`}>
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           {/* Brand Logo */}
           <a
@@ -58,14 +65,19 @@ export function HeroSection() {
 
           {/* Desktop Navigation Links */}
           <nav className="hidden md:flex items-center gap-8 lg:gap-10">
-            {["How It Works", "Industries", "Success Stories", "About"].map(
+            {[
+              { name: "How it Works", id: "how-it-works" },
+              { name: "The Platform", id: "platform" },
+              { name: "Track Record", id: "track-record" },
+              { name: "Who it Fits", id: "fit" }
+            ].map(
               (item) => (
                 <a
-                  key={item}
-                  href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
+                  key={item.id}
+                  href={`#${item.id}`}
                   className="font-sans-clean text-sm font-medium text-[#2a6369] hover:text-[#0a3a40] transition-colors duration-200"
                 >
-                  {item}
+                  {item.name}
                 </a>
               ),
             )}
@@ -97,15 +109,20 @@ export function HeroSection() {
         {/* Mobile Dropdown Menu */}
         {mobileMenuOpen && (
           <div className="md:hidden absolute top-full left-0 w-full bg-[#edf2f2]/95 backdrop-blur-md border-b border-[#2a6369]/20 px-6 py-6 shadow-xl flex flex-col gap-4 z-50">
-            {["How It Works", "Industries", "Success Stories", "About"].map(
+            {[
+              { name: "How it Works", id: "how-it-works" },
+              { name: "The Platform", id: "platform" },
+              { name: "Track Record", id: "track-record" },
+              { name: "Who it Fits", id: "fit" }
+            ].map(
               (item) => (
                 <a
-                  key={item}
-                  href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
+                  key={item.id}
+                  href={`#${item.id}`}
                   onClick={() => setMobileMenuOpen(false)}
                   className="font-sans-clean text-base font-medium text-[#0a3a40] py-2 border-b border-[#2a6369]/10"
                 >
-                  {item}
+                  {item.name}
                 </a>
               ),
             )}
@@ -124,7 +141,7 @@ export function HeroSection() {
       </header>
 
       {/* HERO MAIN BODY */}
-      <main className="relative z-20 flex-1 flex flex-col items-center justify-start text-center px-4 sm:px-6 pt-6 sm:pt-10 md:pt-12">
+      <main className="relative z-20 flex-1 flex flex-col items-center justify-start text-center px-4 sm:px-6 pt-32 sm:pt-40 md:pt-44">
         {/* Flanking Editorial Labels (Desktop) */}
         <div className="hidden xl:block absolute left-8 lg:left-14 top-24 text-left pointer-events-none select-none">
           <div className="font-mono-tech text-[10px] sm:text-[11px] font-medium tracking-[0.22em] text-[#2a6369]/75 uppercase space-y-1">
@@ -191,7 +208,7 @@ export function HeroSection() {
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-full bg-[radial-gradient(ellipse_at_50%_120%,rgba(42,99,105,0.15),transparent_70%)]" />
 
         {/* Unzoomed Globe Sphere with bottom half clipped by overflow-hidden */}
-        <div className="absolute left-1/2 -translate-x-1/2 top-4 sm:top-2 md:top-0 w-[860px] sm:w-[1100px] md:w-[1300px] lg:w-[1450px]">
+        <div className="absolute left-1/2 -translate-x-1/2 top-4 sm:top-2 md:top-0 w-[860px] max-w-[250vw] sm:w-[1100px] md:w-[1300px] lg:w-[1450px]">
           <Globe
             className="w-full"
             markers={markers}

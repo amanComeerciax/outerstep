@@ -8,12 +8,7 @@ export default function CtaSection() {
   return (
     <div style={{ background: "#ffffff", paddingBottom: "80px" }}>
       <section 
-        style={{
-          position: "relative",
-          padding: "120px 24px",
-          overflow: "hidden",
-          backgroundColor: "#000000",
-        }}
+        className="relative px-6 py-20 sm:py-24 md:py-32 overflow-hidden bg-black"
       >
         {/* Background Image */}
         <div 
@@ -44,15 +39,9 @@ export default function CtaSection() {
 
         <div style={{ position: "relative", zIndex: 10, textAlign: "center", maxWidth: "1000px", margin: "0 auto" }}>
           <h2 
-            className="font-headline"
+            className="font-headline text-white max-w-[800px] mx-auto mb-8 sm:mb-10 font-bold tracking-tight leading-[1.1]"
             style={{ 
-              fontSize: "clamp(42px, 6vw, 76px)", 
-              fontWeight: 700, 
-              letterSpacing: "-0.03em", 
-              lineHeight: 1.1, 
-              margin: "0 auto 36px auto",
-              color: "#ffffff",
-              maxWidth: "800px",
+              fontSize: "clamp(32px, 5.5vw, 76px)", 
             }}
           >
             Let's find your buyers.

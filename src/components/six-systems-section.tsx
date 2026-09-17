@@ -335,7 +335,7 @@ export function SixSystemsSection() {
       ref={sectionRef}
       id="underneath-systems"
       suppressHydrationWarning
-      className="relative w-full bg-[#edf2f2]"
+      className="relative w-full bg-[#edf2f2] contain-layout"
       style={{ height: "300vh" }}
     >
       {/* 
