@@ -31,7 +31,11 @@ const arcs: Arc[] = [
   },
 ]
 
-export function HeroSection() {
+interface HeroSectionProps {
+  onOpenBookCall?: () => void;
+}
+
+export function HeroSection({ onOpenBookCall }: HeroSectionProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
@@ -73,6 +77,7 @@ export function HeroSection() {
           <div className="hidden md:flex items-center">
             <a
               href="#book"
+              onClick={(e) => { e.preventDefault(); onOpenBookCall?.(); }}
               className="group font-sans-clean text-sm font-semibold px-5 py-2.5 rounded-full bg-[#0a3a40] text-white hover:bg-[#072a2e] transition-all duration-200 shadow-sm hover:shadow flex items-center gap-2"
             >
               <span>Book a Call</span>
@@ -109,7 +114,7 @@ export function HeroSection() {
             )}
             <a
               href="#book"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={(e) => { e.preventDefault(); setMobileMenuOpen(false); onOpenBookCall?.(); }}
               className="font-sans-clean text-sm font-semibold px-5 py-3 rounded-full bg-[#0a3a40] text-white hover:bg-[#072a2e] text-center flex items-center justify-center gap-2 mt-2"
             >
               <span>Book a Call</span>
@@ -164,6 +169,7 @@ export function HeroSection() {
             {/* Primary CTA */}
             <a
               href="#book-call"
+              onClick={(e) => { e.preventDefault(); onOpenBookCall?.(); }}
               className="group font-sans-clean text-sm sm:text-base font-semibold px-8 py-3.5 rounded-full bg-[#0a3a40] text-white hover:bg-[#06262a] transition-all duration-200 shadow-md hover:shadow-lg flex items-center gap-2.5 active:scale-[0.98]"
             >
               <span>Book a call</span>
