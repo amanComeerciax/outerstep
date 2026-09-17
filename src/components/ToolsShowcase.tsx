@@ -7,6 +7,7 @@ import {
   FileCheck,
   Check,
   Send,
+  GitCommit,
 } from "lucide-react";
 
 interface ToolCard {
@@ -51,6 +52,13 @@ interface ToolCard {
   replyParagraph2?: string;
   missingTermPlaceholder?: string;
   warningNote?: string;
+  // Card 5 (Deal Room)
+  dealCompany?: string;
+  dealValue?: string;
+  stages?: string[];
+  activeStageIdx?: number;
+  eventDate?: string;
+  eventDescription?: string;
 }
 
 const TOOLS: ToolCard[] = [
@@ -154,6 +162,29 @@ const TOOLS: ToolCard[] = [
       "Nothing auto-sent, ever",
     ],
   },
+  {
+    id: "dealroom",
+    badge: "05 DEAL ROOM",
+    title: "One timeline, from first reply to bill of lading.",
+    description: "Every message, quote, note, document and stage change in a single scroll. Why a deal sits where it does should never take more than one screen to answer.",
+    icon: <GitCommit className="w-6 h-6 text-[#0b3536]" />,
+    bgGradient: "bg-white",
+    iconBg: "bg-[#2dd4bf] shadow-lg shadow-[#2dd4bf]/30",
+    defaultRotation: 12,
+    defaultTranslateY: 18,
+    zIndexDefault: 10,
+    dealCompany: "Terranova Agro Ltda",
+    dealValue: "USD 1,065,000.00",
+    stages: ["1 Pros.", "2 Eng.", "3 Qual.", "4 Quot.", "5 Neg.", "6 Contr.", "7 Ship.", "8 Recr."],
+    activeStageIdx: 1, // 2 Eng.
+    eventDate: "18 Aug",
+    eventDescription: "Introduction unlocked, deal created, protection window opened",
+    features: [
+      "Eight stages, forward and back",
+      "Documents typed and attributed",
+      "Reply without leaving the deal",
+    ],
+  },
 ];
 
 export default function ToolsShowcase() {
@@ -214,7 +245,7 @@ export default function ToolsShowcase() {
 
         {/* Section Heading */}
         <h2 className="text-3xl md:text-5xl font-serif font-medium tracking-tight text-white max-w-3xl mb-12">
-          Four screens, in the order you meet them.
+          Five screens, in the order you meet them.
         </h2>
 
         {/* Cards Container */}
@@ -222,7 +253,7 @@ export default function ToolsShowcase() {
           <div
             className={`flex justify-center items-end transition-all duration-700 ease-out w-full px-2 ${
               isScrolled
-                ? "gap-4 sm:gap-5"
+                ? "gap-3 sm:gap-4 md:gap-5"
                 : "-space-x-10 sm:-space-x-14 md:-space-x-16 lg:-space-x-20"
             }`}
           >
@@ -243,7 +274,7 @@ export default function ToolsShowcase() {
                       ? `translateY(-32px) rotate(0deg) scale(1.03)`
                       : `translateY(${currentTranslateY}px) rotate(${currentRotation}deg)`,
                   }}
-                  className={`relative flex-shrink-0 w-64 sm:w-72 md:w-80 lg:w-[340px] min-h-[310px] rounded-2xl p-6 transition-all duration-500 ease-out cursor-pointer ${
+                  className={`relative flex-shrink-0 w-60 sm:w-68 md:w-72 lg:w-[320px] min-h-[310px] rounded-2xl p-6 transition-all duration-500 ease-out cursor-pointer ${
                     tool.bgGradient
                   } border border-white/90 shadow-[0_15px_35px_rgba(0,0,0,0.35)] flex flex-col justify-between text-left ${
                     isHovered
@@ -503,7 +534,6 @@ export default function ToolsShowcase() {
                             </span>
                           </div>
 
-                          {/* Email body draft */}
                           <div className="p-2.5 rounded bg-white border border-slate-200 font-sans text-[10px] text-slate-700 space-y-1.5 leading-relaxed">
                             <p className="font-semibold text-slate-900">{tool.recipientName}</p>
                             <p>{tool.replyParagraph1}</p>
@@ -516,13 +546,11 @@ export default function ToolsShowcase() {
                             </p>
                           </div>
 
-                          {/* Warning text */}
                           <div className="text-[9px] text-amber-700 flex items-center gap-1">
                             <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
                             <span>{tool.warningNote}</span>
                           </div>
 
-                          {/* Footer action button */}
                           <div className="pt-1 flex items-center justify-between">
                             <button
                               disabled
@@ -532,6 +560,72 @@ export default function ToolsShowcase() {
                             </button>
                             <span className="text-[8.5px] text-slate-400 uppercase font-mono tracking-tighter">
                               NEVER SENT WITHOUT YOUR APPROVAL
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Feature Bullets */}
+                        {tool.features && (
+                          <div className="mt-3 pt-2 border-t border-slate-200/60 space-y-1">
+                            {tool.features.map((feat, idx) => (
+                              <div
+                                key={idx}
+                                className="flex items-center gap-1.5 text-[11px] text-slate-600 font-sans"
+                              >
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#2dd4bf]" />
+                                <span>{feat}</span>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {/* Reveal detailed deal timeline ONLY when HOVERED for Card 5 (Deal Room) */}
+                    {tool.id === "dealroom" && (
+                      <div
+                        className={`transition-all duration-500 ease-in-out ${
+                          isHovered
+                            ? "opacity-100 max-h-96 mt-4 pointer-events-auto"
+                            : "opacity-0 max-h-0 overflow-hidden pointer-events-none"
+                        }`}
+                      >
+                        <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 font-mono text-[10.5px] space-y-2 text-slate-700 shadow-inner">
+                          {/* Deal Company & Value */}
+                          <div className="flex items-center justify-between pb-1.5 border-b border-slate-200">
+                            <span className="font-bold text-slate-900 text-xs">
+                              {tool.dealCompany}
+                            </span>
+                            <span className="text-[10px] font-bold text-slate-900">
+                              {tool.dealValue}
+                            </span>
+                          </div>
+
+                          {/* 8-stage progress timeline */}
+                          <div className="pt-1">
+                            <div className="grid grid-cols-4 sm:grid-cols-8 gap-1 text-[8.5px] text-slate-400 text-center mb-1">
+                              {tool.stages?.map((stage, idx) => (
+                                <span
+                                  key={idx}
+                                  className={
+                                    idx === tool.activeStageIdx
+                                      ? "font-bold text-[#0b3536] border-b-2 border-[#2dd4bf] pb-0.5"
+                                      : ""
+                                  }
+                                >
+                                  {stage}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* Event Timeline Item */}
+                          <div className="p-2 rounded bg-white border border-slate-200 flex items-start gap-2 text-[9.5px]">
+                            <span className="text-slate-400 shrink-0 font-bold">
+                              {tool.eventDate}
+                            </span>
+                            <span className="text-slate-700 leading-snug">
+                              {tool.eventDescription}
                             </span>
                           </div>
                         </div>
