@@ -67,7 +67,7 @@ const TOOLS: ToolCard[] = [
     badge: "01 SETUP",
     title: "Describe what you sell, once.",
     description: "Grades, capacity, minimum order, certifications & loading ports. Precision decides how close buyers are.",
-    icon: <Sliders className="w-6 h-6 text-[#0b3536]" />,
+    icon: <Sliders className="w-5 h-5 sm:w-6 sm:h-6 text-[#0b3536]" />,
     bgGradient: "bg-white",
     iconBg: "bg-[#2dd4bf] shadow-lg shadow-[#2dd4bf]/30",
     defaultRotation: -12,
@@ -91,7 +91,7 @@ const TOOLS: ToolCard[] = [
     badge: "02 INBOX",
     title: "Only real buyer replies reach you.",
     description: "Bounces, out-of-offices and polite declines are handled before you see them. What lands is a buyer asking about your product, with quantity, incoterm and destination extracted.",
-    icon: <Inbox className="w-6 h-6 text-[#0b3536]" />,
+    icon: <Inbox className="w-5 h-5 sm:w-6 sm:h-6 text-[#0b3536]" />,
     bgGradient: "bg-white",
     iconBg: "bg-[#2dd4bf] shadow-lg shadow-[#2dd4bf]/30",
     defaultRotation: -6,
@@ -119,7 +119,7 @@ const TOOLS: ToolCard[] = [
     badge: "03 INTRODUCTION",
     title: "See the terms before you see the name.",
     description: "Every introduction states what it costs and what it commits you to, per deal, before the buyer is revealed. Nothing is buried in an agreement you signed weeks earlier.",
-    icon: <FileCheck className="w-6 h-6 text-[#0b3536]" />,
+    icon: <FileCheck className="w-5 h-5 sm:w-6 sm:h-6 text-[#0b3536]" />,
     bgGradient: "bg-white",
     iconBg: "bg-[#2dd4bf] shadow-lg shadow-[#2dd4bf]/30",
     defaultRotation: 0,
@@ -145,7 +145,7 @@ const TOOLS: ToolCard[] = [
     badge: "04 YOUR REPLY",
     title: "The draft is written. The price is yours.",
     description: "Every reply comes drafted from your product record and the buyer's message. Commercial terms are left marked, and the send button stays disabled until you set them. We never quote a price on your behalf.",
-    icon: <Send className="w-6 h-6 text-[#0b3536]" />,
+    icon: <Send className="w-5 h-5 sm:w-6 sm:h-6 text-[#0b3536]" />,
     bgGradient: "bg-white",
     iconBg: "bg-[#2dd4bf] shadow-lg shadow-[#2dd4bf]/30",
     defaultRotation: 6,
@@ -167,7 +167,7 @@ const TOOLS: ToolCard[] = [
     badge: "05 DEAL ROOM",
     title: "One timeline, from first reply to bill of lading.",
     description: "Every message, quote, note, document and stage change in a single scroll. Why a deal sits where it does should never take more than one screen to answer.",
-    icon: <GitCommit className="w-6 h-6 text-[#0b3536]" />,
+    icon: <GitCommit className="w-5 h-5 sm:w-6 sm:h-6 text-[#0b3536]" />,
     bgGradient: "bg-white",
     iconBg: "bg-[#2dd4bf] shadow-lg shadow-[#2dd4bf]/30",
     defaultRotation: 12,
@@ -198,8 +198,7 @@ export default function ToolsShowcase() {
       const rect = sectionRef.current.getBoundingClientRect();
       const vh = window.innerHeight;
 
-      // Straight un-tilted layout is ONLY active when section is actively in view (between top & bottom bounds).
-      // When scrolling above OR scrolling past to the next section (Footer), reverts to original tilted fan layout!
+      // Active zone check
       const isActivelyInView = rect.top <= vh * 0.45 && rect.bottom >= vh * 0.35;
 
       if (isActivelyInView) {
@@ -214,16 +213,21 @@ export default function ToolsShowcase() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Toggle card active state for mobile tap
+  const handleCardClick = (id: string) => {
+    setActiveId((prev) => (prev === id ? "" : id));
+  };
+
   return (
     <section
       ref={sectionRef}
-      className="relative w-full min-h-screen py-16 md:py-24 px-4 overflow-hidden bg-[#0b3536] text-white transition-colors flex flex-col justify-center items-center"
+      className="relative w-full min-h-screen py-12 sm:py-20 md:py-24 px-3 sm:px-6 overflow-hidden bg-[#0b3536] text-white transition-colors flex flex-col justify-center items-center"
     >
       {/* Mint Halftone Dotted Background */}
       <div className="absolute inset-0 pointer-events-none opacity-30">
         {/* Left Halftone Grid */}
         <div
-          className="absolute left-0 top-0 bottom-0 w-2/5 bg-[radial-gradient(#2dd4bf_2px,transparent_2px)] [background-size:18px_18px]"
+          className="absolute left-0 top-0 bottom-0 w-2/5 bg-[radial-gradient(#2dd4bf_2px,transparent_2px)] [background-size:16px_16px] sm:[background-size:18px_18px]"
           style={{
             maskImage:
               "radial-gradient(ellipse at left, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 80%)",
@@ -233,7 +237,7 @@ export default function ToolsShowcase() {
         />
         {/* Right Halftone Grid */}
         <div
-          className="absolute right-0 top-0 bottom-0 w-2/5 bg-[radial-gradient(#2dd4bf_2px,transparent_2px)] [background-size:18px_18px]"
+          className="absolute right-0 top-0 bottom-0 w-2/5 bg-[radial-gradient(#2dd4bf_2px,transparent_2px)] [background-size:16px_16px] sm:[background-size:18px_18px]"
           style={{
             maskImage:
               "radial-gradient(ellipse at right, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 80%)",
@@ -243,24 +247,24 @@ export default function ToolsShowcase() {
         />
       </div>
 
-      <div className="relative max-w-6xl mx-auto flex flex-col items-center text-center z-10 w-full">
+      <div className="relative max-w-7xl mx-auto flex flex-col items-center text-center z-10 w-full">
         {/* Top Tagline */}
-        <div className="text-[11px] font-mono tracking-widest text-[#2dd4bf] uppercase mb-2">
+        <div className="text-[10px] sm:text-[11px] font-mono tracking-widest text-[#2dd4bf] uppercase mb-2">
           THE PLATFORM
         </div>
 
         {/* Section Heading */}
-        <h2 className="text-3xl md:text-5xl font-serif font-medium tracking-tight text-white max-w-3xl mb-12">
+        <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-medium tracking-tight text-white max-w-3xl mb-8 sm:mb-12 leading-tight">
           Five screens, in the order you meet them.
         </h2>
 
-        {/* Cards Container */}
-        <div className="relative w-full max-w-6xl min-h-[420px] my-4 flex justify-center items-center">
+        {/* Responsive Cards Wrapper */}
+        <div className="relative w-full min-h-[460px] sm:min-h-[440px] my-2 sm:my-4 flex justify-center items-center overflow-x-auto md:overflow-x-visible pb-8 pt-4 md:pb-0 scrollbar-none">
           <div
-            className={`flex justify-center items-end transition-all duration-700 ease-out w-full px-2 ${
+            className={`flex items-end transition-all duration-700 ease-out px-4 md:px-2 min-w-max md:min-w-0 ${
               isScrolled
                 ? "gap-3 sm:gap-4 md:gap-5"
-                : "-space-x-10 sm:-space-x-14 md:-space-x-16 lg:-space-x-20"
+                : "-space-x-8 sm:-space-x-12 md:-space-x-16 lg:-space-x-20"
             }`}
           >
             {TOOLS.map((tool) => {
@@ -272,30 +276,31 @@ export default function ToolsShowcase() {
               return (
                 <div
                   key={tool.id}
+                  onClick={() => handleCardClick(tool.id)}
                   onMouseEnter={() => setActiveId(tool.id)}
                   onMouseLeave={() => setActiveId("")}
                   style={{
                     zIndex: isHovered ? 40 : tool.zIndexDefault,
                     transform: isHovered
-                      ? `translateY(-32px) rotate(0deg) scale(1.03)`
+                      ? `translateY(-24px) rotate(0deg) scale(1.02)`
                       : `translateY(${currentTranslateY}px) rotate(${currentRotation}deg)`,
                   }}
-                  className={`relative flex-shrink-0 w-60 sm:w-68 md:w-72 lg:w-[320px] min-h-[310px] rounded-2xl p-6 transition-all duration-500 ease-out cursor-pointer ${
+                  className={`relative flex-shrink-0 w-60 sm:w-68 md:w-72 lg:w-[310px] min-h-[300px] sm:min-h-[320px] rounded-2xl p-5 sm:p-6 transition-all duration-500 ease-out cursor-pointer ${
                     tool.bgGradient
-                  } border border-white/90 shadow-[0_15px_35px_rgba(0,0,0,0.35)] flex flex-col justify-between text-left ${
+                  } border border-white/90 shadow-[0_12px_30px_rgba(0,0,0,0.35)] flex flex-col justify-between text-left ${
                     isHovered
-                      ? "shadow-[0_25px_50px_rgba(0,0,0,0.5)] border-[#2dd4bf]"
+                      ? "shadow-[0_22px_45px_rgba(0,0,0,0.5)] border-[#2dd4bf]"
                       : "hover:border-slate-300"
                   }`}
                 >
                   <div>
                     {/* Step Badge Pill */}
-                    <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-[#0b3536] text-[#2dd4bf] text-[10px] font-mono font-bold tracking-wider mb-4">
+                    <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-[#0b3536] text-[#2dd4bf] text-[9.5px] sm:text-[10px] font-mono font-bold tracking-wider mb-3 sm:mb-4">
                       {tool.badge}
                     </div>
 
                     {/* Card Title */}
-                    <h3 className="font-serif font-bold text-xl sm:text-2xl text-slate-900 leading-snug mb-3">
+                    <h3 className="font-serif font-bold text-lg sm:text-xl md:text-2xl text-slate-900 leading-snug mb-2 sm:mb-3">
                       {tool.title}
                     </h3>
 
@@ -304,16 +309,16 @@ export default function ToolsShowcase() {
                       {tool.description}
                     </p>
 
-                    {/* Reveal detailed product setup data ONLY when HOVERED for Card 1 (Setup) */}
+                    {/* Reveal detailed product setup data ONLY when HOVERED / TAPPED for Card 1 (Setup) */}
                     {tool.id === "setup" && (
                       <div
                         className={`transition-all duration-500 ease-in-out ${
                           isHovered
-                            ? "opacity-100 max-h-96 mt-4 pointer-events-auto"
+                            ? "opacity-100 max-h-96 mt-3 sm:mt-4 pointer-events-auto"
                             : "opacity-0 max-h-0 overflow-hidden pointer-events-none"
                         }`}
                       >
-                        <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 font-mono text-[11px] space-y-2 text-slate-700 shadow-inner">
+                        <div className="p-3 sm:p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 font-mono text-[10.5px] sm:text-[11px] space-y-2 text-slate-700 shadow-inner">
                           <div className="flex items-center justify-between pb-1.5 border-b border-slate-200">
                             <span className="font-semibold text-slate-900 text-xs">
                               {tool.productName}
@@ -323,36 +328,36 @@ export default function ToolsShowcase() {
                             </span>
                           </div>
 
-                          <div className="flex justify-between items-center text-[10px]">
+                          <div className="flex justify-between items-center text-[9.5px] sm:text-[10px]">
                             <span className="text-slate-400 uppercase">HS CODE</span>
                             <span className="font-medium text-slate-800 flex items-center gap-1">
                               {tool.hsCode}
-                              <span className="px-1 py-0.2 rounded bg-emerald-100 text-[#0b3536] text-[9px] font-bold">
+                              <span className="px-1 py-0.2 rounded bg-emerald-100 text-[#0b3536] text-[8.5px] sm:text-[9px] font-bold">
                                 {tool.hsSuggested}
                               </span>
                             </span>
                           </div>
 
-                          <div className="flex justify-between items-center text-[10px]">
+                          <div className="flex justify-between items-center text-[9.5px] sm:text-[10px]">
                             <span className="text-slate-400 uppercase">CAPACITY</span>
                             <span className="font-medium text-slate-800">{tool.capacity}</span>
                           </div>
 
-                          <div className="flex justify-between items-center text-[10px]">
+                          <div className="flex justify-between items-center text-[9.5px] sm:text-[10px]">
                             <span className="text-slate-400 uppercase">MIN ORDER</span>
                             <span className="font-medium text-slate-800">{tool.minOrder}</span>
                           </div>
 
                           {/* Target Markets */}
                           <div className="pt-1.5 border-t border-slate-200">
-                            <div className="text-[9px] text-slate-400 uppercase mb-1">
+                            <div className="text-[8.5px] sm:text-[9px] text-slate-400 uppercase mb-1">
                               TARGET MARKETS
                             </div>
                             <div className="flex flex-wrap gap-1">
                               {tool.targetMarkets?.map((market, idx) => (
                                 <span
                                   key={idx}
-                                  className="px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[9px] text-slate-700"
+                                  className="px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[8.5px] sm:text-[9px] text-slate-700"
                                 >
                                   {idx + 1} {market}
                                 </span>
@@ -367,9 +372,9 @@ export default function ToolsShowcase() {
                             {tool.features.map((feat, idx) => (
                               <div
                                 key={idx}
-                                className="flex items-center gap-1.5 text-[11px] text-slate-600 font-sans"
+                                className="flex items-center gap-1.5 text-[10.5px] sm:text-[11px] text-slate-600 font-sans"
                               >
-                                <span className="w-1.5 h-1.5 rounded-full bg-[#2dd4bf]" />
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#2dd4bf] shrink-0" />
                                 <span>{feat}</span>
                               </div>
                             ))}
@@ -378,30 +383,30 @@ export default function ToolsShowcase() {
                       </div>
                     )}
 
-                    {/* Reveal detailed buyer inquiry data ONLY when HOVERED for Card 2 (Inbox) */}
+                    {/* Reveal detailed buyer inquiry data ONLY when HOVERED / TAPPED for Card 2 (Inbox) */}
                     {tool.id === "inbox" && (
                       <div
                         className={`transition-all duration-500 ease-in-out ${
                           isHovered
-                            ? "opacity-100 max-h-96 mt-4 pointer-events-auto"
+                            ? "opacity-100 max-h-96 mt-3 sm:mt-4 pointer-events-auto"
                             : "opacity-0 max-h-0 overflow-hidden pointer-events-none"
                         }`}
                       >
-                        <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 font-mono text-[11px] space-y-2.5 text-slate-700 shadow-inner">
+                        <div className="p-3 sm:p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 font-mono text-[10.5px] sm:text-[11px] space-y-2 text-slate-700 shadow-inner">
                           <div className="flex items-center justify-between pb-1.5 border-b border-slate-200">
-                            <span className="text-[10px] text-rose-600 bg-rose-100 px-1.5 py-0.5 rounded font-bold uppercase">
+                            <span className="text-[9.5px] sm:text-[10px] text-rose-600 bg-rose-100 px-1.5 py-0.5 rounded font-bold uppercase">
                               HOT INQUIRY
                             </span>
-                            <span className="text-[10px] text-slate-400">
+                            <span className="text-[9.5px] sm:text-[10px] text-slate-400">
                               confidence {tool.confidence}
                             </span>
                           </div>
 
-                          <p className="text-[10px] italic text-slate-600 font-sans leading-snug border-l-2 border-teal-500 pl-2">
+                          <p className="text-[9.5px] sm:text-[10px] italic text-slate-600 font-sans leading-snug border-l-2 border-teal-500 pl-2">
                             {tool.quoteText}
                           </p>
 
-                          <div className="grid grid-cols-2 gap-1.5 text-[9.5px] pt-1">
+                          <div className="grid grid-cols-2 gap-1.5 text-[9px] sm:text-[9.5px] pt-1">
                             <div>
                               <span className="text-slate-400 block uppercase">QUANTITY</span>
                               <span className="font-bold text-slate-900">{tool.quantity}</span>
@@ -420,20 +425,20 @@ export default function ToolsShowcase() {
                             </div>
                           </div>
 
-                          <div className="pt-2 border-t border-slate-200">
-                            <div className="font-bold text-slate-900 text-[11px]">
+                          <div className="pt-1.5 border-t border-slate-200">
+                            <div className="font-bold text-slate-900 text-[10.5px] sm:text-[11px]">
                               {tool.buyerType}
                             </div>
-                            <div className="text-[9.5px] text-slate-500 font-sans">
+                            <div className="text-[9px] sm:text-[9.5px] text-slate-500 font-sans">
                               {tool.buyerVolume}
                             </div>
                           </div>
 
                           <div className="pt-1 flex items-center justify-between">
-                            <button className="px-3 py-1 rounded-lg bg-[#2dd4bf] hover:bg-[#14b8a6] text-[#0b3536] text-[10px] font-bold shadow-sm transition">
+                            <button className="px-2.5 py-1 rounded-lg bg-[#2dd4bf] hover:bg-[#14b8a6] text-[#0b3536] text-[9.5px] sm:text-[10px] font-bold shadow-sm transition">
                               Unlock introduction
                             </button>
-                            <span className="text-[9.5px] text-slate-400">Not for me</span>
+                            <span className="text-[9px] text-slate-400">Not for me</span>
                           </div>
                         </div>
 
@@ -443,9 +448,9 @@ export default function ToolsShowcase() {
                             {tool.features.map((feat, idx) => (
                               <div
                                 key={idx}
-                                className="flex items-center gap-1.5 text-[11px] text-slate-600 font-sans"
+                                className="flex items-center gap-1.5 text-[10.5px] sm:text-[11px] text-slate-600 font-sans"
                               >
-                                <span className="w-1.5 h-1.5 rounded-full bg-[#2dd4bf]" />
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#2dd4bf] shrink-0" />
                                 <span>{feat}</span>
                               </div>
                             ))}
@@ -454,33 +459,33 @@ export default function ToolsShowcase() {
                       </div>
                     )}
 
-                    {/* Reveal detailed introduction terms ONLY when HOVERED for Card 3 (Introduction) */}
+                    {/* Reveal detailed introduction terms ONLY when HOVERED / TAPPED for Card 3 (Introduction) */}
                     {tool.id === "introduction" && (
                       <div
                         className={`transition-all duration-500 ease-in-out ${
                           isHovered
-                            ? "opacity-100 max-h-96 mt-4 pointer-events-auto"
+                            ? "opacity-100 max-h-96 mt-3 sm:mt-4 pointer-events-auto"
                             : "opacity-0 max-h-0 overflow-hidden pointer-events-none"
                         }`}
                       >
-                        <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 font-mono text-[10.5px] space-y-2 text-slate-700 shadow-inner">
-                          <div className="text-[9.5px] uppercase tracking-wider text-slate-400 font-semibold pb-1 border-b border-slate-200">
+                        <div className="p-3 sm:p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 font-mono text-[10px] sm:text-[10.5px] space-y-2 text-slate-700 shadow-inner">
+                          <div className="text-[9px] uppercase tracking-wider text-slate-400 font-semibold pb-1 border-b border-slate-200">
                             INTRODUCTION
                           </div>
-                          <div className="text-[10px] text-slate-500 italic">
+                          <div className="text-[9.5px] text-slate-500 italic">
                             Name revealed once terms are accepted
                           </div>
 
-                          <div className="space-y-1.5 text-[9.5px] pt-1">
+                          <div className="space-y-1 text-[9px] sm:text-[9.5px] pt-1">
                             {tool.terms?.map((term, idx) => (
                               <div key={idx} className="flex items-start gap-1.5">
-                                <span className="w-3.5 h-3.5 rounded bg-slate-200 text-slate-700 flex items-center justify-center text-[9px] font-bold shrink-0">
+                                <span className="w-3.5 h-3.5 rounded bg-slate-200 text-slate-700 flex items-center justify-center text-[8.5px] font-bold shrink-0">
                                   {idx + 1}
                                 </span>
                                 <div className="flex-1 leading-tight text-slate-800">
                                   <span>{term} </span>
                                   {idx < 2 && (
-                                    <span className="border border-dashed border-amber-500/80 text-amber-700 bg-amber-50 px-1 py-0.2 rounded text-[8.5px] font-bold ml-1">
+                                    <span className="border border-dashed border-amber-500/80 text-amber-700 bg-amber-50 px-1 py-0.2 rounded text-[8px] font-bold ml-1">
                                       RATE-TBD
                                     </span>
                                   )}
@@ -489,18 +494,18 @@ export default function ToolsShowcase() {
                             ))}
                           </div>
 
-                          <div className="mt-2 p-2 rounded border border-emerald-300 bg-emerald-50/60 flex items-start gap-1.5 text-[9.5px] text-slate-700">
-                            <div className="w-3.5 h-3.5 rounded bg-emerald-500 text-white flex items-center justify-center shrink-0 mt-0.5">
-                              <Check className="w-2.5 h-2.5 stroke-[3]" />
+                          <div className="mt-2 p-1.5 rounded border border-emerald-300 bg-emerald-50/60 flex items-start gap-1.5 text-[9px] text-slate-700">
+                            <div className="w-3 h-3 rounded bg-emerald-500 text-white flex items-center justify-center shrink-0 mt-0.5">
+                              <Check className="w-2 h-2 stroke-[3]" />
                             </div>
                             <span className="leading-tight">{tool.acceptanceText}</span>
                           </div>
 
                           <div className="pt-1 flex items-center gap-2">
-                            <button className="px-3 py-1 rounded-lg bg-[#2dd4bf] hover:bg-[#14b8a6] text-[#0b3536] text-[10px] font-bold shadow-sm transition">
+                            <button className="px-2.5 py-1 rounded-lg bg-[#2dd4bf] hover:bg-[#14b8a6] text-[#0b3536] text-[9.5px] font-bold shadow-sm transition">
                               Agree & unlock
                             </button>
-                            <span className="text-[9.5px] text-slate-400">Not for me</span>
+                            <span className="text-[9px] text-slate-400">Not for me</span>
                           </div>
                         </div>
 
@@ -510,9 +515,9 @@ export default function ToolsShowcase() {
                             {tool.features.map((feat, idx) => (
                               <div
                                 key={idx}
-                                className="flex items-center gap-1.5 text-[11px] text-slate-600 font-sans"
+                                className="flex items-center gap-1.5 text-[10.5px] sm:text-[11px] text-slate-600 font-sans"
                               >
-                                <span className="w-1.5 h-1.5 rounded-full bg-[#2dd4bf]" />
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#2dd4bf] shrink-0" />
                                 <span>{feat}</span>
                               </div>
                             ))}
@@ -521,50 +526,50 @@ export default function ToolsShowcase() {
                       </div>
                     )}
 
-                    {/* Reveal detailed email reply draft ONLY when HOVERED for Card 4 (Your Reply) */}
+                    {/* Reveal detailed email reply draft ONLY when HOVERED / TAPPED for Card 4 (Your Reply) */}
                     {tool.id === "reply" && (
                       <div
                         className={`transition-all duration-500 ease-in-out ${
                           isHovered
-                            ? "opacity-100 max-h-96 mt-4 pointer-events-auto"
+                            ? "opacity-100 max-h-96 mt-3 sm:mt-4 pointer-events-auto"
                             : "opacity-0 max-h-0 overflow-hidden pointer-events-none"
                         }`}
                       >
-                        <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 font-mono text-[10.5px] space-y-2 text-slate-700 shadow-inner">
+                        <div className="p-3 sm:p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 font-mono text-[10px] sm:text-[10.5px] space-y-2 text-slate-700 shadow-inner">
                           <div className="flex items-center justify-between pb-1 border-b border-slate-200">
-                            <span className="text-[9.5px] uppercase tracking-wider text-slate-400 font-semibold">
+                            <span className="text-[9px] uppercase tracking-wider text-slate-400 font-semibold">
                               YOUR REPLY
                             </span>
-                            <span className="text-[9px] bg-slate-200 text-slate-700 px-1.5 py-0.5 rounded font-bold">
+                            <span className="text-[8.5px] bg-slate-200 text-slate-700 px-1.5 py-0.5 rounded font-bold">
                               AI DRAFT
                             </span>
                           </div>
 
-                          <div className="p-2.5 rounded bg-white border border-slate-200 font-sans text-[10px] text-slate-700 space-y-1.5 leading-relaxed">
+                          <div className="p-2 rounded bg-white border border-slate-200 font-sans text-[9.5px] text-slate-700 space-y-1 leading-relaxed">
                             <p className="font-semibold text-slate-900">{tool.recipientName}</p>
                             <p>{tool.replyParagraph1}</p>
                             <p>
                               Our price for this volume is{" "}
-                              <span className="border border-dashed border-amber-500/80 text-amber-800 bg-amber-50 px-1 py-0.2 rounded font-mono text-[9px] font-semibold">
+                              <span className="border border-dashed border-amber-500/80 text-amber-800 bg-amber-50 px-1 py-0.2 rounded font-mono text-[8.5px] font-semibold">
                                 {tool.missingTermPlaceholder}
                               </span>{" "}
                               per MT CIF Santos, valid 14 days.
                             </p>
                           </div>
 
-                          <div className="text-[9px] text-amber-700 flex items-center gap-1">
-                            <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+                          <div className="text-[8.5px] sm:text-[9px] text-amber-700 flex items-center gap-1">
+                            <span className="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0" />
                             <span>{tool.warningNote}</span>
                           </div>
 
                           <div className="pt-1 flex items-center justify-between">
                             <button
                               disabled
-                              className="px-3 py-1 rounded-lg bg-slate-200 text-slate-400 text-[10px] font-bold cursor-not-allowed"
+                              className="px-2.5 py-1 rounded-lg bg-slate-200 text-slate-400 text-[9.5px] font-bold cursor-not-allowed"
                             >
                               Send reply
                             </button>
-                            <span className="text-[8.5px] text-slate-400 uppercase font-mono tracking-tighter">
+                            <span className="text-[8px] text-slate-400 uppercase font-mono tracking-tighter">
                               NEVER SENT WITHOUT YOUR APPROVAL
                             </span>
                           </div>
@@ -576,9 +581,9 @@ export default function ToolsShowcase() {
                             {tool.features.map((feat, idx) => (
                               <div
                                 key={idx}
-                                className="flex items-center gap-1.5 text-[11px] text-slate-600 font-sans"
+                                className="flex items-center gap-1.5 text-[10.5px] sm:text-[11px] text-slate-600 font-sans"
                               >
-                                <span className="w-1.5 h-1.5 rounded-full bg-[#2dd4bf]" />
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#2dd4bf] shrink-0" />
                                 <span>{feat}</span>
                               </div>
                             ))}
@@ -587,27 +592,27 @@ export default function ToolsShowcase() {
                       </div>
                     )}
 
-                    {/* Reveal detailed deal timeline ONLY when HOVERED for Card 5 (Deal Room) */}
+                    {/* Reveal detailed deal timeline ONLY when HOVERED / TAPPED for Card 5 (Deal Room) */}
                     {tool.id === "dealroom" && (
                       <div
                         className={`transition-all duration-500 ease-in-out ${
                           isHovered
-                            ? "opacity-100 max-h-96 mt-4 pointer-events-auto"
+                            ? "opacity-100 max-h-96 mt-3 sm:mt-4 pointer-events-auto"
                             : "opacity-0 max-h-0 overflow-hidden pointer-events-none"
                         }`}
                       >
-                        <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 font-mono text-[10.5px] space-y-2 text-slate-700 shadow-inner">
+                        <div className="p-3 sm:p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 font-mono text-[10px] sm:text-[10.5px] space-y-2 text-slate-700 shadow-inner">
                           <div className="flex items-center justify-between pb-1.5 border-b border-slate-200">
                             <span className="font-bold text-slate-900 text-xs">
                               {tool.dealCompany}
                             </span>
-                            <span className="text-[10px] font-bold text-slate-900">
+                            <span className="text-[9.5px] font-bold text-slate-900">
                               {tool.dealValue}
                             </span>
                           </div>
 
                           <div className="pt-1">
-                            <div className="grid grid-cols-4 sm:grid-cols-8 gap-1 text-[8.5px] text-slate-400 text-center mb-1">
+                            <div className="grid grid-cols-4 sm:grid-cols-8 gap-1 text-[8px] text-slate-400 text-center mb-1">
                               {tool.stages?.map((stage, idx) => (
                                 <span
                                   key={idx}
@@ -623,7 +628,7 @@ export default function ToolsShowcase() {
                             </div>
                           </div>
 
-                          <div className="p-2 rounded bg-white border border-slate-200 flex items-start gap-2 text-[9.5px]">
+                          <div className="p-1.5 rounded bg-white border border-slate-200 flex items-start gap-1.5 text-[9px]">
                             <span className="text-slate-400 shrink-0 font-bold">
                               {tool.eventDate}
                             </span>
@@ -639,9 +644,9 @@ export default function ToolsShowcase() {
                             {tool.features.map((feat, idx) => (
                               <div
                                 key={idx}
-                                className="flex items-center gap-1.5 text-[11px] text-slate-600 font-sans"
+                                className="flex items-center gap-1.5 text-[10.5px] sm:text-[11px] text-slate-600 font-sans"
                               >
-                                <span className="w-1.5 h-1.5 rounded-full bg-[#2dd4bf]" />
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#2dd4bf] shrink-0" />
                                 <span>{feat}</span>
                               </div>
                             ))}
