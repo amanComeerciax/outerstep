@@ -50,6 +50,7 @@ export default function Home() {
       {/* Who It Fits: $1M - $50M Exporters */}
       <WhoItFits />
 
+
       {/* Final Call to Action Banner */}
       <CtaSection onOpenBookCall={() => handleOpenBookCall()} />
 
