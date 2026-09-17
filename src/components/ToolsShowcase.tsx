@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Ruler,
   Percent,
@@ -17,8 +17,8 @@ interface ToolCard {
   icon: React.ReactNode;
   bgGradient: string;
   iconBg: string;
-  defaultRotation: string;
-  defaultTranslateY: string;
+  defaultRotation: number;
+  defaultTranslateY: number;
   zIndexDefault: number;
 }
 
@@ -26,23 +26,23 @@ const TOOLS: ToolCard[] = [
   {
     id: "px-rem",
     title: "PX to REM Converter",
-    description: "Convert pixels to REM units easily.",
+    description: "Convert pixels to REM CSS units easily.",
     icon: <Ruler className="w-7 h-7 text-white" />,
     bgGradient: "bg-[#f5f3ff]",
     iconBg: "bg-[#a855f7] shadow-lg shadow-purple-500/30",
-    defaultRotation: "-rotate-[12deg]",
-    defaultTranslateY: "translate-y-[18px]",
+    defaultRotation: -12,
+    defaultTranslateY: 18,
     zIndexDefault: 10,
   },
   {
     id: "discount",
     title: "Discount Calculator",
-    description: "Calculate sale price savings instantly.",
+    description: "Calculate sale price & savings instantly.",
     icon: <Percent className="w-7 h-7 text-white" />,
     bgGradient: "bg-[#ecfdf5]",
     iconBg: "bg-[#10b981] shadow-lg shadow-emerald-500/30",
-    defaultRotation: "-rotate-[6deg]",
-    defaultTranslateY: "translate-y-[6px]",
+    defaultRotation: -6,
+    defaultTranslateY: 6,
     zIndexDefault: 15,
   },
   {
@@ -52,8 +52,8 @@ const TOOLS: ToolCard[] = [
     icon: <Calendar className="w-7 h-7 text-white" />,
     bgGradient: "bg-[#fff7ed]",
     iconBg: "bg-[#f97316] shadow-lg shadow-orange-500/30",
-    defaultRotation: "rotate-0",
-    defaultTranslateY: "translate-y-0",
+    defaultRotation: 0,
+    defaultTranslateY: 0,
     zIndexDefault: 20,
   },
   {
@@ -63,8 +63,8 @@ const TOOLS: ToolCard[] = [
     icon: <Code2 className="w-7 h-7 text-white" />,
     bgGradient: "bg-[#fff1f2]",
     iconBg: "bg-[#f43f5e] shadow-lg shadow-rose-500/30",
-    defaultRotation: "rotate-[6deg]",
-    defaultTranslateY: "translate-y-[6px]",
+    defaultRotation: 6,
+    defaultTranslateY: 6,
     zIndexDefault: 15,
   },
   {
@@ -74,18 +74,43 @@ const TOOLS: ToolCard[] = [
     icon: <Wallet className="w-7 h-7 text-white" />,
     bgGradient: "bg-[#eff6ff]",
     iconBg: "bg-[#3b82f6] shadow-lg shadow-blue-500/30",
-    defaultRotation: "rotate-[12deg]",
-    defaultTranslateY: "translate-y-[18px]",
+    defaultRotation: 12,
+    defaultTranslateY: 18,
     zIndexDefault: 10,
   },
 ];
 
 export default function ToolsShowcase() {
   const [activeId, setActiveId] = useState<string>("payday");
+  const [isScrolled, setIsScrolled] = useState<boolean>(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!sectionRef.current) return;
+      const rect = sectionRef.current.getBoundingClientRect();
+
+      // Trigger scroll effect when user scrolls into the section (e.g. top < 150px)
+      if (rect.top < 150) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll(); // Initial check
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <section className="relative w-full py-20 px-4 overflow-hidden bg-[#0b3a3f] text-white transition-colors">
-      {/* Halftone Dotted Background tuned for #0b3a3f */}
+    <section
+      ref={sectionRef}
+      className={`relative w-full py-20 px-4 overflow-hidden transition-colors duration-700 ease-in-out ${
+        isScrolled ? "bg-[#fafafa] text-slate-900" : "bg-[#0b3a3f] text-white"
+      }`}
+    >
+      {/* Halftone Dotted Background */}
       <div className="absolute inset-0 pointer-events-none opacity-40">
         {/* Left Halftone Grid */}
         <div
@@ -111,27 +136,54 @@ export default function ToolsShowcase() {
 
       <div className="relative max-w-6xl mx-auto flex flex-col items-center text-center z-10">
         {/* Badge Pill */}
-        <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#072a2e] border border-teal-500/30 text-xs font-mono shadow-sm hover:shadow transition-all cursor-pointer mb-6">
+        <div
+          className={`inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-mono shadow-sm transition-all duration-500 cursor-pointer mb-6 ${
+            isScrolled
+              ? "bg-white border border-slate-200 text-slate-700"
+              : "bg-[#072a2e] border border-teal-500/30 text-teal-100"
+          }`}
+        >
           <span className="text-rose-400">❤️</span>
-          <span className="text-teal-100 font-medium">Introducing Saveku</span>
-          <span className="text-teal-400/70 font-sans">›</span>
+          <span className="font-medium">Introducing Saveku</span>
+          <span className={isScrolled ? "text-slate-400 font-sans" : "text-teal-400/70 font-sans"}>
+            ›
+          </span>
         </div>
 
         {/* Main Title (Serif Style) */}
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-serif-heading font-medium tracking-tight text-white max-w-3xl mb-4 drop-shadow-sm">
+        <h2
+          className={`text-4xl md:text-5xl lg:text-6xl font-serif font-medium tracking-tight max-w-3xl mb-4 transition-colors duration-500 ${
+            isScrolled ? "text-[#1d2026]" : "text-white drop-shadow-sm"
+          }`}
+        >
           Answer your curiosity right away
         </h2>
 
         {/* Subtitle */}
-        <p className="text-sm md:text-base text-teal-100/70 font-mono tracking-tight max-w-2xl mb-14">
+        <p
+          className={`text-sm md:text-base font-mono tracking-tight max-w-2xl mb-14 transition-colors duration-500 ${
+            isScrolled ? "text-slate-500" : "text-teal-100/70"
+          }`}
+        >
           Saveku is a free multi-purpose online tool hub for your daily needs.
         </p>
 
-        {/* Overlapping Fan-Out Tool Cards Layout */}
-        <div className="relative w-full max-w-5xl h-[380px] my-4 flex justify-center items-center">
-          <div className="flex justify-center items-end -space-x-12 sm:-space-x-16 md:-space-x-20 lg:-space-x-24 w-full px-4">
+        {/* Cards Container - Smoothly morphs on Scroll */}
+        <div className="relative w-full max-w-6xl h-[380px] my-4 flex justify-center items-center">
+          <div
+            className={`flex justify-center items-end transition-all duration-700 ease-out w-full px-2 ${
+              isScrolled
+                ? "gap-3 sm:gap-4 md:gap-5"
+                : "-space-x-12 sm:-space-x-16 md:-space-x-20 lg:-space-x-24"
+            }`}
+          >
             {TOOLS.map((tool) => {
               const isHovered = activeId === tool.id;
+
+              // Without scrolling (isScrolled === false): Keep default tilted fan layout & overlap
+              // When scrolling (isScrolled === true): Straighten to 0deg and space out cleanly
+              const currentRotation = isScrolled ? 0 : tool.defaultRotation;
+              const currentTranslateY = isScrolled ? 0 : tool.defaultTranslateY;
 
               return (
                 <div
@@ -139,19 +191,22 @@ export default function ToolsShowcase() {
                   onMouseEnter={() => setActiveId(tool.id)}
                   style={{
                     zIndex: isHovered ? 40 : tool.zIndexDefault,
+                    transform: isHovered
+                      ? `translateY(-28px) rotate(0deg) scale(1.04)`
+                      : `translateY(${currentTranslateY}px) rotate(${currentRotation}deg)`,
                   }}
-                  className={`relative flex-shrink-0 w-52 sm:w-60 md:w-64 lg:w-68 h-[310px] sm:h-[330px] rounded-2xl p-6 transition-all duration-300 ease-out cursor-pointer ${
+                  className={`relative flex-shrink-0 w-48 sm:w-56 md:w-60 lg:w-64 h-[310px] sm:h-[330px] rounded-2xl p-6 transition-all duration-500 ease-out cursor-pointer ${
                     tool.bgGradient
-                  } border border-white/90 shadow-[0_15px_35px_rgba(0,0,0,0.25)] flex flex-col justify-between text-left ${
+                  } border border-white/90 shadow-[0_12px_32px_rgba(0,0,0,0.1)] flex flex-col justify-between text-left ${
                     isHovered
-                      ? "scale-105 -translate-y-12 rotate-0 shadow-[0_25px_50px_rgba(0,0,0,0.4)] border-rose-300"
-                      : `${tool.defaultRotation} ${tool.defaultTranslateY} hover:-translate-y-4 hover:rotate-0`
+                      ? "shadow-[0_22px_45px_rgba(0,0,0,0.18)] border-rose-300"
+                      : "hover:border-slate-300"
                   }`}
                 >
                   {/* Top Square Icon */}
                   <div>
                     <div
-                      className={`w-14 h-14 rounded-2xl ${tool.iconBg} flex items-center justify-center mb-8 shadow-md transform transition-transform duration-300`}
+                      className={`w-14 h-14 rounded-2xl ${tool.iconBg} flex items-center justify-center mb-8 shadow-md transition-transform duration-300`}
                     >
                       {tool.icon}
                     </div>
@@ -176,20 +231,36 @@ export default function ToolsShowcase() {
         <div className="flex flex-col items-center gap-3 mt-8 z-20">
           <div className="flex items-center justify-center gap-3">
             {/* View all tools button */}
-            <button className="px-5 py-2.5 rounded-xl bg-black hover:bg-slate-900 text-white text-xs font-mono font-medium shadow-lg flex items-center gap-2 transition-all hover:scale-105 active:scale-95 border border-teal-800/40">
+            <button
+              className={`px-5 py-2.5 rounded-xl text-xs font-mono font-medium shadow-md flex items-center gap-2 transition-all hover:scale-105 active:scale-95 ${
+                isScrolled
+                  ? "bg-[#1e2025] hover:bg-black text-white"
+                  : "bg-black hover:bg-slate-900 text-white border border-teal-800/40"
+              }`}
+            >
               <span>View all tools</span>
               <Smile className="w-4 h-4 text-white" />
             </button>
 
             {/* Follow us button */}
-            <button className="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-teal-300/30 text-xs font-mono font-medium shadow-sm backdrop-blur-md flex items-center gap-2 transition-all hover:scale-105 active:scale-95">
+            <button
+              className={`px-5 py-2.5 rounded-xl text-xs font-mono font-medium shadow-sm backdrop-blur-md flex items-center gap-2 transition-all hover:scale-105 active:scale-95 ${
+                isScrolled
+                  ? "bg-white hover:bg-slate-50 text-slate-700 border border-slate-300"
+                  : "bg-white/10 hover:bg-white/20 text-white border border-teal-300/30"
+              }`}
+            >
               <span>Follow us</span>
-              <span className="font-bold text-white text-xs">X</span>
+              <span className="font-bold text-xs">X</span>
             </button>
           </div>
 
           {/* Subtext info */}
-          <p className="text-[11px] font-mono text-teal-200/60 tracking-tight mt-1">
+          <p
+            className={`text-[11px] font-mono tracking-tight mt-1 transition-colors duration-500 ${
+              isScrolled ? "text-slate-400" : "text-teal-200/60"
+            }`}
+          >
             All tools are available for free. No account creation or login needed.
           </p>
         </div>
