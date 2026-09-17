@@ -2,13 +2,9 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import {
-  FileText,
   Inbox,
   LineChart,
   BarChart3,
-  Sparkles,
-  CheckCircle2,
-  Globe,
   Sliders,
 } from "lucide-react";
 
@@ -23,7 +19,7 @@ interface ToolCard {
   defaultRotation: number;
   defaultTranslateY: number;
   zIndexDefault: number;
-  // Specific data for card 1 (Setup)
+  // Specific data for card 1 (Setup) reveal on hover
   productName?: string;
   hsCode?: string;
   hsSuggested?: string;
@@ -98,7 +94,7 @@ const TOOLS: ToolCard[] = [
 ];
 
 export default function ToolsShowcase() {
-  const [activeId, setActiveId] = useState<string>("setup");
+  const [activeId, setActiveId] = useState<string>("");
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
   const sectionRef = useRef<HTMLDivElement>(null);
 
@@ -177,13 +173,14 @@ export default function ToolsShowcase() {
                 <div
                   key={tool.id}
                   onMouseEnter={() => setActiveId(tool.id)}
+                  onMouseLeave={() => setActiveId("")}
                   style={{
                     zIndex: isHovered ? 40 : tool.zIndexDefault,
                     transform: isHovered
                       ? `translateY(-32px) rotate(0deg) scale(1.03)`
                       : `translateY(${currentTranslateY}px) rotate(${currentRotation}deg)`,
                   }}
-                  className={`relative flex-shrink-0 w-64 sm:w-72 md:w-80 lg:w-[340px] min-h-[360px] rounded-2xl p-6 transition-all duration-500 ease-out cursor-pointer ${
+                  className={`relative flex-shrink-0 w-64 sm:w-72 md:w-80 lg:w-[340px] min-h-[310px] rounded-2xl p-6 transition-all duration-500 ease-out cursor-pointer ${
                     tool.bgGradient
                   } border border-white/90 shadow-[0_15px_35px_rgba(0,0,0,0.35)] flex flex-col justify-between text-left ${
                     isHovered
@@ -203,76 +200,84 @@ export default function ToolsShowcase() {
                     </h3>
 
                     {/* Card Description */}
-                    <p className="text-xs sm:text-sm text-slate-600 font-sans leading-relaxed mb-4">
+                    <p className="text-xs sm:text-sm text-slate-600 font-sans leading-relaxed">
                       {tool.description}
                     </p>
 
-                    {/* If Card 1 (Setup) - Show exact product setup card preview! */}
+                    {/* Reveal detailed product setup data ONLY when HOVERED */}
                     {tool.id === "setup" && (
-                      <div className="mt-4 p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 font-mono text-[11px] space-y-2 text-slate-700 shadow-inner">
-                        <div className="flex items-center justify-between pb-1.5 border-b border-slate-200">
-                          <span className="font-semibold text-slate-900 text-xs">
-                            {tool.productName}
-                          </span>
-                          <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold">
-                            100%
-                          </span>
-                        </div>
-
-                        <div className="flex justify-between items-center text-[10px]">
-                          <span className="text-slate-400 uppercase">HS CODE</span>
-                          <span className="font-medium text-slate-800 flex items-center gap-1">
-                            {tool.hsCode}
-                            <span className="px-1 py-0.2 rounded bg-emerald-100 text-[#0b3536] text-[9px] font-bold">
-                              {tool.hsSuggested}
+                      <div
+                        className={`transition-all duration-500 ease-in-out ${
+                          isHovered
+                            ? "opacity-100 max-h-96 mt-4 pointer-events-auto"
+                            : "opacity-0 max-h-0 overflow-hidden pointer-events-none"
+                        }`}
+                      >
+                        <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 font-mono text-[11px] space-y-2 text-slate-700 shadow-inner">
+                          <div className="flex items-center justify-between pb-1.5 border-b border-slate-200">
+                            <span className="font-semibold text-slate-900 text-xs">
+                              {tool.productName}
                             </span>
-                          </span>
-                        </div>
-
-                        <div className="flex justify-between items-center text-[10px]">
-                          <span className="text-slate-400 uppercase">CAPACITY</span>
-                          <span className="font-medium text-slate-800">{tool.capacity}</span>
-                        </div>
-
-                        <div className="flex justify-between items-center text-[10px]">
-                          <span className="text-slate-400 uppercase">MIN ORDER</span>
-                          <span className="font-medium text-slate-800">{tool.minOrder}</span>
-                        </div>
-
-                        {/* Target Markets */}
-                        <div className="pt-1.5 border-t border-slate-200">
-                          <div className="text-[9px] text-slate-400 uppercase mb-1">
-                            TARGET MARKETS
+                            <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold">
+                              100%
+                            </span>
                           </div>
-                          <div className="flex flex-wrap gap-1">
-                            {tool.targetMarkets?.map((market, idx) => (
-                              <span
-                                key={idx}
-                                className="px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[9px] text-slate-700"
-                              >
-                                {idx + 1} {market}
+
+                          <div className="flex justify-between items-center text-[10px]">
+                            <span className="text-slate-400 uppercase">HS CODE</span>
+                            <span className="font-medium text-slate-800 flex items-center gap-1">
+                              {tool.hsCode}
+                              <span className="px-1 py-0.2 rounded bg-emerald-100 text-[#0b3536] text-[9px] font-bold">
+                                {tool.hsSuggested}
                               </span>
+                            </span>
+                          </div>
+
+                          <div className="flex justify-between items-center text-[10px]">
+                            <span className="text-slate-400 uppercase">CAPACITY</span>
+                            <span className="font-medium text-slate-800">{tool.capacity}</span>
+                          </div>
+
+                          <div className="flex justify-between items-center text-[10px]">
+                            <span className="text-slate-400 uppercase">MIN ORDER</span>
+                            <span className="font-medium text-slate-800">{tool.minOrder}</span>
+                          </div>
+
+                          {/* Target Markets */}
+                          <div className="pt-1.5 border-t border-slate-200">
+                            <div className="text-[9px] text-slate-400 uppercase mb-1">
+                              TARGET MARKETS
+                            </div>
+                            <div className="flex flex-wrap gap-1">
+                              {tool.targetMarkets?.map((market, idx) => (
+                                <span
+                                  key={idx}
+                                  className="px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[9px] text-slate-700"
+                                >
+                                  {idx + 1} {market}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Feature Bullets */}
+                        {tool.features && (
+                          <div className="mt-3 pt-2 border-t border-slate-200/60 space-y-1">
+                            {tool.features.map((feat, idx) => (
+                              <div
+                                key={idx}
+                                className="flex items-center gap-1.5 text-[11px] text-slate-600 font-sans"
+                              >
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#2dd4bf]" />
+                                <span>{feat}</span>
+                              </div>
                             ))}
                           </div>
-                        </div>
+                        )}
                       </div>
                     )}
                   </div>
-
-                  {/* Bottom Features List for Card 1 */}
-                  {tool.features && (
-                    <div className="mt-4 pt-3 border-t border-slate-200/60 space-y-1">
-                      {tool.features.map((feat, idx) => (
-                        <div
-                          key={idx}
-                          className="flex items-center gap-1.5 text-[11px] text-slate-600 font-sans"
-                        >
-                          <span className="w-1.5 h-1.5 rounded-full bg-[#2dd4bf]" />
-                          <span>{feat}</span>
-                        </div>
-                      ))}
-                    </div>
-                  )}
                 </div>
               );
             })}
