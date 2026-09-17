@@ -8,11 +8,6 @@ import {
   Check,
   Send,
   GitCommit,
-  Ruler,
-  Percent,
-  Calendar,
-  Code2,
-  Wallet,
 } from "lucide-react";
 
 interface ToolCard {
@@ -201,8 +196,13 @@ export default function ToolsShowcase() {
     const handleScroll = () => {
       if (!sectionRef.current) return;
       const rect = sectionRef.current.getBoundingClientRect();
-      // When scrolled down into the section (top < 200px), trigger straight layout
-      if (rect.top < 200) {
+      const vh = window.innerHeight;
+
+      // Straight un-tilted layout is ONLY active when section is actively in view (between top & bottom bounds).
+      // When scrolling above OR scrolling past to the next section (Footer), reverts to original tilted fan layout!
+      const isActivelyInView = rect.top <= vh * 0.45 && rect.bottom >= vh * 0.35;
+
+      if (isActivelyInView) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
@@ -254,10 +254,7 @@ export default function ToolsShowcase() {
           Five screens, in the order you meet them.
         </h2>
 
-        {/* Cards Container:
-            Without scrolling (!isScrolled): Tilted fan arrangement with overlapping cards (-space-x-12).
-            With scrolling (isScrolled): Straightened cards (0deg) with spaced layout (gap-4).
-        */}
+        {/* Cards Container */}
         <div className="relative w-full max-w-6xl min-h-[420px] my-4 flex justify-center items-center">
           <div
             className={`flex justify-center items-end transition-all duration-700 ease-out w-full px-2 ${
@@ -269,9 +266,6 @@ export default function ToolsShowcase() {
             {TOOLS.map((tool) => {
               const isHovered = activeId === tool.id;
 
-              // Rotation & translateY logic:
-              // Unscrolled (!isScrolled): Use tilted defaultRotation (-12deg to +12deg) & defaultTranslateY
-              // Scrolled (isScrolled): Straighten to 0deg and 0px translateY
               const currentRotation = isScrolled ? 0 : tool.defaultRotation;
               const currentTranslateY = isScrolled ? 0 : tool.defaultTranslateY;
 
