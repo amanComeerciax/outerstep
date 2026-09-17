@@ -3,9 +3,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
   Inbox,
-  LineChart,
   BarChart3,
   Sliders,
+  FileCheck,
+  Check,
 } from "lucide-react";
 
 interface ToolCard {
@@ -19,7 +20,7 @@ interface ToolCard {
   defaultRotation: number;
   defaultTranslateY: number;
   zIndexDefault: number;
-  // Specific data for card 1 (Setup) reveal on hover
+  // Card 1 (Setup)
   productName?: string;
   hsCode?: string;
   hsSuggested?: string;
@@ -28,7 +29,7 @@ interface ToolCard {
   minOrder?: string;
   targetMarkets?: string[];
   features?: string[];
-  // Specific data for card 2 (Inbox) reveal on hover
+  // Card 2 (Inbox)
   inquiryStatus?: string;
   hotInquiry?: boolean;
   confidence?: string;
@@ -39,6 +40,11 @@ interface ToolCard {
   timeline?: string;
   buyerType?: string;
   buyerVolume?: string;
+  // Card 3 (Introduction)
+  introFeeRate?: string;
+  commissionRate?: string;
+  terms?: string[];
+  acceptanceText?: string;
 }
 
 const TOOLS: ToolCard[] = [
@@ -95,16 +101,30 @@ const TOOLS: ToolCard[] = [
     ],
   },
   {
-    id: "pipeline",
-    badge: "03 PIPELINE",
-    title: "Track active deals & trade offers.",
-    description: "Manage RFQs, LOIs, and price specifications in one structured dashboard.",
-    icon: <LineChart className="w-6 h-6 text-white" />,
-    bgGradient: "bg-[#fff7ed]",
-    iconBg: "bg-[#f97316] shadow-lg shadow-orange-500/30",
+    id: "introduction",
+    badge: "03 INTRODUCTION",
+    title: "See the terms before you see the name.",
+    description: "Every introduction states what it costs and what it commits you to, per deal, before the buyer is revealed. Nothing is buried in an agreement you signed weeks earlier.",
+    icon: <FileCheck className="w-6 h-6 text-[#0b3536]" />,
+    bgGradient: "bg-white",
+    iconBg: "bg-[#2dd4bf] shadow-lg shadow-[#2dd4bf]/30",
     defaultRotation: 0,
     defaultTranslateY: 0,
     zIndexDefault: 20,
+    introFeeRate: "RATE-TBD",
+    commissionRate: "RATE-TBD",
+    terms: [
+      "Introduction fee, charged now",
+      "Commission on any transaction with this buyer",
+      "You report orders and upload shipping documents",
+      "Off-platform deals are still commissionable, and visible",
+    ],
+    acceptanceText: "I accept these terms for this buyer, recorded with my name and a timestamp.",
+    features: [
+      "Priced on what the reply actually contains",
+      "Protected window on that buyer",
+      "Recorded and timestamped",
+    ],
   },
   {
     id: "analytics",
@@ -364,6 +384,76 @@ export default function ToolsShowcase() {
                           <div className="pt-1 flex items-center justify-between">
                             <button className="px-3 py-1 rounded-lg bg-[#2dd4bf] hover:bg-[#14b8a6] text-[#0b3536] text-[10px] font-bold shadow-sm transition">
                               Unlock introduction
+                            </button>
+                            <span className="text-[9.5px] text-slate-400">Not for me</span>
+                          </div>
+                        </div>
+
+                        {/* Feature Bullets */}
+                        {tool.features && (
+                          <div className="mt-3 pt-2 border-t border-slate-200/60 space-y-1">
+                            {tool.features.map((feat, idx) => (
+                              <div
+                                key={idx}
+                                className="flex items-center gap-1.5 text-[11px] text-slate-600 font-sans"
+                              >
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#2dd4bf]" />
+                                <span>{feat}</span>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {/* Reveal detailed introduction terms ONLY when HOVERED for Card 3 (Introduction) */}
+                    {tool.id === "introduction" && (
+                      <div
+                        className={`transition-all duration-500 ease-in-out ${
+                          isHovered
+                            ? "opacity-100 max-h-96 mt-4 pointer-events-auto"
+                            : "opacity-0 max-h-0 overflow-hidden pointer-events-none"
+                        }`}
+                      >
+                        <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 font-mono text-[10.5px] space-y-2 text-slate-700 shadow-inner">
+                          <div className="text-[9.5px] uppercase tracking-wider text-slate-400 font-semibold pb-1 border-b border-slate-200">
+                            INTRODUCTION
+                          </div>
+                          <div className="text-[10px] text-slate-500 italic">
+                            Name revealed once terms are accepted
+                          </div>
+
+                          {/* Terms list */}
+                          <div className="space-y-1.5 text-[9.5px] pt-1">
+                            {tool.terms?.map((term, idx) => (
+                              <div key={idx} className="flex items-start gap-1.5">
+                                <span className="w-3.5 h-3.5 rounded bg-slate-200 text-slate-700 flex items-center justify-center text-[9px] font-bold shrink-0">
+                                  {idx + 1}
+                                </span>
+                                <div className="flex-1 leading-tight text-slate-800">
+                                  <span>{term} </span>
+                                  {idx < 2 && (
+                                    <span className="border border-dashed border-amber-500/80 text-amber-700 bg-amber-50 px-1 py-0.2 rounded text-[8.5px] font-bold ml-1">
+                                      RATE-TBD
+                                    </span>
+                                  )}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+
+                          {/* Agreement Box */}
+                          <div className="mt-2 p-2 rounded border border-emerald-300 bg-emerald-50/60 flex items-start gap-1.5 text-[9.5px] text-slate-700">
+                            <div className="w-3.5 h-3.5 rounded bg-emerald-500 text-white flex items-center justify-center shrink-0 mt-0.5">
+                              <Check className="w-2.5 h-2.5 stroke-[3]" />
+                            </div>
+                            <span className="leading-tight">{tool.acceptanceText}</span>
+                          </div>
+
+                          {/* Action button */}
+                          <div className="pt-1 flex items-center gap-2">
+                            <button className="px-3 py-1 rounded-lg bg-[#2dd4bf] hover:bg-[#14b8a6] text-[#0b3536] text-[10px] font-bold shadow-sm transition">
+                              Agree & unlock
                             </button>
                             <span className="text-[9.5px] text-slate-400">Not for me</span>
                           </div>
