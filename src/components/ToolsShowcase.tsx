@@ -3,10 +3,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
   Inbox,
-  BarChart3,
   Sliders,
   FileCheck,
   Check,
+  Send,
 } from "lucide-react";
 
 interface ToolCard {
@@ -45,6 +45,12 @@ interface ToolCard {
   commissionRate?: string;
   terms?: string[];
   acceptanceText?: string;
+  // Card 4 (Your Reply)
+  recipientName?: string;
+  replyParagraph1?: string;
+  replyParagraph2?: string;
+  missingTermPlaceholder?: string;
+  warningNote?: string;
 }
 
 const TOOLS: ToolCard[] = [
@@ -127,16 +133,26 @@ const TOOLS: ToolCard[] = [
     ],
   },
   {
-    id: "analytics",
-    badge: "04 ANALYTICS",
-    title: "Global export intelligence.",
-    description: "Discover high-demand target markets, port volumes, and trade route metrics.",
-    icon: <BarChart3 className="w-6 h-6 text-white" />,
-    bgGradient: "bg-[#eff6ff]",
-    iconBg: "bg-[#3b82f6] shadow-lg shadow-blue-500/30",
+    id: "reply",
+    badge: "04 YOUR REPLY",
+    title: "The draft is written. The price is yours.",
+    description: "Every reply comes drafted from your product record and the buyer's message. Commercial terms are left marked, and the send button stays disabled until you set them. We never quote a price on your behalf.",
+    icon: <Send className="w-6 h-6 text-[#0b3536]" />,
+    bgGradient: "bg-white",
+    iconBg: "bg-[#2dd4bf] shadow-lg shadow-[#2dd4bf]/30",
     defaultRotation: 6,
     defaultTranslateY: 6,
     zIndexDefault: 15,
+    recipientName: "Dear Mr. Oliveira,",
+    replyParagraph1:
+      "Thank you for your interest. We confirm availability of granular urea 46% N for an October shipment of 3,000 MT.",
+    missingTermPlaceholder: "[PRICE: confirm, not on product record]",
+    warningNote: "One term needs your input. We never invent a price.",
+    features: [
+      "Drafted in the buyer's language",
+      "Missing terms marked, never invented",
+      "Nothing auto-sent, ever",
+    ],
   },
 ];
 
@@ -335,7 +351,6 @@ export default function ToolsShowcase() {
                         }`}
                       >
                         <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 font-mono text-[11px] space-y-2.5 text-slate-700 shadow-inner">
-                          {/* Header bar */}
                           <div className="flex items-center justify-between pb-1.5 border-b border-slate-200">
                             <span className="text-[10px] text-rose-600 bg-rose-100 px-1.5 py-0.5 rounded font-bold uppercase">
                               HOT INQUIRY
@@ -345,12 +360,10 @@ export default function ToolsShowcase() {
                             </span>
                           </div>
 
-                          {/* Buyer message quote */}
                           <p className="text-[10px] italic text-slate-600 font-sans leading-snug border-l-2 border-teal-500 pl-2">
                             {tool.quoteText}
                           </p>
 
-                          {/* Extracted Metrics Table */}
                           <div className="grid grid-cols-2 gap-1.5 text-[9.5px] pt-1">
                             <div>
                               <span className="text-slate-400 block uppercase">QUANTITY</span>
@@ -370,7 +383,6 @@ export default function ToolsShowcase() {
                             </div>
                           </div>
 
-                          {/* Buyer Profile Box */}
                           <div className="pt-2 border-t border-slate-200">
                             <div className="font-bold text-slate-900 text-[11px]">
                               {tool.buyerType}
@@ -380,7 +392,6 @@ export default function ToolsShowcase() {
                             </div>
                           </div>
 
-                          {/* Unlock Introduction button */}
                           <div className="pt-1 flex items-center justify-between">
                             <button className="px-3 py-1 rounded-lg bg-[#2dd4bf] hover:bg-[#14b8a6] text-[#0b3536] text-[10px] font-bold shadow-sm transition">
                               Unlock introduction
@@ -423,7 +434,6 @@ export default function ToolsShowcase() {
                             Name revealed once terms are accepted
                           </div>
 
-                          {/* Terms list */}
                           <div className="space-y-1.5 text-[9.5px] pt-1">
                             {tool.terms?.map((term, idx) => (
                               <div key={idx} className="flex items-start gap-1.5">
@@ -442,7 +452,6 @@ export default function ToolsShowcase() {
                             ))}
                           </div>
 
-                          {/* Agreement Box */}
                           <div className="mt-2 p-2 rounded border border-emerald-300 bg-emerald-50/60 flex items-start gap-1.5 text-[9.5px] text-slate-700">
                             <div className="w-3.5 h-3.5 rounded bg-emerald-500 text-white flex items-center justify-center shrink-0 mt-0.5">
                               <Check className="w-2.5 h-2.5 stroke-[3]" />
@@ -450,12 +459,80 @@ export default function ToolsShowcase() {
                             <span className="leading-tight">{tool.acceptanceText}</span>
                           </div>
 
-                          {/* Action button */}
                           <div className="pt-1 flex items-center gap-2">
                             <button className="px-3 py-1 rounded-lg bg-[#2dd4bf] hover:bg-[#14b8a6] text-[#0b3536] text-[10px] font-bold shadow-sm transition">
                               Agree & unlock
                             </button>
                             <span className="text-[9.5px] text-slate-400">Not for me</span>
+                          </div>
+                        </div>
+
+                        {/* Feature Bullets */}
+                        {tool.features && (
+                          <div className="mt-3 pt-2 border-t border-slate-200/60 space-y-1">
+                            {tool.features.map((feat, idx) => (
+                              <div
+                                key={idx}
+                                className="flex items-center gap-1.5 text-[11px] text-slate-600 font-sans"
+                              >
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#2dd4bf]" />
+                                <span>{feat}</span>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {/* Reveal detailed email reply draft ONLY when HOVERED for Card 4 (Your Reply) */}
+                    {tool.id === "reply" && (
+                      <div
+                        className={`transition-all duration-500 ease-in-out ${
+                          isHovered
+                            ? "opacity-100 max-h-96 mt-4 pointer-events-auto"
+                            : "opacity-0 max-h-0 overflow-hidden pointer-events-none"
+                        }`}
+                      >
+                        <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 font-mono text-[10.5px] space-y-2 text-slate-700 shadow-inner">
+                          <div className="flex items-center justify-between pb-1 border-b border-slate-200">
+                            <span className="text-[9.5px] uppercase tracking-wider text-slate-400 font-semibold">
+                              YOUR REPLY
+                            </span>
+                            <span className="text-[9px] bg-slate-200 text-slate-700 px-1.5 py-0.5 rounded font-bold">
+                              AI DRAFT
+                            </span>
+                          </div>
+
+                          {/* Email body draft */}
+                          <div className="p-2.5 rounded bg-white border border-slate-200 font-sans text-[10px] text-slate-700 space-y-1.5 leading-relaxed">
+                            <p className="font-semibold text-slate-900">{tool.recipientName}</p>
+                            <p>{tool.replyParagraph1}</p>
+                            <p>
+                              Our price for this volume is{" "}
+                              <span className="border border-dashed border-amber-500/80 text-amber-800 bg-amber-50 px-1 py-0.2 rounded font-mono text-[9px] font-semibold">
+                                {tool.missingTermPlaceholder}
+                              </span>{" "}
+                              per MT CIF Santos, valid 14 days.
+                            </p>
+                          </div>
+
+                          {/* Warning text */}
+                          <div className="text-[9px] text-amber-700 flex items-center gap-1">
+                            <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+                            <span>{tool.warningNote}</span>
+                          </div>
+
+                          {/* Footer action button */}
+                          <div className="pt-1 flex items-center justify-between">
+                            <button
+                              disabled
+                              className="px-3 py-1 rounded-lg bg-slate-200 text-slate-400 text-[10px] font-bold cursor-not-allowed"
+                            >
+                              Send reply
+                            </button>
+                            <span className="text-[8.5px] text-slate-400 uppercase font-mono tracking-tighter">
+                              NEVER SENT WITHOUT YOUR APPROVAL
+                            </span>
                           </div>
                         </div>
 
