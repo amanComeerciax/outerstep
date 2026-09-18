@@ -4,7 +4,7 @@ import React from "react";
 
 export default function Footer() {
   return (
-    <footer className="bg-[#0a3a40] text-white pt-16 sm:pt-20 relative overflow-hidden">
+    <footer className="w-full max-w-full bg-[#0a3a40] text-white pt-16 sm:pt-20 relative overflow-hidden overflow-x-clip">
       {/* Subtle Glow Background */}
       <div className="absolute -top-48 left-1/2 -translate-x-1/2 w-[600px] sm:w-[1000px] h-[300px] sm:h-[400px] bg-[#2dd4bf] blur-[140px] sm:blur-[200px] opacity-[0.12] pointer-events-none rounded-full" />
 

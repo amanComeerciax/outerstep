@@ -133,7 +133,7 @@ export function TrackRecordSection() {
     <section
       ref={sectionRef}
       id="track-record"
-      className="relative w-full bg-[#0a3a40] text-white pt-10 pb-32 sm:pt-14 sm:pb-36 lg:pt-16 lg:pb-40 overflow-hidden"
+      className="relative w-full max-w-full bg-[#0a3a40] text-white pt-10 pb-32 sm:pt-14 sm:pb-36 lg:pt-16 lg:pb-40 overflow-hidden overflow-x-clip"
     >
       {/* Subtle background ambient radial gradient */}
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(72,181,165,0.08),transparent_70%)]" />

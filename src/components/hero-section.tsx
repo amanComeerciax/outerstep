@@ -68,7 +68,7 @@ export function HeroSection() {
   }, [])
 
   return (
-    <div className="relative min-h-screen w-full bg-[#edf2f2] text-[#0a3a40] overflow-hidden flex flex-col justify-between selection:bg-[#2a6369]/20 selection:text-[#0a3a40]">
+    <div className="relative min-h-screen w-full max-w-full bg-[#edf2f2] text-[#0a3a40] overflow-hidden overflow-x-clip flex flex-col justify-between selection:bg-[#2a6369]/20 selection:text-[#0a3a40]">
       {/* Subtle atmospheric ambient glow */}
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(42,99,105,0.06),transparent_65%)]" />
 

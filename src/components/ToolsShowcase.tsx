@@ -281,13 +281,13 @@ export default function ToolsShowcase() {
     <section
       id="platform"
       ref={sectionRef}
-      className="relative w-full h-[250vh] md:h-auto md:min-h-screen px-0 md:px-6 bg-[#0b3536] text-white flex flex-col md:justify-center md:items-center transition-colors"
+      className="relative w-full max-w-full h-[250vh] md:h-auto md:min-h-screen px-0 md:px-6 bg-[#0b3536] text-white flex flex-col md:justify-center md:items-center transition-colors overflow-x-clip"
     >
       {/* Clean Ambient Gradient Glow Accent */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-[#2dd4bf]/5 blur-[140px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] max-w-[100vw] h-[400px] bg-[#2dd4bf]/5 blur-[140px] rounded-full pointer-events-none" />
 
       {/* STICKY CONTAINER FOR MOBILE, NORMAL ON DESKTOP */}
-      <div className="sticky top-0 h-[100dvh] w-full flex flex-col justify-between pt-16 pb-6 overflow-hidden z-10 md:relative md:h-auto md:min-h-0 md:pt-10 md:pb-10 md:overflow-visible md:max-w-7xl md:mx-auto md:items-center md:text-center">
+      <div className="sticky top-0 h-[100dvh] w-full max-w-full flex flex-col justify-between pt-16 pb-6 overflow-hidden z-10 md:relative md:h-auto md:min-h-0 md:pt-10 md:pb-10 md:overflow-visible md:max-w-7xl md:mx-auto md:items-center md:text-center">
         {/* Top Tagline & Heading */}
         <div className="w-full text-center px-4 shrink-0">
           <div className="text-[10px] sm:text-[11px] font-mono-tech tracking-widest text-[#2dd4bf] uppercase mb-1 sm:mb-2">
@@ -320,7 +320,7 @@ export default function ToolsShowcase() {
         </div>
 
         {/* Cards Container */}
-        <div className="relative w-full flex items-center overflow-visible my-auto py-2 md:min-h-[440px] md:justify-center md:pb-8 md:pt-4">
+        <div className="relative w-full max-w-full flex items-center overflow-x-clip md:overflow-visible my-auto py-2 md:min-h-[440px] md:justify-center md:pb-8 md:pt-4">
           <div
             ref={trackRef}
             className={`flex will-change-transform ${isMobile

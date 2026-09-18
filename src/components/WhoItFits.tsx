@@ -65,6 +65,7 @@ export default function WhoItFits() {
     <section
       ref={containerRef}
       id="fit"
+      className="w-full max-w-full overflow-x-clip"
       style={{
         padding: "clamp(60px, 10vw, 120px) 0 clamp(80px, 15vw, 160px) 0",
         background: "var(--os-paper)",

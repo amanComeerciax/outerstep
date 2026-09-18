@@ -21,10 +21,16 @@
     /* Do NOT set scroll-behavior:smooth here — it fights GSAP scrub animations.
        JS-driven smooth scrolling is handled in SmoothScrollProvider. */
     overflow-anchor: none;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: clip;
   }
 
-  * {
+  *,
+  *::before,
+  *::after {
     border-color: var(--border);
+    box-sizing: border-box;
   }
 
   body {
@@ -33,6 +39,12 @@
     font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: clip;
+    position: relative;
+    margin: 0;
+    padding: 0;
   }
 
   ::selection {

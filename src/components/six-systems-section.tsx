@@ -335,7 +335,7 @@ export function SixSystemsSection() {
       ref={sectionRef}
       id="underneath-systems"
       suppressHydrationWarning
-      className="relative w-full bg-[#edf2f2] contain-layout"
+      className="relative w-full max-w-full bg-[#edf2f2] contain-layout overflow-x-clip"
       style={{ height: "300vh" }}
     >
       {/* 
@@ -344,7 +344,7 @@ export function SixSystemsSection() {
         giving ample scroll distance so the dot travels steadily and reveals each
         bullet precisely upon arrival without jumping or prematurely surpassing the section.
       */}
-      <div className="sticky top-0 h-screen w-full flex flex-col justify-center py-6 sm:py-8 lg:py-10 px-6 sm:px-10 lg:px-16 overflow-hidden select-none">
+      <div className="sticky top-0 h-screen w-full max-w-full flex flex-col justify-center py-6 sm:py-8 lg:py-10 px-6 sm:px-10 lg:px-16 overflow-hidden select-none">
         <div className="max-w-4xl mx-auto w-full">
           {/* Header Tagline */}
           <div className="mb-2">

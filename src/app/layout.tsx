@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="min-h-screen bg-[#edf2f2] text-[#0a3a40] antialiased">
+      <body className="min-h-screen w-full max-w-full overflow-x-clip bg-[#edf2f2] text-[#0a3a40] antialiased">
         <ModalProvider>
           <SmoothScrollProvider />
           {children}

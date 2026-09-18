@@ -365,7 +365,7 @@ function CircularSplitRollComp({
   return (
     <section
       ref={rootRef}
-      className={`relative w-full ${className}`}
+      className={`relative w-full max-w-full overflow-x-clip ${className}`}
       style={{
         background: background || "var(--os-deep-water)",
         "--css-title-size": titleSize,

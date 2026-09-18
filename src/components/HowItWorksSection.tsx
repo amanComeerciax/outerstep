@@ -691,13 +691,13 @@ export default function HowItWorksSection() {
       ref={sectionRef}
       id="how-it-works"
       aria-label="How It Works"
-      className="w-full bg-[#F2F4F2] relative h-[250vh] sm:h-[300vh]"
+      className="w-full max-w-full bg-[#F2F4F2] relative h-[250vh] sm:h-[300vh] overflow-x-clip"
     >
       {/* 
         STICKY CONTAINER FOR ALL SCREENS (MOBILE & DESKTOP):
         Pins during vertical page scroll until Card 03 is completely revealed.
       */}
-      <div className="sticky top-0 h-[100dvh] w-full overflow-hidden flex flex-col justify-center gap-6 sm:gap-12 pt-8 sm:pt-20 pb-6 sm:py-10 lg:py-14">
+      <div className="sticky top-0 h-[100dvh] w-full max-w-full overflow-hidden flex flex-col justify-center gap-6 sm:gap-12 pt-8 sm:pt-20 pb-6 sm:py-10 lg:py-14">
         {/* =========================================================================
             HEADER SECTION (Fluid clamp typography)
            ========================================================================= */}
@@ -748,7 +748,7 @@ export default function HowItWorksSection() {
         {/* =========================================================================
             HORIZONTAL CARDS TRACK
            ========================================================================= */}
-        <div className="relative w-full overflow-visible pl-4 sm:pl-8 lg:pl-12">
+        <div className="relative w-full max-w-full overflow-x-clip md:overflow-visible pl-4 sm:pl-8 lg:pl-12">
           <div
             ref={trackRef}
             className="flex gap-4 sm:gap-6 lg:gap-8 will-change-transform"
