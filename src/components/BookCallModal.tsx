@@ -67,13 +67,18 @@ export default function BookCallModal({ isOpen, onClose, initialProduct = "" }: 
           <a
             href="#"
             onClick={onClose}
-            className="flex items-center gap-1.5 group select-none"
+            className="flex items-center gap-3 group select-none"
             aria-label="Outerstep Home"
           >
-            <span className="font-sans-clean font-bold text-2xl tracking-tight text-[#0a3a40]">
+            <svg width="32" height="32" viewBox="0 0 120 120" fill="none" className="transition-transform duration-200 group-hover:scale-105">
+              <rect x="0" y="0" width="120" height="120" rx="24" fill="#2dd4bf" />
+              <rect x="20" y="76" width="24" height="24" rx="6" fill="#0a3a40" />
+              <rect x="48" y="48" width="24" height="24" rx="6" fill="#0a3a40" />
+              <rect x="76" y="20" width="24" height="24" rx="6" fill="#0a3a40" opacity="0.55" />
+            </svg>
+            <span className="font-headline font-semibold text-2xl tracking-tight text-[#0a3a40]">
               Outerstep
             </span>
-            <span className="w-2 h-2 rounded-full bg-[#2a6369] -mt-2 group-hover:scale-125 transition-transform duration-200" />
           </a>
 
           {/* Desktop Navigation Links */}
