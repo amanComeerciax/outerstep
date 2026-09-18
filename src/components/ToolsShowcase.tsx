@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import {
   Inbox,
   Sliders,
@@ -191,33 +191,86 @@ export default function ToolsShowcase() {
   const [activeId, setActiveId] = useState<string>("");
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
   const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [mobileStep, setMobileStep] = useState<number>(0);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    const checkMobile = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      if (!mobile && trackRef.current) {
+        trackRef.current.style.transform = "";
+        trackRef.current.style.paddingLeft = "";
+        trackRef.current.style.paddingRight = "";
+      }
+    };
     checkMobile();
     window.addEventListener("resize", checkMobile, { passive: true });
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  useEffect(() => {
-    const evaluate = () => {
-      if (!sectionRef.current) return;
-      const rect = sectionRef.current.getBoundingClientRect();
-      // Trigger spread when the section top is within 75% of the viewport height
-      // This gives the animation enough time regardless of screen height
-      const inView = rect.top <= window.innerHeight * 0.75 && rect.bottom > 100;
-      setIsScrolled(inView);
-    };
+  const handleScroll = useCallback(() => {
+    if (!sectionRef.current) return;
+    const rect = sectionRef.current.getBoundingClientRect();
 
-    window.addEventListener("scroll", evaluate, { passive: true });
-    window.addEventListener("resize", evaluate, { passive: true });
-    evaluate();
-    return () => {
-      window.removeEventListener("scroll", evaluate);
-      window.removeEventListener("resize", evaluate);
-    };
+    // Desktop spread evaluation
+    const inView = rect.top <= window.innerHeight * 0.75 && rect.bottom > 100;
+    setIsScrolled(inView);
+
+    // Mobile on-scroll pinned horizontal translation
+    if (window.innerWidth < 768 && trackRef.current && sectionRef.current) {
+      const section = sectionRef.current;
+      const track = trackRef.current;
+      const sectionHeight = section.offsetHeight;
+      const viewportHeight = window.innerHeight;
+      const scrollableDistance = sectionHeight - viewportHeight;
+
+      if (scrollableDistance > 0) {
+        const scrolled = -rect.top;
+        const progress = Math.min(Math.max(scrolled / scrollableDistance, 0), 1);
+
+        const firstCard = track.children[0] as HTMLElement;
+        const cardWidth = firstCard?.offsetWidth || 300;
+        const gap = 16;
+        const totalCards = 5;
+
+        // Symmetric padding so Card 0 is centered at progress 0, Card 4 centered at progress 1
+        const centerOffset = Math.max(16, (window.innerWidth - cardWidth) / 2);
+        track.style.paddingLeft = `${centerOffset}px`;
+        track.style.paddingRight = `${centerOffset}px`;
+
+        const maxTranslate = (totalCards - 1) * (cardWidth + gap);
+        const currentTranslate = progress * maxTranslate;
+
+        track.style.transform = `translate3d(-${currentTranslate}px, 0, 0)`;
+
+        const step = Math.min(4, Math.max(0, Math.round(progress * 4)));
+        setMobileStep(step);
+      }
+    }
   }, []);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll, { passive: true });
+    handleScroll();
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
+  }, [handleScroll]);
+
+  const scrollToStep = (idx: number) => {
+    if (sectionRef.current) {
+      const top = sectionRef.current.offsetTop;
+      const total = sectionRef.current.offsetHeight - window.innerHeight;
+      window.scrollTo({
+        top: top + (idx / 4) * total,
+        behavior: "smooth",
+      });
+    }
+  };
 
   // Toggle card active state for mobile tap
   const handleCardClick = (id: string) => {
@@ -228,58 +281,71 @@ export default function ToolsShowcase() {
     <section
       id="platform"
       ref={sectionRef}
-      className="relative w-full min-h-screen py-10 sm:py-16 md:py-24 px-3 sm:px-6 overflow-hidden bg-[#0b3536] text-white transition-colors flex flex-col justify-center items-center"
+      className="relative w-full h-[250vh] md:h-auto md:min-h-screen px-0 md:px-6 bg-[#0b3536] text-white flex flex-col md:justify-center md:items-center transition-colors"
     >
       {/* Clean Ambient Gradient Glow Accent */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-[#2dd4bf]/5 blur-[140px] rounded-full pointer-events-none" />
 
-      <div className="relative max-w-7xl mx-auto flex flex-col items-center text-center z-10 w-full">
-        {/* Top Tagline */}
-        <div className="text-[10px] sm:text-[11px] font-mono-tech tracking-widest text-[#2dd4bf] uppercase mb-2">
-          THE PLATFORM
+      {/* STICKY CONTAINER FOR MOBILE, NORMAL ON DESKTOP */}
+      <div className="sticky top-0 h-[100dvh] w-full flex flex-col justify-between pt-16 pb-6 overflow-hidden z-10 md:relative md:h-auto md:min-h-0 md:pt-10 md:pb-10 md:overflow-visible md:max-w-7xl md:mx-auto md:items-center md:text-center">
+        {/* Top Tagline & Heading */}
+        <div className="w-full text-center px-4 shrink-0">
+          <div className="text-[10px] sm:text-[11px] font-mono-tech tracking-widest text-[#2dd4bf] uppercase mb-1 sm:mb-2">
+            THE PLATFORM
+          </div>
+
+          <h2 className="text-xl sm:text-3xl md:text-5xl lg:text-6xl font-headline font-medium tracking-tight text-white max-w-3xl mx-auto mb-1.5 sm:mb-4 leading-tight">
+            Five screens, in the order you meet them.
+          </h2>
+
+          {/* Mobile Step Indicator */}
+          <div className="flex md:hidden items-center justify-center gap-2 mt-1">
+            <div className="px-2.5 py-0.5 rounded-full bg-[#0d4546] border border-[#2dd4bf]/40 text-[10px] font-mono-tech font-bold text-[#2dd4bf]">
+              0{mobileStep + 1} / 05
+            </div>
+            <div className="flex items-center gap-1.5">
+              {[0, 1, 2, 3, 4].map((idx) => (
+                <button
+                  key={idx}
+                  onClick={() => scrollToStep(idx)}
+                  aria-label={`Go to screen 0${idx + 1}`}
+                  className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${mobileStep === idx
+                      ? "w-5 bg-[#2dd4bf]"
+                      : "w-1.5 bg-[#2dd4bf]/25"
+                    }`}
+                />
+              ))}
+            </div>
+          </div>
         </div>
 
-        {/* Section Heading */}
-        <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-headline font-medium tracking-tight text-white max-w-3xl mb-6 sm:mb-12 leading-tight">
-          Five screens, in the order you meet them.
-        </h2>
-
-        {/* Swipe Hint Indicator for Mobile */}
-        <div className="flex md:hidden items-center justify-center gap-1.5 text-[10px] font-mono-tech text-[#2dd4bf] mb-4 bg-[#0d4546] px-3 py-1 rounded-full border border-[#2dd4bf]/30">
-          <span>← Swipe to explore cards →</span>
-        </div>
-
-        {/* Cards Container:
-            - Mobile (<md): native horizontal snap scroll, cards always spread, no stacking
-            - Desktop (>=md): cards stack when off-screen and spread on scroll-in
-        */}
-        <div
-          className={`relative w-full ${
-            isMobile
-              ? "min-h-[380px]"
-              : "min-h-[460px] sm:min-h-[440px]"
-          } my-2 sm:my-4 flex items-center ${
-            isMobile ? "justify-start overflow-x-auto" : "justify-center overflow-visible"
-          } pb-8 pt-4 scrollbar-none ${
-            isMobile ? "snap-x snap-mandatory" : ""
-          }`}
-        >
+        {/* Cards Container */}
+        <div className="relative w-full flex items-center overflow-visible my-auto py-2 md:min-h-[440px] md:justify-center md:pb-8 md:pt-4">
           <div
-            className={`flex items-end ${
-              isMobile
-                ? "gap-3 px-6 min-w-max" // mobile: always spread, swipeable
+            ref={trackRef}
+            className={`flex will-change-transform ${isMobile
+                ? "items-center gap-4 transition-none"
                 : isScrolled
-                ? "gap-2 sm:gap-3 lg:gap-3.5 xl:gap-4 transition-all duration-700 ease-out justify-center" // desktop spread
-                : "md:-space-x-16 lg:-space-x-20 transition-all duration-700 ease-out justify-center" // desktop stacked
-            }`}
+                  ? "items-end gap-2 sm:gap-3 lg:gap-3.5 xl:gap-4 transition-all duration-700 ease-out justify-center"
+                  : "items-end md:-space-x-16 lg:-space-x-20 transition-all duration-700 ease-out justify-center"
+              }`}
           >
-            {TOOLS.map((tool) => {
+            {TOOLS.map((tool, idx) => {
               const isHovered = activeId === tool.id;
-              const showKeyPoints = isHovered && (isScrolled || isMobile);
+              const isCurrentMobileCard = isMobile && mobileStep === idx;
+              const showKeyPoints = isHovered || isCurrentMobileCard;
 
-              // On mobile or when scrolled-in: cards are always flat/spread
-              const currentRotation = (isScrolled || isMobile) ? 0 : tool.defaultRotation;
-              const currentTranslateY = (isScrolled || isMobile) ? 0 : tool.defaultTranslateY;
+              // On mobile: un-tilt when active; on desktop: based on isScrolled
+              const currentRotation = isMobile
+                ? 0
+                : isScrolled
+                  ? 0
+                  : tool.defaultRotation;
+              const currentTranslateY = isMobile
+                ? 0
+                : isScrolled
+                  ? 0
+                  : tool.defaultTranslateY;
 
               return (
                 <div
@@ -289,30 +355,37 @@ export default function ToolsShowcase() {
                   onMouseLeave={() => setActiveId("")}
                   style={{
                     zIndex: isHovered ? 40 : tool.zIndexDefault,
-                    transform: isHovered
-                      ? (isScrolled || isMobile)
-                        ? `translateY(-24px) rotate(0deg) scale(1.02)`
-                        : `translateY(${currentTranslateY - 10}px) rotate(${currentRotation}deg)`
-                      : `translateY(${currentTranslateY}px) rotate(${currentRotation}deg)`,
+                    transform: isMobile
+                      ? isCurrentMobileCard
+                        ? "scale(1.02)"
+                        : "scale(0.95)"
+                      : isHovered
+                        ? isScrolled
+                          ? `translateY(-24px) rotate(0deg) scale(1.02)`
+                          : `translateY(${currentTranslateY - 10}px) rotate(${currentRotation}deg)`
+                        : `translateY(${currentTranslateY}px) rotate(${currentRotation}deg)`,
                   }}
-                  className={`relative flex-shrink-0 ${
-                  isMobile ? "snap-center" : ""
-                } w-[220px] sm:w-[235px] md:w-[220px] lg:w-[230px] xl:w-[245px] min-h-[300px] sm:min-h-[320px] rounded-2xl p-4 sm:p-5 transition-all duration-500 ease-out cursor-pointer ${
-                    tool.bgGradient
-                  } border border-white/90 shadow-[0_12px_30px_rgba(0,0,0,0.35)] flex flex-col justify-between text-left ${
-                    isHovered
-                      ? "shadow-[0_22px_45px_rgba(0,0,0,0.5)] border-[#2dd4bf]"
-                      : "hover:border-slate-300"
-                  }`}
+                  className={`relative flex-shrink-0 ${isMobile
+                      ? "w-[82vw] max-w-[310px] min-h-[290px]"
+                      : "w-[220px] sm:w-[235px] md:w-[220px] lg:w-[230px] xl:w-[245px] min-h-[300px] sm:min-h-[320px]"
+                    } rounded-2xl p-4 sm:p-5 transition-all duration-300 ease-out cursor-pointer ${tool.bgGradient
+                    } border shadow-[0_12px_30px_rgba(0,0,0,0.35)] flex flex-col justify-between text-left ${isCurrentMobileCard
+                      ? "border-[#2dd4bf] shadow-[0_16px_40px_rgba(45,212,191,0.25)] ring-1 ring-[#2dd4bf]/40 opacity-100"
+                      : isHovered
+                        ? "shadow-[0_22px_45px_rgba(0,0,0,0.5)] border-[#2dd4bf] opacity-100"
+                        : isMobile
+                          ? "border-white/40 opacity-70"
+                          : "border-white/90 hover:border-slate-300 opacity-100"
+                    }`}
                 >
                   <div>
                     {/* Step Badge Pill */}
-                    <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-[#0b3536] text-[#2dd4bf] text-[9.5px] sm:text-[10px] font-mono-tech font-bold tracking-wider mb-3 sm:mb-4">
+                    <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-[#0b3536] text-[#2dd4bf] text-[9.5px] sm:text-[10px] font-mono-tech font-bold tracking-wider mb-2.5 sm:mb-4">
                       {tool.badge}
                     </div>
 
                     {/* Card Title */}
-                    <h3 className="font-headline font-bold text-base sm:text-lg md:text-xl text-slate-900 leading-snug mb-2 sm:mb-3">
+                    <h3 className="font-headline font-bold text-base sm:text-lg md:text-xl text-slate-900 leading-snug mb-1.5 sm:mb-3">
                       {tool.title}
                     </h3>
 
@@ -321,19 +394,18 @@ export default function ToolsShowcase() {
                       {tool.description}
                     </p>
 
-                    {/* Key Points / Bullet Features: ONLY when cards are separated (isScrolled) AND hovered (isHovered) */}
+                    {/* Key Points / Bullet Features */}
                     {tool.features && tool.features.length > 0 && (
                       <div
-                        className={`transition-all duration-400 ease-in-out ${
-                          showKeyPoints
-                            ? "opacity-100 max-h-40 mt-3.5 pt-3 border-t border-slate-200/80 pointer-events-auto"
+                        className={`transition-all duration-400 ease-in-out ${showKeyPoints
+                            ? "opacity-100 max-h-40 mt-3 pt-2.5 border-t border-slate-200/80 pointer-events-auto"
                             : "opacity-0 max-h-0 overflow-hidden pointer-events-none"
-                        }`}
+                          }`}
                       >
                         <div className="space-y-1.5">
-                          {tool.features.map((feat, idx) => (
+                          {tool.features.map((feat, fIdx) => (
                             <div
-                              key={idx}
+                              key={fIdx}
                               className="flex items-center gap-2 text-[10.5px] sm:text-[11px] text-slate-700 font-sans-clean leading-snug"
                             >
                               <span className="w-1.5 h-1.5 rounded-full bg-[#2dd4bf] shrink-0" />

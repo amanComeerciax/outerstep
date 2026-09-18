@@ -1,6 +1,5 @@
 import type { Metadata } from "next"
 import "./globals.css"
-import { AgentationWrapper } from "@/components/agentation-wrapper"
 import { ModalProvider } from "@/components/ModalProvider"
 import { SmoothScrollProvider } from "@/components/SmoothScrollProvider"
 
@@ -21,7 +20,6 @@ export default function RootLayout({
         <ModalProvider>
           <SmoothScrollProvider />
           {children}
-          <AgentationWrapper />
         </ModalProvider>
       </body>
     </html>

@@ -109,15 +109,15 @@ function CardOneVisual() {
       </div>
 
       {/* Floating Product Details Form Card */}
-      <div className="w-full max-w-[420px] rounded-2xl bg-white border border-[#DFE9E4] p-4 sm:p-5 shadow-[0_12px_36px_-6px_rgba(11,56,50,0.08)] relative z-10">
+      <div className="w-full max-w-[420px] rounded-2xl bg-white border border-[#DFE9E4] p-3 sm:p-5 shadow-[0_12px_36px_-6px_rgba(11,56,50,0.08)] relative z-10">
         {/* Header */}
-        <div className="flex items-center justify-between mb-3.5">
+        <div className="flex items-center justify-between mb-2 sm:mb-3.5">
           <div className="flex items-center gap-2">
             <h4 className="text-xs sm:text-sm font-bold text-[#082F28]">Product details</h4>
             <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-ping" />
           </div>
           <span
-            className={`text-[10px] font-mono px-2 py-0.5 rounded-full font-medium transition-all duration-300 ${
+            className={`text-[9.5px] sm:text-[10px] font-mono px-2 py-0.5 rounded-full font-medium transition-all duration-300 ${
               saveBadge === "Saving..."
                 ? "bg-amber-100 text-amber-800"
                 : "bg-[#10B981]/10 text-[#10B981]"
@@ -128,7 +128,7 @@ function CardOneVisual() {
         </div>
 
         {/* 2-Column Form Fields */}
-        <div className="grid grid-cols-2 gap-2 mb-4">
+        <div className="grid grid-cols-2 gap-1.5 sm:gap-2 mb-2 sm:mb-4">
           <div className="relative">
             <input
               type="text"
@@ -137,7 +137,7 @@ function CardOneVisual() {
                 setFormData({ ...formData, productName: e.target.value })
               }
               placeholder="Product name"
-              className={`w-full h-8 px-2.5 rounded-lg border text-[11px] text-[#082F28] transition-all font-medium ${
+              className={`w-full h-7 sm:h-8 px-2 sm:px-2.5 rounded-lg border text-[10px] sm:text-[11px] text-[#082F28] transition-all font-medium ${
                 activeStep === 0
                   ? "border-[#10B981] bg-white shadow-[0_0_10px_rgba(16,185,129,0.15)] ring-1 ring-[#10B981]/30"
                   : "border-[#D5E2DB] bg-[#F9FBFA]"
@@ -153,13 +153,13 @@ function CardOneVisual() {
                 setFormData({ ...formData, hsCode: e.target.value })
               }
               placeholder="HS Code"
-              className={`w-full h-8 pl-2.5 pr-6 rounded-lg border text-[11px] text-[#082F28] font-mono transition-all font-medium ${
+              className={`w-full h-7 sm:h-8 pl-2 sm:pl-2.5 pr-6 rounded-lg border text-[10px] sm:text-[11px] text-[#082F28] font-mono transition-all font-medium ${
                 activeStep === 0
                   ? "border-[#10B981] bg-white shadow-[0_0_10px_rgba(16,185,129,0.15)]"
                   : "border-[#D5E2DB] bg-[#F9FBFA]"
               }`}
             />
-            <Search className="w-3 h-3 text-[#708E83] absolute right-2 top-2.5 pointer-events-none" />
+            <Search className="w-3 h-3 text-[#708E83] absolute right-2 top-2 pointer-events-none" />
           </div>
 
           <div>
@@ -170,7 +170,7 @@ function CardOneVisual() {
                 setFormData({ ...formData, grade: e.target.value })
               }
               placeholder="Grade / Specification"
-              className={`w-full h-8 px-2.5 rounded-lg border text-[11px] text-[#082F28] transition-all font-medium ${
+              className={`w-full h-7 sm:h-8 px-2 sm:px-2.5 rounded-lg border text-[10px] sm:text-[11px] text-[#082F28] transition-all font-medium ${
                 activeStep === 1
                   ? "border-[#10B981] bg-white shadow-[0_0_10px_rgba(16,185,129,0.15)] ring-1 ring-[#10B981]/30"
                   : "border-[#D5E2DB] bg-[#F9FBFA]"
@@ -186,7 +186,7 @@ function CardOneVisual() {
                 setFormData({ ...formData, loadingPort: e.target.value })
               }
               placeholder="Loading port"
-              className={`w-full h-8 px-2.5 rounded-lg border text-[11px] text-[#082F28] transition-all font-medium ${
+              className={`w-full h-7 sm:h-8 px-2 sm:px-2.5 rounded-lg border text-[10px] sm:text-[11px] text-[#082F28] transition-all font-medium ${
                 activeStep === 1
                   ? "border-[#10B981] bg-white shadow-[0_0_10px_rgba(16,185,129,0.15)] ring-1 ring-[#10B981]/30"
                   : "border-[#D5E2DB] bg-[#F9FBFA]"
@@ -201,8 +201,8 @@ function CardOneVisual() {
               onChange={(e) =>
                 setFormData({ ...formData, moq: e.target.value })
               }
-              placeholder="Minimum order quantity"
-              className={`w-full h-8 px-2.5 rounded-lg border text-[11px] text-[#082F28] transition-all font-medium ${
+              placeholder="MOQ"
+              className={`w-full h-7 sm:h-8 px-2 sm:px-2.5 rounded-lg border text-[10px] sm:text-[11px] text-[#082F28] transition-all font-medium ${
                 activeStep === 2
                   ? "border-[#10B981] bg-white shadow-[0_0_10px_rgba(16,185,129,0.15)] ring-1 ring-[#10B981]/30"
                   : "border-[#D5E2DB] bg-[#F9FBFA]"
@@ -218,7 +218,7 @@ function CardOneVisual() {
                 setFormData({ ...formData, certifications: e.target.value })
               }
               placeholder="Certifications"
-              className={`w-full h-8 px-2.5 rounded-lg border text-[11px] text-[#082F28] transition-all font-medium ${
+              className={`w-full h-7 sm:h-8 px-2 sm:px-2.5 rounded-lg border text-[10px] sm:text-[11px] text-[#082F28] transition-all font-medium ${
                 activeStep === 2
                   ? "border-[#10B981] bg-white shadow-[0_0_10px_rgba(16,185,129,0.15)] ring-1 ring-[#10B981]/30"
                   : "border-[#D5E2DB] bg-[#F9FBFA]"
@@ -227,18 +227,17 @@ function CardOneVisual() {
           </div>
         </div>
 
-        {/* Save and continue button */}
-        <div className="flex items-center justify-between">
-          <span className="text-[10px] text-[#6E887F] font-mono">
+        {/* Card Footer Bar */}
+        <div className="flex items-center justify-between pt-2 sm:pt-3 border-t border-[#DFE9E4]">
+          <span className="text-[9.5px] sm:text-[11px] font-mono text-[#769389]">
             Step {activeStep + 1} of 4
           </span>
           <button
             onClick={handleManualSave}
-            type="button"
-            className="px-3.5 py-1.5 rounded-lg bg-[#082F28] hover:bg-[#05211C] text-white text-[11px] font-semibold flex items-center gap-1.5 transition-all shadow-sm active:scale-95 group"
+            className="flex items-center gap-1.5 px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-lg bg-[#082F28] text-white text-[10px] sm:text-[11px] font-medium hover:bg-[#0c4037] transition-all active:scale-95"
           >
             <span>Save and continue</span>
-            <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+            <ArrowRight className="w-3 h-3" />
           </button>
         </div>
       </div>
@@ -630,42 +629,10 @@ export default function HowItWorksSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const [activeStep, setActiveStep] = useState(0);
-  // Use BOTH state (for JSX re-render) and ref (for real-time scroll reads without re-subscribing)
-  const [isDesktopPinned, setIsDesktopPinned] = useState(false);
-  const isDesktopPinnedRef = useRef(false);
 
-  // Check screen size — runs on mount and every resize
-  useEffect(() => {
-    const checkBreakpoint = () => {
-      const isLarge = window.innerWidth >= 768;
-      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      const shouldPin = isLarge && !prefersReducedMotion;
-
-      const prev = isDesktopPinnedRef.current;
-      isDesktopPinnedRef.current = shouldPin;
-      setIsDesktopPinned(shouldPin);
-
-      // When switching TO mobile: reset any stuck transform on the track
-      if (prev && !shouldPin && trackRef.current) {
-        trackRef.current.style.transform = "translate3d(0, 0, 0)";
-      }
-      // When switching TO desktop: recalculate immediately
-      if (!prev && shouldPin) {
-        // Small rAF delay so the DOM has updated its layout
-        requestAnimationFrame(handleScroll);
-      }
-    };
-
-    checkBreakpoint();
-    window.addEventListener("resize", checkBreakpoint, { passive: true });
-    return () => window.removeEventListener("resize", checkBreakpoint);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // Desktop/Tablet: Pinned vertical-scroll-to-horizontal-translation
+  // Pinned vertical-scroll-to-horizontal-translation (mobile & desktop)
   const handleScroll = useCallback(() => {
-    // Read from ref so this callback never becomes stale between re-renders
-    if (!isDesktopPinnedRef.current || !sectionRef.current || !trackRef.current) return;
+    if (!sectionRef.current || !trackRef.current) return;
 
     const section = sectionRef.current;
     const track = trackRef.current;
@@ -680,8 +647,7 @@ export default function HowItWorksSection() {
     const progress = Math.min(Math.max(scrolled / scrollableDistance, 0), 1);
 
     // Max translation: how many px the track needs to move so Card 03 fully appears
-    // Add a small right-margin buffer so last card isn't clipped against the viewport edge
-    const rightBuffer = window.innerWidth >= 1200 ? 80 : 32;
+    const rightBuffer = window.innerWidth >= 1200 ? 80 : (window.innerWidth >= 768 ? 48 : 24);
     const maxTranslate = Math.max(0, track.scrollWidth - window.innerWidth + rightBuffer);
     const currentTranslate = progress * maxTranslate;
 
@@ -693,91 +659,68 @@ export default function HowItWorksSection() {
   }, []);
 
   useEffect(() => {
-    if (!isDesktopPinned) return;
     window.addEventListener("scroll", handleScroll, { passive: true });
-    // Run immediately so initial position is correct
+    window.addEventListener("resize", handleScroll, { passive: true });
     handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [isDesktopPinned, handleScroll]);
+    
+    // FORCE fix for iOS/Safari sticky bug (bypasses need for hard refresh)
+    document.body.style.overflowX = "visible";
+    document.documentElement.style.overflowX = "visible";
 
-  // Mobile horizontal swipe listener
-  const handleMobileScroll = (e: React.UIEvent<HTMLDivElement>) => {
-    const el = e.currentTarget;
-    const cardWidth = el.clientWidth * 0.88;
-    const index = Math.round(el.scrollLeft / cardWidth);
-    setActiveStep(Math.min(Math.max(index, 0), 2));
-  };
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+      document.body.style.overflowX = "";
+      document.documentElement.style.overflowX = "";
+    };
+  }, [handleScroll]);
 
   const scrollToCard = (index: number) => {
-    const el = trackRef.current;
-    if (!el) return;
-    if (isDesktopPinned) {
-      // Scroll window to proportional position
-      if (sectionRef.current) {
-        const top = sectionRef.current.offsetTop;
-        const total = sectionRef.current.offsetHeight - window.innerHeight;
-        window.scrollTo({
-          top: top + (index / 2) * total,
-          behavior: "smooth",
-        });
-      }
-    } else {
-      const cardWidth = el.clientWidth * 0.88;
-      el.scrollTo({
-        left: index * cardWidth,
+    if (sectionRef.current) {
+      const top = sectionRef.current.offsetTop;
+      const total = sectionRef.current.offsetHeight - window.innerHeight;
+      window.scrollTo({
+        top: top + (index / 2) * total,
         behavior: "smooth",
       });
     }
   };
-
-  // NOTE: No wheel event hijacking.
-  // Desktop pinned mode drives the horizontal translate via window scroll (passive).
-  // Mobile uses native overflow-x scroll + touch gestures — no interception needed.
-  // Intercepting wheel events with passive:false was the primary cause of scroll sticking.
 
   return (
     <section
       ref={sectionRef}
       id="how-it-works"
       aria-label="How It Works"
-      className={`w-full bg-[#F2F4F2] relative contain-layout ${
-        isDesktopPinned ? "h-[300vh]" : "py-16 sm:py-20"
-      }`}
+      className="w-full bg-[#F2F4F2] relative h-[250vh] sm:h-[300vh]"
     >
       {/* 
-        STICKY CONTAINER FOR DESKTOP & TABLET:
+        STICKY CONTAINER FOR ALL SCREENS (MOBILE & DESKTOP):
         Pins during vertical page scroll until Card 03 is completely revealed.
       */}
-      <div
-        className={`${
-          isDesktopPinned
-            ? "sticky top-0 h-screen overflow-hidden flex flex-col justify-between py-10 lg:py-14"
-            : "w-full"
-        }`}
-      >
+      <div className="sticky top-0 h-[100dvh] w-full overflow-hidden flex flex-col justify-center gap-6 sm:gap-12 pt-8 sm:pt-20 pb-6 sm:py-10 lg:py-14">
         {/* =========================================================================
             HEADER SECTION (Fluid clamp typography)
            ========================================================================= */}
-        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 w-full shrink-0">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6 sm:mb-8 lg:mb-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 w-full shrink-0">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-1 sm:gap-4 mb-1.5 sm:mb-8 lg:mb-10">
             <div className="max-w-3xl">
-              <p className="text-[11px] sm:text-xs font-semibold uppercase tracking-[0.24em] text-[#637C73] mb-2 sm:mb-3">
+              <p className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.24em] text-[#637C73] mb-0.5 sm:mb-3">
                 HOW IT WORKS
               </p>
 
-              <h2 className="font-serif-editorial text-[clamp(2.35rem,4.5vw,4.75rem)] font-normal text-[#082F28] leading-[1.12] mb-3">
+              <h2 className="font-serif-editorial text-[clamp(1.5rem,3.5vw,4.75rem)] font-normal text-[#082F28] leading-[1.12] mb-0.5 sm:mb-3">
                 You touch it three times.
               </h2>
 
-              <p className="text-[clamp(1rem,1.2vw,1.25rem)] text-[#5D756D] leading-relaxed max-w-xl">
+              <p className="text-[clamp(0.75rem,1vw,1.25rem)] text-[#5D756D] leading-relaxed max-w-xl line-clamp-2 sm:line-clamp-none">
                 Three actions from you. Everything between them runs on our side,
                 continuously, without a single approval to give.
               </p>
             </div>
 
             {/* Step Counter Indicator */}
-            <div className="flex items-center gap-3 shrink-0 pt-2 md:pt-0">
-              <div className="px-3.5 py-1.5 rounded-full bg-[#082F28]/8 text-[#082F28] text-xs font-mono font-semibold tracking-wider flex items-center gap-2">
+            <div className="flex items-center gap-2 sm:gap-3 shrink-0 pt-0.5 md:pt-0">
+              <div className="px-2.5 py-0.5 sm:px-3.5 sm:py-1.5 rounded-full bg-[#082F28]/8 text-[#082F28] text-[10px] sm:text-xs font-mono font-semibold tracking-wider flex items-center gap-1.5 sm:gap-2">
                 <span>0{activeStep + 1}</span>
                 <span className="text-[#082F28]/35">/</span>
                 <span className="text-[#082F28]/50">03</span>
@@ -804,35 +747,17 @@ export default function HowItWorksSection() {
 
         {/* =========================================================================
             HORIZONTAL CARDS TRACK
-            - Desktop (>= 1200px): w-[65vw], pinned transform scroll
-            - Tablet (768px-1199px): w-[78vw], pinned transform scroll
-            - Mobile (< 768px): w-[90vw], native horizontal touch scroll-snap
            ========================================================================= */}
-        <div
-          className={`${
-            isDesktopPinned
-              ? "relative w-full overflow-visible pl-6 sm:pl-8 lg:pl-12"
-              : "relative w-full px-6 overflow-hidden"
-          }`}
-        >
+        <div className="relative w-full overflow-visible pl-4 sm:pl-8 lg:pl-12">
           <div
             ref={trackRef}
-            onScroll={!isDesktopPinned ? handleMobileScroll : undefined}
-            className={`${
-              isDesktopPinned
-                ? "flex gap-6 lg:gap-8 will-change-transform"
-                : "flex gap-4 overflow-x-auto snap-x snap-mandatory no-scrollbar pb-6 pt-2 scroll-smooth"
-            }`}
+            className="flex gap-4 sm:gap-6 lg:gap-8 will-change-transform"
           >
             {/* -----------------------------------------------------------------
                 CARD 01: Tell us what you sell (matching image (17).png)
                ----------------------------------------------------------------- */}
             <article
-              className={`rounded-3xl bg-white border border-[#0B3832]/10 p-6 sm:p-8 lg:p-10 shadow-[0_4px_30px_-4px_rgba(11,56,50,0.05)] hover:shadow-[0_12px_36px_-4px_rgba(11,56,50,0.09)] transition-all duration-300 shrink-0 ${
-                isDesktopPinned
-                  ? "w-[78vw] lg:w-[65vw] max-w-[940px] min-w-[580px] flex flex-col justify-between"
-                  : "w-[88vw] sm:w-[85vw] snap-start flex flex-col justify-between"
-              }`}
+              className="rounded-2xl sm:rounded-3xl bg-white border border-[#0B3832]/10 p-5 sm:p-8 lg:p-10 shadow-[0_4px_30px_-4px_rgba(11,56,50,0.05)] hover:shadow-[0_12px_36px_-4px_rgba(11,56,50,0.09)] transition-all duration-300 shrink-0 w-[88vw] sm:w-[78vw] lg:w-[65vw] max-w-[940px] snap-center flex flex-col justify-between"
             >
               {/* Card Header row */}
               <div className="flex items-center justify-between mb-6">
@@ -898,27 +823,23 @@ export default function HowItWorksSection() {
                 CARD 02: We find them, write to them (matching image (17).png)
                ----------------------------------------------------------------- */}
             <article
-              className={`rounded-3xl bg-[#082F28] border border-[#134A40] p-6 sm:p-8 lg:p-10 shadow-[0_8px_36px_-4px_rgba(8,47,40,0.35)] hover:shadow-[0_16px_44px_-4px_rgba(8,47,40,0.45)] transition-all duration-300 shrink-0 bg-teal-grid ${
-                isDesktopPinned
-                  ? "w-[78vw] lg:w-[65vw] max-w-[940px] min-w-[580px] flex flex-col justify-between"
-                  : "w-[88vw] sm:w-[85vw] snap-start flex flex-col justify-between"
-              }`}
+              className="rounded-2xl sm:rounded-3xl bg-[#082F28] border border-[#134A40] p-5 sm:p-8 lg:p-10 shadow-[0_8px_36px_-4px_rgba(8,47,40,0.35)] hover:shadow-[0_16px_44px_-4px_rgba(8,47,40,0.45)] transition-all duration-300 shrink-0 bg-teal-grid w-[88vw] sm:w-[78vw] lg:w-[65vw] max-w-[940px] snap-center flex flex-col justify-between"
             >
               {/* Card Header row */}
-              <div className="flex items-center gap-2.5 mb-6">
+              <div className="flex items-center gap-2.5 mb-4 sm:mb-6">
                 <span className="inline-flex items-center justify-center px-2 py-0.5 rounded-[5px] bg-[#38C593] text-[#062923] text-[11px] font-mono font-bold">
                   02
                 </span>
-                <span className="text-[11px] font-medium tracking-[0.18em] uppercase text-[#7AA89E]">
+                <span className="text-[10px] sm:text-[11px] font-medium tracking-[0.18em] uppercase text-[#7AA89E]">
                   CONTINUOUSLY, IN THE BACKGROUND
                 </span>
               </div>
 
               {/* Card Body: 2-col on desktop/tablet, stacked on mobile */}
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-center">
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-6 lg:gap-8 items-center">
                 {/* Left Text */}
-                <div className="md:col-span-6 space-y-3.5">
-                  <h3 className="font-serif-editorial text-[clamp(1.75rem,2.5vw,2.75rem)] text-white font-normal leading-[1.15]">
+                <div className="md:col-span-6 space-y-2 sm:space-y-3.5">
+                  <h3 className="font-serif-editorial text-[clamp(1.5rem,2.5vw,2.75rem)] text-white font-normal leading-[1.15]">
                     We find them, write to them, and read what comes back
                   </h3>
 
@@ -934,7 +855,7 @@ export default function HowItWorksSection() {
               </div>
 
               {/* Bottom Metadata Badges */}
-              <div className="pt-4 mt-6 border-t border-white/10 flex flex-wrap gap-x-5 gap-y-2 text-xs font-medium text-white/80">
+              <div className="pt-3 sm:pt-4 mt-4 sm:mt-6 border-t border-white/10 flex flex-wrap gap-x-4 sm:gap-x-5 gap-y-2 text-xs font-medium text-white/80">
                 <div className="flex items-center gap-2">
                   <div className="w-5 h-5 rounded-full border border-white/20 bg-white/5 flex items-center justify-center text-white/80">
                     <Mail className="w-2.5 h-2.5" />
@@ -962,27 +883,23 @@ export default function HowItWorksSection() {
                 CARD 03: Answer the buyer (matching image (17).png)
                ----------------------------------------------------------------- */}
             <article
-              className={`rounded-3xl bg-white border border-[#0B3832]/10 p-6 sm:p-8 lg:p-10 shadow-[0_4px_30px_-4px_rgba(11,56,50,0.05)] hover:shadow-[0_12px_36px_-4px_rgba(11,56,50,0.09)] transition-all duration-300 shrink-0 ${
-                isDesktopPinned
-                  ? "w-[78vw] lg:w-[65vw] max-w-[940px] min-w-[580px] flex flex-col justify-between"
-                  : "w-[88vw] sm:w-[85vw] snap-start flex flex-col justify-between"
-              }`}
+              className="rounded-2xl sm:rounded-3xl bg-white border border-[#0B3832]/10 p-5 sm:p-8 lg:p-10 shadow-[0_4px_30px_-4px_rgba(11,56,50,0.05)] hover:shadow-[0_12px_36px_-4px_rgba(11,56,50,0.09)] transition-all duration-300 shrink-0 w-[88vw] sm:w-[78vw] lg:w-[65vw] max-w-[940px] snap-center flex flex-col justify-between"
             >
               {/* Card Header row */}
-              <div className="flex items-center gap-2.5 mb-6">
+              <div className="flex items-center gap-2.5 mb-4 sm:mb-6">
                 <span className="inline-flex items-center justify-center px-2 py-0.5 rounded-[5px] bg-[#00875A] text-white text-[11px] font-mono font-bold">
                   03
                 </span>
-                <span className="text-[11px] font-medium tracking-[0.18em] uppercase text-[#6C857C]">
+                <span className="text-[10px] sm:text-[11px] font-medium tracking-[0.18em] uppercase text-[#6C857C]">
                   ONLY WHEN A BUYER REPLIES
                 </span>
               </div>
 
               {/* Card Body: 2-col on desktop/tablet, stacked on mobile */}
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-center">
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-6 lg:gap-8 items-center">
                 {/* Left Text */}
-                <div className="md:col-span-6 space-y-3.5">
-                  <h3 className="font-serif-editorial text-[clamp(1.75rem,2.5vw,2.75rem)] text-[#082F28] font-normal leading-[1.15]">
+                <div className="md:col-span-6 space-y-2 sm:space-y-3.5">
+                  <h3 className="font-serif-editorial text-[clamp(1.5rem,2.5vw,2.75rem)] text-[#082F28] font-normal leading-[1.15]">
                     Answer the buyer
                   </h3>
 
@@ -998,7 +915,7 @@ export default function HowItWorksSection() {
               </div>
 
               {/* Bottom Metadata Badges */}
-              <div className="pt-4 mt-6 border-t border-[#0B3832]/8 flex flex-wrap gap-x-5 gap-y-2 text-xs font-medium text-[#4D6960]">
+              <div className="pt-3 sm:pt-4 mt-4 sm:mt-6 border-t border-[#0B3832]/8 flex flex-wrap gap-x-4 sm:gap-x-5 gap-y-2 text-xs font-medium text-[#4D6960]">
                 <div className="flex items-center gap-2">
                   <div className="w-5 h-5 rounded-full bg-[#E3F4EC] text-[#137A63] flex items-center justify-center">
                     <Pencil className="w-2.5 h-2.5" />
@@ -1025,7 +942,7 @@ export default function HowItWorksSection() {
         </div>
 
         {/* Bottom anchor spacing */}
-        {isDesktopPinned && <div className="h-2" />}
+        <div className="h-2" />
       </div>
     </section>
   );

@@ -316,10 +316,19 @@ function CircularSplitRollComp({
         return () => {
           window.removeEventListener("resize", onResize);
           scrollTrigger.kill();
+          if (rootRef.current) {
+            rootRef.current.style.height = "auto";
+          }
         };
       }, rootRef);
 
       return () => ctx.revert();
+    });
+
+    mm.add("(max-width: 768px)", () => {
+      if (rootRef.current) {
+        rootRef.current.style.height = "auto";
+      }
     });
 
     return () => mm.revert();
@@ -356,8 +365,9 @@ function CircularSplitRollComp({
   return (
     <section
       ref={rootRef}
-      className={`relative min-h-screen w-full overflow-clip ${className}`}
+      className={`relative w-full ${className}`}
       style={{
+        background: background || "var(--os-deep-water)",
         "--css-title-size": titleSize,
         "--css-card-width": `${imageCardWidth}px`,
         "--css-card-height": `${imageCardHeight}px`,
@@ -491,15 +501,15 @@ function CircularSplitRollComp({
         </div>
       </div>
 
-      {/* Fallback grid for reduced-motion / mobile */}
+      {/* Mobile view */}
       <div
-        className={`w-full py-24 px-6 block md:hidden ${reducedMotion ? "!block" : ""}`}
+        className={`w-full py-12 sm:py-16 px-4 sm:px-6 block md:hidden ${reducedMotion ? "!block" : ""}`}
         style={{ 
           display: reducedMotion ? "block" : undefined,
           background: background || "var(--os-deep-water)" 
         }}
       >
-        <div className="flex flex-col gap-12 max-w-[400px] mx-auto md:max-w-[1000px] md:grid md:grid-cols-3 md:gap-8">
+        <div className="flex flex-col gap-8 max-w-[420px] mx-auto md:max-w-[1000px] md:grid md:grid-cols-3 md:gap-8">
           {safeItems.map((item) => (
             <div key={item.id} className="flex flex-col gap-6">
               <h3
