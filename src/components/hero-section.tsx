@@ -19,16 +19,40 @@ const markers: Marker[] = [
 
 const arcs: Arc[] = [
   {
-    id: "sf-tokyo",
+    id: "sf-nyc",
     from: [37.7595, -122.4367],
-    to: [35.6762, 139.6503],
-    label: "SF → Tokyo",
+    to: [40.7128, -74.006],
+    label: "SF → New York",
   },
   {
     id: "nyc-london",
     from: [40.7128, -74.006],
     to: [51.5074, -0.1278],
     label: "NYC → London",
+  },
+  {
+    id: "london-dubai",
+    from: [51.5074, -0.1278],
+    to: [25.2048, 55.2708],
+    label: "London → Dubai",
+  },
+  {
+    id: "dubai-tokyo",
+    from: [25.2048, 55.2708],
+    to: [35.6762, 139.6503],
+    label: "Dubai → Tokyo",
+  },
+  {
+    id: "tokyo-sydney",
+    from: [35.6762, 139.6503],
+    to: [-33.8688, 151.2093],
+    label: "Tokyo → Sydney",
+  },
+  {
+    id: "paris-saopaulo",
+    from: [48.8566, 2.3522],
+    to: [-23.5505, -46.6333],
+    label: "Paris → São Paulo",
   },
 ]
 
@@ -218,6 +242,7 @@ export function HeroSection() {
             className="w-full"
             markers={markers}
             arcs={arcs}
+            arcHeight={0.035}
             baseColor={[237 / 255, 242 / 255, 242 / 255]}
             glowColor={[215 / 255, 230 / 255, 230 / 255]}
             markerColor={[10 / 255, 58 / 255, 64 / 255]}
