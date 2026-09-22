@@ -1,147 +1,127 @@
 "use client";
 
 import React from "react";
-import CircularSplitRoll from "@/components/ui/circular-split-roll";
-import type { CircularSplitRollItem } from "@/components/ui/circular-split-roll";
-import {
-  Database,
-  Filter,
-  ShieldCheck,
-  CheckCircle2,
-} from "lucide-react";
+import { motion } from "framer-motion";
+import { FileText, SlidersHorizontal, Layers } from "lucide-react";
 
-function FeatureCard({
-  icon: Icon,
-  tag,
-  description,
-  benefit,
-}: {
-  icon: React.ElementType;
-  tag: string;
+interface StepCardData {
+  id: number;
+  stepNum: string;
+  title: string;
   description: string;
-  benefit: string;
-}) {
-  return (
-    <div
-      style={{
-        width: "100%",
-        height: "100%",
-        padding: "20px",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-      }}
-    >
-      <div>
-        <div style={{ marginBottom: "24px" }}>
-          <Icon size={40} color="#48b5a5" strokeWidth={1.5} />
-        </div>
-
-        <div
-          style={{
-            fontFamily: "'IBM Plex Mono', monospace",
-            fontSize: "16px",
-            fontWeight: 700,
-            letterSpacing: "0.1em",
-            color: "#48b5a5",
-            marginBottom: "20px",
-          }}
-        >
-          {tag}
-        </div>
-
-        <p
-          style={{
-            fontSize: "clamp(15px, 2vw, 24px)",
-            lineHeight: 1.4,
-            color: "rgba(255, 255, 255, 0.95)",
-            margin: 0,
-            fontWeight: 400,
-          }}
-        >
-          {description}
-        </p>
-      </div>
-
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "14px",
-          paddingTop: "28px",
-          borderTop: "1px solid rgba(255, 255, 255, 0.15)",
-          marginTop: "28px",
-        }}
-      >
-        <CheckCircle2 size={26} color="#48b5a5" strokeWidth={2.5} />
-        <span
-          style={{
-            fontSize: "clamp(13px, 1.5vw, 18px)",
-            fontWeight: 700,
-            color: "#ffffff",
-          }}
-        >
-          {benefit}
-        </span>
-      </div>
-    </div>
-  );
+  icon: React.ElementType;
+  iconBg: string;
+  iconColor: string;
+  iconBorder: string;
 }
 
-const whyDifferentItems: CircularSplitRollItem[] = [
-  {
-    id: 0,
-    title: "Buyers who already import this",
-    cardContent: (
-      <FeatureCard
-        icon={Database}
-        tag="CUSTOMS-BACKED"
-        description="We track actual customs records, manifests, and import filings to find companies that regularly buy your exact HS code."
-        benefit="Zero wasted messages to non-buyers"
-      />
-    ),
-  },
+const cardsData: StepCardData[] = [
   {
     id: 1,
-    title: "One screen, no chasing",
-    cardContent: (
-      <FeatureCard
-        icon={Filter}
-        tag="NO CLUTTER"
-        description="What reaches your desk is a buyer asking to buy, with quantity, incoterm, and port already extracted."
-        benefit="Only high-intent purchase inquiries"
-      />
-    ),
+    stepNum: "01",
+    title: "Buyers who already import this",
+    description:
+      "We track actual customs records, manifests, and import filings to find companies that regularly buy your exact HS code.",
+    icon: FileText,
+    iconBg: "bg-[#0a3a40]/8",
+    iconColor: "text-[#0a3a40]",
+    iconBorder: "border-[#0a3a40]/15",
   },
   {
     id: 2,
+    stepNum: "02",
+    title: "One screen, no chasing",
+    description:
+      "What reaches your desk is a buyer asking to buy, with quantity, incoterm, and port already extracted.",
+    icon: SlidersHorizontal,
+    iconBg: "bg-[#2a6369]/12",
+    iconColor: "text-[#2a6369]",
+    iconBorder: "border-[#2a6369]/20",
+  },
+  {
+    id: 3,
+    stepNum: "03",
     title: "Nothing until it works",
-    cardContent: (
-      <FeatureCard
-        icon={ShieldCheck}
-        tag="100% TRANSPARENT"
-        description="Every introduction states what it costs and what it commits you to, per deal, before the buyer is revealed."
-        benefit="Zero financial lock-in"
-      />
-    ),
+    description:
+      "Every introduction states what it costs and what it commits you to, per deal, before the buyer is revealed.",
+    icon: Layers,
+    iconBg: "bg-[#2dd4bf]/20",
+    iconColor: "text-[#0a3a40]",
+    iconBorder: "border-[#2dd4bf]/40",
   },
 ];
 
 export default function WhyDifferent() {
   return (
-    <CircularSplitRoll
-      items={whyDifferentItems}
-      background="#0a3a40"
-      titleColor="#ffffff"
-      radius={450}
-      cardSize={400}
-      sectionHeight={100}
-      titleSize="clamp(30px, 3.5vw, 52px)"
-      textSideScale={0.65}
-      textSideOpacity={0.15}
-      imageSideOpacity={0.12}
-      scrub={1.2}
-      columnOffsetPx={650}
-    />
+    <section className="relative w-full max-w-full bg-[#edf2f2] text-[#0a3a40] py-24 sm:py-32 px-6 sm:px-10 lg:px-16 overflow-hidden">
+      {/* Section Header */}
+      <div className="max-w-4xl mx-auto text-center mb-16 sm:mb-20">
+        <div className="font-mono-tech text-[11px] sm:text-xs tracking-[0.22em] text-[#2a6369] uppercase font-semibold mb-3">
+          HOW WE INTRODUCE BUYERS
+        </div>
+        <h2 className="font-headline text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#0a3a40] mb-4">
+          Three principles that protect your time.
+        </h2>
+        <p className="font-sans-clean text-base sm:text-lg text-[#2a6369]/80 leading-relaxed max-w-xl mx-auto">
+          Built from the ground up to replace cold outreach with verified, high-intent introductions.
+        </p>
+      </div>
+
+      {/* Main Container with Cards */}
+      <div className="relative max-w-6xl mx-auto">
+        {/* 3 Interactive Cards with Playful Pop Slide-in Animation */}
+        <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
+          {cardsData.map((card, index) => {
+            const Icon = card.icon;
+            return (
+              <motion.div
+                key={card.id}
+                initial={{ opacity: 0, x: -140, scale: 0.86, rotate: -3.5 }}
+                whileInView={{ opacity: 1, x: 0, scale: 1, rotate: 0 }}
+                viewport={{ once: true, amount: 0.25 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 240,
+                  damping: 18,
+                  mass: 0.75,
+                  delay: index * 0.18,
+                }}
+                whileHover={{
+                  y: -8,
+                  scale: 1.02,
+                  transition: { type: "spring", stiffness: 400, damping: 22 },
+                }}
+                className="group relative bg-white/95 backdrop-blur-sm rounded-[28px] p-8 sm:p-9 lg:p-10 border border-[#2a6369]/15 shadow-[0_10px_35px_rgba(10,58,64,0.06),0_1px_3px_rgba(0,0,0,0.03)] hover:shadow-[0_24px_50px_rgba(10,58,64,0.12)] hover:border-[#2dd4bf]/70 transition-all duration-300 min-h-[390px] sm:min-h-[420px] flex flex-col justify-center"
+              >
+                {/* Top Row: Icon Badge & Numeral */}
+                <div className="flex items-center justify-between mb-8 sm:mb-9">
+                  {/* Rounded Icon Box */}
+                  <div
+                    className={`w-14 h-14 sm:w-16 sm:h-16 rounded-2xl ${card.iconBg} ${card.iconColor} ${card.iconBorder} border flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform duration-200`}
+                  >
+                    <Icon className="w-7 h-7 sm:w-8 sm:h-8 stroke-[2]" />
+                  </div>
+
+                  {/* Brand Tech Numeral */}
+                  <span className="font-mono-tech font-bold text-4xl sm:text-5xl md:text-[52px] text-[#2a6369]/35 group-hover:text-[#0a3a40] transition-colors duration-200 select-none leading-none tracking-tight">
+                    {card.stepNum}
+                  </span>
+                </div>
+
+                {/* Title in Clean Brand Headline Font */}
+                <h3 className="font-headline font-bold text-2xl sm:text-[27px] md:text-[29px] text-[#0a3a40] tracking-tight leading-[1.22] mb-4 sm:mb-5">
+                  {card.title}
+                </h3>
+
+                {/* Description Paragraph */}
+                <p className="font-sans-clean text-base sm:text-[16.5px] md:text-[17px] leading-relaxed text-[#2a6369]/90">
+                  {card.description}
+                </p>
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
   );
 }

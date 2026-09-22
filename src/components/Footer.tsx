@@ -14,16 +14,12 @@ export default function Footer() {
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-6 gap-x-6 sm:gap-x-10 gap-y-10 sm:gap-y-12 mb-16 sm:mb-20">
           {/* Col 1-2: Brand & Tagline (spans full width on mobile/tablet) */}
           <div className="col-span-2 lg:col-span-2">
-            <Link href="/" className="inline-flex items-center gap-3 mb-4 group">
-              <svg width="32" height="32" viewBox="0 0 120 120" fill="none">
-                <rect x="0" y="0" width="120" height="120" rx="24" fill="#2dd4bf" />
-                <rect x="20" y="76" width="24" height="24" rx="6" fill="#0a3a40" />
-                <rect x="48" y="48" width="24" height="24" rx="6" fill="#0a3a40" />
-                <rect x="76" y="20" width="24" height="24" rx="6" fill="#0a3a40" opacity="0.55" />
-              </svg>
-              <span className="font-headline font-semibold text-2xl tracking-tight text-white">
-                Outerstep
-              </span>
+            <Link href="/" className="inline-flex items-center mb-4 group select-none" aria-label="Outerstep Home">
+              <img
+                src="/logo2.webp"
+                alt="Outerstep"
+                className="h-10 sm:h-12 md:h-13 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
+              />
             </Link>
             <p className="font-sans-clean text-sm text-white/60 leading-relaxed max-w-xs">
               Automated Buyer Inquiries for Exporters
