@@ -15,7 +15,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className="min-h-screen w-full max-w-full overflow-x-clip bg-[#edf2f2] text-[#0a3a40] antialiased">
         <ModalProvider>
           <SmoothScrollProvider />

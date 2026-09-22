@@ -95,15 +95,15 @@ export function HeroSection() {
           {/* Desktop Navigation Links */}
           <nav className="hidden md:flex items-center gap-8 lg:gap-10">
             {[
-              { name: "How it Works", id: "how-it-works" },
-              { name: "The Platform", id: "platform" },
-              { name: "Track Record", id: "track-record" },
-              { name: "Who it Fits", id: "fit" }
+              { name: "How it Works", href: "#how-it-works" },
+              { name: "The Platform", href: "#platform" },
+              { name: "Track Record", href: "#track-record" },
+              { name: "Who it Fits", href: "#fit" },
             ].map(
               (item) => (
                 <a
-                  key={item.id}
-                  href={`#${item.id}`}
+                  key={item.name}
+                  href={item.href}
                   className="font-sans-clean text-sm font-medium text-[#2a6369] hover:text-[#0a3a40] transition-colors duration-200"
                 >
                   {item.name}
@@ -139,15 +139,15 @@ export function HeroSection() {
         {mobileMenuOpen && (
           <div className="md:hidden absolute top-full left-0 w-full bg-[#edf2f2]/95 backdrop-blur-md border-b border-[#2a6369]/20 px-6 py-6 shadow-xl flex flex-col gap-4 z-50">
             {[
-              { name: "How it Works", id: "how-it-works" },
-              { name: "The Platform", id: "platform" },
-              { name: "Track Record", id: "track-record" },
-              { name: "Who it Fits", id: "fit" }
+              { name: "How it Works", href: "#how-it-works" },
+              { name: "The Platform", href: "#platform" },
+              { name: "Track Record", href: "#track-record" },
+              { name: "Who it Fits", href: "#fit" },
             ].map(
               (item) => (
                 <a
-                  key={item.id}
-                  href={`#${item.id}`}
+                  key={item.name}
+                  href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
                   className="font-sans-clean text-base font-medium text-[#0a3a40] py-2 border-b border-[#2a6369]/10"
                 >
@@ -171,22 +171,7 @@ export function HeroSection() {
 
       {/* HERO MAIN BODY */}
       <main className="relative z-20 flex-1 flex flex-col items-center justify-start text-center px-4 sm:px-6 pt-32 sm:pt-40 md:pt-44">
-        {/* Flanking Editorial Labels (Desktop) */}
-        <div className="hidden xl:block absolute left-8 lg:left-14 top-24 text-left pointer-events-none select-none">
-          <div className="font-mono-tech text-[10px] sm:text-[11px] font-medium tracking-[0.22em] text-[#2a6369]/75 uppercase space-y-1">
-            <div>EXPORT</div>
-            <div>GROW</div>
-            <div>BEYOND BORDERS</div>
-          </div>
-        </div>
 
-        <div className="hidden xl:block absolute right-8 lg:right-14 top-24 text-right pointer-events-none select-none">
-          <div className="font-mono-tech text-[10px] sm:text-[11px] font-medium tracking-[0.22em] text-[#2a6369]/75 uppercase space-y-1">
-            <div>GLOBAL</div>
-            <div>OPPORTUNITIES</div>
-            <div>REAL CONNECTIONS</div>
-          </div>
-        </div>
 
         {/* Central Content Container */}
         <div className="max-w-4xl lg:max-w-5xl mx-auto flex flex-col items-center">
@@ -195,7 +180,7 @@ export function HeroSection() {
             You bring the product.
             <br />
             We bring the{" "}
-            <span className="italic text-[#2a6369] font-semibold inline-block hover:opacity-95 transition-opacity">
+            <span className="text-[#2a6369] font-semibold inline-block hover:opacity-95 transition-opacity">
               buyers.
             </span>
           </h1>
