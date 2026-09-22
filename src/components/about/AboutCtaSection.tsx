@@ -8,7 +8,7 @@ export function AboutCtaSection() {
   const { openModal } = useModal();
 
   return (
-    <section className="relative w-full max-w-full bg-[#021214] border-t border-[#124248]/50 text-white py-24 sm:py-32 md:py-36 px-6 sm:px-10 lg:px-16 overflow-hidden">
+    <section className="relative w-full max-w-full bg-[#0a3a40] border-t border-[#2a6369]/30 text-white py-24 sm:py-32 md:py-36 px-6 sm:px-10 lg:px-16 overflow-hidden">
       {/* Luminous Curved Horizon Light Arc */}
       <div className="pointer-events-none absolute left-1/2 -translate-x-1/2 bottom-10 sm:bottom-14 w-[700px] sm:w-[1000px] lg:w-[1200px] h-[180px] overflow-hidden opacity-80">
         <svg
