@@ -62,12 +62,12 @@ function useCountUp(target: number, isVisible: boolean, duration: number = 1800)
       const easeOut = 1 - Math.pow(1 - progress, 3)
       const currentCount = Math.round(easeOut * target)
 
-      setCount(currentCount)
+      setCount((prev) => (prev !== currentCount ? currentCount : prev))
 
       if (progress < 1) {
         animationFrameId = requestAnimationFrame(animate)
       } else {
-        setCount(target)
+        setCount((prev) => (prev !== target ? target : prev))
       }
     }
 

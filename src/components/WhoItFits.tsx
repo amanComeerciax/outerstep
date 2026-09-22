@@ -49,14 +49,19 @@ export default function WhoItFits() {
 
     }, containerRef);
 
-    // Refresh on resize for responsiveness
+    // Debounced refresh on resize for responsiveness
+    let resizeTimer: ReturnType<typeof setTimeout> | null = null;
     const handleResize = () => {
-      ScrollTrigger.refresh(true);
+      if (resizeTimer) clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        ScrollTrigger.refresh(true);
+      }, 200);
     };
     window.addEventListener("resize", handleResize, { passive: true });
 
     return () => {
       ctx.revert();
+      if (resizeTimer) clearTimeout(resizeTimer);
       window.removeEventListener("resize", handleResize);
     };
   }, []);

@@ -216,7 +216,7 @@ export default function ToolsShowcase() {
 
     // Desktop spread evaluation
     const inView = rect.top <= window.innerHeight * 0.75 && rect.bottom > 100;
-    setIsScrolled(inView);
+    setIsScrolled((prev) => (prev !== inView ? inView : prev));
 
     // Mobile on-scroll pinned horizontal translation
     if (window.innerWidth < 768 && trackRef.current && sectionRef.current) {
@@ -246,18 +246,29 @@ export default function ToolsShowcase() {
         track.style.transform = `translate3d(-${currentTranslate}px, 0, 0)`;
 
         const step = Math.min(4, Math.max(0, Math.round(progress * 4)));
-        setMobileStep(step);
+        setMobileStep((prev) => (prev !== step ? step : prev));
       }
     }
   }, []);
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("resize", handleScroll, { passive: true });
+    let ticking = false;
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
     handleScroll();
     return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleScroll);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
     };
   }, [handleScroll]);
 

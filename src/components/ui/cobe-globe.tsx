@@ -130,6 +130,17 @@ export function Globe({
       if (width === 0 || globe) return
 
       const dpr = Math.min(window.devicePixelRatio || 1, 2)
+      const formattedMarkers = markers.map((m) => ({
+        location: m.location,
+        size: markerSize,
+        id: m.id,
+      }))
+      const formattedArcs = arcs.map((a) => ({
+        from: a.from,
+        to: a.to,
+        id: a.id,
+      }))
+
       globe = createGlobe(canvas, {
         devicePixelRatio: dpr,
         width,
@@ -144,23 +155,19 @@ export function Globe({
         markerColor,
         glowColor,
         markerElevation,
-        markers: markers.map((m) => ({
-          location: m.location,
-          size: markerSize,
-          id: m.id,
-        })),
-        arcs: arcs.map((a) => ({
-          from: a.from,
-          to: a.to,
-          id: a.id,
-        })),
+        markers: formattedMarkers,
+        arcs: formattedArcs,
         arcColor,
         arcWidth,
         arcHeight,
         opacity: 0.7,
       })
 
+      let isVisibleOnScreen = true
+
       function animate() {
+        if (!isVisibleOnScreen) return
+
         if (!isPausedRef.current) {
           phi += speed
           if (
@@ -189,36 +196,50 @@ export function Globe({
           baseColor,
           arcColor,
           markerElevation,
-          markers: markers.map((m) => ({
-            location: m.location,
-            size: markerSize,
-            id: m.id,
-          })),
-          arcs: arcs.map((a) => ({
-            from: a.from,
-            to: a.to,
-            id: a.id,
-          })),
+          markers: formattedMarkers,
+          arcs: formattedArcs,
         })
         animationId = requestAnimationFrame(animate)
       }
+
       animate()
       setTimeout(() => canvas && (canvas.style.opacity = "1"))
+
+      // Pause rendering when canvas is off-screen to free GPU/CPU for rest of page
+      const io = new IntersectionObserver(([entry]) => {
+        const nowVisible = entry.isIntersecting
+        if (nowVisible && !isVisibleOnScreen) {
+          isVisibleOnScreen = true
+          animationId = requestAnimationFrame(animate)
+        } else if (!nowVisible && isVisibleOnScreen) {
+          isVisibleOnScreen = false
+          if (animationId) cancelAnimationFrame(animationId)
+        }
+      }, { threshold: 0.01 })
+
+      io.observe(canvas)
+
+      return () => {
+        io.disconnect()
+      }
     }
 
+    let cleanupIo: (() => void) | undefined
+
     if (canvas.offsetWidth > 0) {
-      init()
+      cleanupIo = init()
     } else {
       const ro = new ResizeObserver((entries) => {
         if (entries[0]?.contentRect.width > 0) {
           ro.disconnect()
-          init()
+          cleanupIo = init()
         }
       })
       ro.observe(canvas)
     }
 
     return () => {
+      if (cleanupIo) cleanupIo()
       if (animationId) cancelAnimationFrame(animationId)
       if (globe) globe.destroy()
     }

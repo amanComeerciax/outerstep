@@ -109,21 +109,28 @@ export function SixSystemsSection() {
 
   const currentProgressRef = useRef<number>(0)
 
+  const cachedDotYRef = useRef<number[]>([])
+
   // Get current visual Y positions of each stationary dot relative to listContainer
-  const getDotYPositions = useCallback(() => {
+  const getDotYPositions = useCallback((forceRefresh = false) => {
+    if (!forceRefresh && cachedDotYRef.current.length >= 6) {
+      return cachedDotYRef.current
+    }
     if (!listContainerRef.current) return []
     const containerTop = listContainerRef.current.getBoundingClientRect().top
-    return dotRefs.current.map((dot) => {
+    const positions = dotRefs.current.map((dot) => {
       if (!dot) return 0
       const rect = dot.getBoundingClientRect()
       return rect.top - containerTop + rect.height / 2
     })
+    cachedDotYRef.current = positions
+    return positions
   }, [])
 
   // Update traveling dot and active line based on scroll progress
   const updateVisuals = useCallback(
-    (progress: number) => {
-      const dotY = getDotYPositions()
+    (progress: number, forceMeasure = false) => {
+      const dotY = getDotYPositions(forceMeasure)
       if (dotY.length < 6) return
 
       const startY = dotY[0]
@@ -174,7 +181,7 @@ export function SixSystemsSection() {
           duration: 0.35,
           ease: "power2.out",
           onUpdate: () => updateVisuals(currentProgressRef.current),
-          onComplete: () => updateVisuals(currentProgressRef.current),
+          onComplete: () => updateVisuals(currentProgressRef.current, true),
         })
       }
 
@@ -212,7 +219,7 @@ export function SixSystemsSection() {
           duration: 0.3,
           ease: "power2.inOut",
           onUpdate: () => updateVisuals(currentProgressRef.current),
-          onComplete: () => updateVisuals(currentProgressRef.current),
+          onComplete: () => updateVisuals(currentProgressRef.current, true),
         })
       }
 
@@ -316,6 +323,7 @@ export function SixSystemsSection() {
     }
 
     const onResize = () => {
+      cachedDotYRef.current = []
       handleScroll()
       ScrollTrigger.refresh()
     }

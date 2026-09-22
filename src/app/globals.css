@@ -228,6 +228,7 @@
 [data-reveal].revealed {
   opacity: 1;
   transform: none;
+  will-change: auto;
 }
 
 /* Respect reduced-motion preference */

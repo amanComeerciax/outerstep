@@ -38,6 +38,7 @@ function CardOneVisual() {
   // Autonomous dynamic cycle every 3.5 seconds
   useEffect(() => {
     const timer = setInterval(() => {
+      if (typeof document !== "undefined" && document.hidden) return;
       setActiveStep((prev) => {
         const next = (prev + 1) % 4;
         setSaveBadge("Saving...");
@@ -306,6 +307,7 @@ function CardTwoVisual() {
   // Autonomous cycle between importers every 3.2 seconds
   useEffect(() => {
     const interval = setInterval(() => {
+      if (typeof document !== "undefined" && document.hidden) return;
       setActiveIdx((prev) => (prev + 1) % importers.length);
     }, 3200);
 
@@ -461,6 +463,7 @@ function CardThreeVisual() {
   // Autonomous dynamic loop every 4.2 seconds
   useEffect(() => {
     const timer = setInterval(() => {
+      if (typeof document !== "undefined" && document.hidden) return;
       setStepperState((prev) => {
         if (prev === 1) return 2;
         if (prev === 2) {
@@ -653,25 +656,29 @@ export default function HowItWorksSection() {
 
     track.style.transform = `translate3d(-${currentTranslate}px, 0, 0)`;
 
-    if (progress < 0.33) setActiveStep(0);
-    else if (progress < 0.66) setActiveStep(1);
-    else setActiveStep(2);
+    const nextStep = progress < 0.33 ? 0 : progress < 0.66 ? 1 : 2;
+    setActiveStep((prev) => (prev !== nextStep ? nextStep : prev));
   }, []);
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("resize", handleScroll, { passive: true });
+    let ticking = false;
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
     handleScroll();
-    
-    // FORCE fix for iOS/Safari sticky bug (bypasses need for hard refresh)
-    document.body.style.overflowX = "visible";
-    document.documentElement.style.overflowX = "visible";
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleScroll);
-      document.body.style.overflowX = "";
-      document.documentElement.style.overflowX = "";
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
     };
   }, [handleScroll]);
 
