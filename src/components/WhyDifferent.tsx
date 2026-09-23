@@ -10,9 +10,6 @@ interface StepCardData {
   title: string;
   description: string;
   icon: React.ElementType;
-  iconBg: string;
-  iconColor: string;
-  iconBorder: string;
 }
 
 const cardsData: StepCardData[] = [
@@ -23,9 +20,6 @@ const cardsData: StepCardData[] = [
     description:
       "We track actual customs records, manifests, and import filings to find companies that regularly buy your exact HS code.",
     icon: FileText,
-    iconBg: "bg-[#0a3a40]/8",
-    iconColor: "text-[#0a3a40]",
-    iconBorder: "border-[#0a3a40]/15",
   },
   {
     id: 2,
@@ -34,9 +28,6 @@ const cardsData: StepCardData[] = [
     description:
       "What reaches your desk is a buyer asking to buy, with quantity, incoterm, and port already extracted.",
     icon: SlidersHorizontal,
-    iconBg: "bg-[#2a6369]/12",
-    iconColor: "text-[#2a6369]",
-    iconBorder: "border-[#2a6369]/20",
   },
   {
     id: 3,
@@ -45,9 +36,6 @@ const cardsData: StepCardData[] = [
     description:
       "Every introduction states what it costs and what it commits you to, per deal, before the buyer is revealed.",
     icon: Layers,
-    iconBg: "bg-[#2dd4bf]/20",
-    iconColor: "text-[#0a3a40]",
-    iconBorder: "border-[#2dd4bf]/40",
   },
 ];
 
@@ -90,13 +78,13 @@ export default function WhyDifferent() {
                   transition: { duration: 0.25, ease: "easeOut" },
                 }}
                 style={{ transform: "translateZ(0)" }}
-                className="group relative bg-white/95 backdrop-blur-sm rounded-[22px] sm:rounded-[26px] md:rounded-[28px] p-6 sm:p-7 md:p-8 lg:p-10 border border-[#2a6369]/15 shadow-[0_10px_35px_rgba(10,58,64,0.06),0_1px_3px_rgba(0,0,0,0.03)] hover:shadow-[0_22px_45px_rgba(10,58,64,0.11)] hover:border-[#2dd4bf]/70 transition-all duration-300 min-h-0 md:min-h-[400px] lg:min-h-[420px] flex flex-col justify-center will-change-transform"
+                className="group relative bg-white/95 backdrop-blur-sm rounded-[22px] sm:rounded-[26px] md:rounded-[28px] p-6 sm:p-7 md:p-8 lg:p-10 border border-[#2a6369]/15 shadow-[0_10px_35px_rgba(10,58,64,0.06),0_1px_3px_rgba(0,0,0,0.03)] hover:shadow-[0_22px_45px_rgba(10,58,64,0.11)] hover:border-[#2dd4bf]/70 transition-all duration-300 min-h-0 md:min-h-[380px] lg:min-h-[400px] flex flex-col justify-start will-change-transform"
               >
                 {/* Top Row: Icon Badge & Numeral */}
                 <div className="flex items-center justify-between mb-6 sm:mb-8 lg:mb-9">
                   {/* Rounded Icon Box */}
                   <div
-                    className={`w-12 h-12 sm:w-13 sm:h-13 md:w-14 md:h-14 lg:w-15 lg:h-15 rounded-2xl ${card.iconBg} ${card.iconColor} ${card.iconBorder} border flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform duration-200 shrink-0`}
+                    className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-2xl bg-[#0a3a40]/[0.07] text-[#0a3a40] border border-[#0a3a40]/15 flex items-center justify-center shadow-sm group-hover:scale-105 group-hover:bg-[#0a3a40]/10 group-hover:border-[#0a3a40]/25 transition-all duration-200 shrink-0"
                   >
                     <Icon className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 stroke-[2]" />
                   </div>
@@ -108,7 +96,7 @@ export default function WhyDifferent() {
                 </div>
 
                 {/* Title in Clean Brand Headline Font */}
-                <h3 className="font-headline font-bold text-xl sm:text-[22px] md:text-2xl lg:text-[26px] text-[#0a3a40] tracking-tight leading-[1.22] mb-3 sm:mb-4">
+                <h3 className="font-headline font-bold text-xl sm:text-[22px] md:text-2xl lg:text-[26px] text-[#0a3a40] tracking-tight leading-[1.22] mb-3 sm:mb-4 min-h-0 md:min-h-[3.6rem] lg:min-h-[4rem] flex items-start">
                   {card.title}
                 </h3>
 

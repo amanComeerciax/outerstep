@@ -36,7 +36,7 @@ export function AboutNavbar() {
           <img
             src="/logo1.webp"
             alt="Outerstep"
-            className="h-9 sm:h-10 md:h-11 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
+            className="h-10 sm:h-11 md:h-12 lg:h-[50px] w-auto object-contain transition-transform duration-200 group-hover:scale-105"
           />
         </Link>
 

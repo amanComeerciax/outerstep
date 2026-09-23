@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useRef, useState, useCallback } from "react"
+import React, { useEffect, useRef, useCallback } from "react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 
@@ -88,11 +88,11 @@ const ANIM_END_PROGRESS = 0.82
 // Calibrated so each bullet opens just as the glowing traveling dot arrives at it
 const THRESHOLDS = [
   { open: 0.0, close: 0.0 }, // Bullet 01 stays open as the base anchor
-  { open: 0.15, close: 0.12 }, // Bullet 02 (dot arrives at ~0.164)
-  { open: 0.31, close: 0.28 }, // Bullet 03 (dot arrives at ~0.328)
-  { open: 0.47, close: 0.44 }, // Bullet 04 (dot arrives at ~0.492)
-  { open: 0.63, close: 0.60 }, // Bullet 05 (dot arrives at ~0.656)
-  { open: 0.79, close: 0.76 }, // Bullet 06 (dot arrives at ~0.820)
+  { open: 0.13, close: 0.10 }, // Bullet 02 (dot arrives at ~0.164)
+  { open: 0.29, close: 0.26 }, // Bullet 03 (dot arrives at ~0.328)
+  { open: 0.45, close: 0.42 }, // Bullet 04 (dot arrives at ~0.492)
+  { open: 0.61, close: 0.58 }, // Bullet 05 (dot arrives at ~0.656)
+  { open: 0.77, close: 0.74 }, // Bullet 06 (dot arrives at ~0.820)
 ]
 
 export function SixSystemsSection() {
@@ -105,32 +105,24 @@ export function SixSystemsSection() {
 
   // Track active state of items (Bullet 01 is active by default)
   const openedStateRef = useRef<boolean[]>([true, false, false, false, false, false])
-  const [activeItems, setActiveItems] = useState<boolean[]>([true, false, false, false, false, false])
 
   const currentProgressRef = useRef<number>(0)
 
-  const cachedDotYRef = useRef<number[]>([])
-
   // Get current visual Y positions of each stationary dot relative to listContainer
-  const getDotYPositions = useCallback((forceRefresh = false) => {
-    if (!forceRefresh && cachedDotYRef.current.length >= 6) {
-      return cachedDotYRef.current
-    }
+  const getDotYPositions = useCallback(() => {
     if (!listContainerRef.current) return []
     const containerTop = listContainerRef.current.getBoundingClientRect().top
-    const positions = dotRefs.current.map((dot) => {
+    return dotRefs.current.map((dot) => {
       if (!dot) return 0
       const rect = dot.getBoundingClientRect()
       return rect.top - containerTop + rect.height / 2
     })
-    cachedDotYRef.current = positions
-    return positions
   }, [])
 
   // Update traveling dot and active line based on scroll progress
   const updateVisuals = useCallback(
-    (progress: number, forceMeasure = false) => {
-      const dotY = getDotYPositions(forceMeasure)
+    (progress: number) => {
+      const dotY = getDotYPositions()
       if (dotY.length < 6) return
 
       const startY = dotY[0]
@@ -167,7 +159,6 @@ export function SixSystemsSection() {
     (idx: number) => {
       if (openedStateRef.current[idx]) return
       openedStateRef.current[idx] = true
-      setActiveItems([...openedStateRef.current])
 
       const contentEl = contentRefs.current[idx]
       const dotEl = dotRefs.current[idx]
@@ -181,7 +172,7 @@ export function SixSystemsSection() {
           duration: 0.35,
           ease: "power2.out",
           onUpdate: () => updateVisuals(currentProgressRef.current),
-          onComplete: () => updateVisuals(currentProgressRef.current, true),
+          onComplete: () => updateVisuals(currentProgressRef.current),
         })
       }
 
@@ -191,8 +182,8 @@ export function SixSystemsSection() {
           backgroundColor: "#48b5a5",
           borderColor: "#48b5a5",
           boxShadow: "0 0 10px rgba(72, 181, 165, 0.7)",
-          duration: 0.25,
-          ease: "power2.out",
+          duration: 0.08,
+          ease: "power1.out",
         })
       }
     },
@@ -205,7 +196,6 @@ export function SixSystemsSection() {
       if (idx === 0) return // Bullet 01 stays open as root anchor
       if (!openedStateRef.current[idx]) return
       openedStateRef.current[idx] = false
-      setActiveItems([...openedStateRef.current])
 
       const contentEl = contentRefs.current[idx]
       const dotEl = dotRefs.current[idx]
@@ -219,7 +209,7 @@ export function SixSystemsSection() {
           duration: 0.3,
           ease: "power2.inOut",
           onUpdate: () => updateVisuals(currentProgressRef.current),
-          onComplete: () => updateVisuals(currentProgressRef.current, true),
+          onComplete: () => updateVisuals(currentProgressRef.current),
         })
       }
 
@@ -229,8 +219,8 @@ export function SixSystemsSection() {
           backgroundColor: "#edf2f2",
           borderColor: "#b6d0d2",
           boxShadow: "none",
-          duration: 0.25,
-          ease: "power2.out",
+          duration: 0.1,
+          ease: "power1.out",
         })
       }
     },
@@ -323,7 +313,6 @@ export function SixSystemsSection() {
     }
 
     const onResize = () => {
-      cachedDotYRef.current = []
       handleScroll()
       ScrollTrigger.refresh()
     }
@@ -395,8 +384,6 @@ export function SixSystemsSection() {
             {/* 6 Bullet Items */}
             <div className="flex flex-col space-y-2.5 sm:space-y-3">
               {systems.map((item, idx) => {
-                const isItemActive = activeItems[idx]
-
                 return (
                   <div
                     key={item.id}
@@ -414,7 +401,7 @@ export function SixSystemsSection() {
                       ref={(el) => {
                         dotRefs.current[idx] = el
                       }}
-                      className="absolute left-0 top-1.5 w-3.5 h-3.5 rounded-full border-2 border-[#b6d0d2] bg-[#edf2f2] z-20 transition-all duration-300"
+                      className="absolute left-0 top-1.5 w-3.5 h-3.5 rounded-full border-2 border-[#b6d0d2] bg-[#edf2f2] z-20"
                     />
 
                     {/* Item Content Column */}

@@ -6,7 +6,7 @@ import { useModal } from "@/components/ModalProvider";
 export default function CtaSection() {
   const { openModal } = useModal();
   return (
-    <div className="w-full max-w-full overflow-x-clip" style={{ background: "#ffffff", paddingBottom: "80px" }}>
+    <div className="w-full max-w-full overflow-x-clip">
       <section 
         className="relative w-full max-w-full px-6 py-20 sm:py-24 md:py-32 overflow-hidden overflow-x-clip bg-black"
       >

@@ -64,7 +64,7 @@ interface ToolCard {
 const TOOLS: ToolCard[] = [
   {
     id: "setup",
-    badge: "01 SETUP",
+    badge: "01 Setup",
     title: "Describe what you sell, once.",
     description: "Grades, capacity, minimum order, certifications & loading ports. Precision decides how close buyers are.",
     icon: <Sliders className="w-5 h-5 sm:w-6 sm:h-6 text-[#0b3536]" />,
@@ -88,7 +88,7 @@ const TOOLS: ToolCard[] = [
   },
   {
     id: "inbox",
-    badge: "02 INBOX",
+    badge: "02 Inbox",
     title: "Only real buyer replies reach you.",
     description: "Bounces, out-of-offices and polite declines are handled before you see them. What lands is a buyer asking about your product, with quantity, incoterm and destination extracted.",
     icon: <Inbox className="w-5 h-5 sm:w-6 sm:h-6 text-[#0b3536]" />,
@@ -116,7 +116,7 @@ const TOOLS: ToolCard[] = [
   },
   {
     id: "introduction",
-    badge: "03 INTRODUCTION",
+    badge: "03 Introduction",
     title: "See the terms before you see the name.",
     description: "Every introduction states what it costs and what it commits you to, per deal, before the buyer is revealed. Nothing is buried in an agreement you signed weeks earlier.",
     icon: <FileCheck className="w-5 h-5 sm:w-6 sm:h-6 text-[#0b3536]" />,
@@ -142,7 +142,7 @@ const TOOLS: ToolCard[] = [
   },
   {
     id: "reply",
-    badge: "04 YOUR REPLY",
+    badge: "04 Your reply",
     title: "The draft is written. The price is yours.",
     description: "Every reply comes drafted from your product record and the buyer's message. Commercial terms are left marked, and the send button stays disabled until you set them. We never quote a price on your behalf.",
     icon: <Send className="w-5 h-5 sm:w-6 sm:h-6 text-[#0b3536]" />,
@@ -164,7 +164,7 @@ const TOOLS: ToolCard[] = [
   },
   {
     id: "dealroom",
-    badge: "05 DEAL ROOM",
+    badge: "05 Deal room",
     title: "One timeline, from first reply to bill of lading.",
     description: "Every message, quote, note, document and stage change in a single scroll. Why a deal sits where it does should never take more than one screen to answer.",
     icon: <GitCommit className="w-5 h-5 sm:w-6 sm:h-6 text-[#0b3536]" />,
@@ -321,8 +321,8 @@ export default function ToolsShowcase() {
                   onClick={() => scrollToStep(idx)}
                   aria-label={`Go to screen 0${idx + 1}`}
                   className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${mobileStep === idx
-                      ? "w-5 bg-[#2dd4bf]"
-                      : "w-1.5 bg-[#2dd4bf]/25"
+                    ? "w-5 bg-[#2dd4bf]"
+                    : "w-1.5 bg-[#2dd4bf]/25"
                     }`}
                 />
               ))}
@@ -335,10 +335,10 @@ export default function ToolsShowcase() {
           <div
             ref={trackRef}
             className={`flex will-change-transform ${isMobile
-                ? "items-center gap-4 transition-none"
-                : isScrolled
-                  ? "items-end gap-2 sm:gap-3 lg:gap-3.5 xl:gap-4 transition-all duration-700 ease-out justify-center"
-                  : "items-end md:-space-x-16 lg:-space-x-20 transition-all duration-700 ease-out justify-center"
+              ? "items-center gap-4 transition-none"
+              : isScrolled
+                ? "items-end gap-2 sm:gap-3 lg:gap-3.5 xl:gap-4 transition-all duration-700 ease-out justify-center"
+                : "items-end md:-space-x-16 lg:-space-x-20 transition-all duration-700 ease-out justify-center"
               }`}
           >
             {TOOLS.map((tool, idx) => {
@@ -377,8 +377,8 @@ export default function ToolsShowcase() {
                         : `translateY(${currentTranslateY}px) rotate(${currentRotation}deg)`,
                   }}
                   className={`relative flex-shrink-0 ${isMobile
-                      ? "w-[82vw] max-w-[310px] min-h-[290px]"
-                      : "w-[220px] sm:w-[235px] md:w-[220px] lg:w-[230px] xl:w-[245px] min-h-[300px] sm:min-h-[320px]"
+                    ? "w-[82vw] max-w-[310px] min-h-[290px]"
+                    : "w-[220px] sm:w-[235px] md:w-[220px] lg:w-[230px] xl:w-[245px] min-h-[300px] sm:min-h-[320px]"
                     } rounded-2xl p-4 sm:p-5 transition-all duration-300 ease-out cursor-pointer ${tool.bgGradient
                     } border shadow-[0_12px_30px_rgba(0,0,0,0.35)] flex flex-col justify-between text-left ${isCurrentMobileCard
                       ? "border-[#2dd4bf] shadow-[0_16px_40px_rgba(45,212,191,0.25)] ring-1 ring-[#2dd4bf]/40 opacity-100"
@@ -409,8 +409,8 @@ export default function ToolsShowcase() {
                     {tool.features && tool.features.length > 0 && (
                       <div
                         className={`transition-all duration-400 ease-in-out ${showKeyPoints
-                            ? "opacity-100 max-h-40 mt-3 pt-2.5 border-t border-slate-200/80 pointer-events-auto"
-                            : "opacity-0 max-h-0 overflow-hidden pointer-events-none"
+                          ? "opacity-100 max-h-40 mt-3 pt-2.5 border-t border-slate-200/80 pointer-events-auto"
+                          : "opacity-0 max-h-0 overflow-hidden pointer-events-none"
                           }`}
                       >
                         <div className="space-y-1.5">

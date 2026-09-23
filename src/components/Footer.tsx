@@ -18,7 +18,7 @@ export default function Footer() {
               <img
                 src="/logo2.webp"
                 alt="Outerstep"
-                className="h-10 sm:h-12 md:h-13 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
+                className="h-12 sm:h-14 md:h-16 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
               />
             </Link>
             <p className="font-sans-clean text-sm text-white/60 leading-relaxed max-w-xs">
