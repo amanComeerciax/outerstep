@@ -7,7 +7,7 @@ const approachPillars = [
   {
     icon: Database,
     title: "Global buyer intelligence",
-    desc: "Aggregated customs manifests, shipping bills, and import volumes across 80+ jurisdictions.",
+    desc: "Companies already importing your product, identified across 80+ countries.",
   },
   {
     icon: Zap,

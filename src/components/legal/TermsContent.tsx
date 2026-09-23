@@ -167,7 +167,7 @@ export function TermsContent() {
               2. Who we are
             </h2>
             <p>
-              Outerstep is operated by Commercialica Infotech Pvt Ltd (&quot;Commercialica&quot;, &quot;we&quot;, &quot;us&quot;, and &quot;Outerstep&quot; in these terms). Reach the team behind Outerstep at{" "}
+              Outerstep is operated by CommerciaX Infotech Pvt Ltd (&quot;CommerciaX&quot;, &quot;we&quot;, &quot;us&quot;, and &quot;Outerstep&quot; in these terms). Reach the team behind Outerstep at{" "}
               <a
                 href="mailto:hello@outerstep.com"
                 className="text-[#0a3a40] font-medium underline decoration-[#2dd4bf] decoration-2 underline-offset-2 hover:text-[#2dd4bf] transition-colors"

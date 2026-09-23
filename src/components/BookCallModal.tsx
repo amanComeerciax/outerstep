@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import { X, Menu, ArrowRight } from "lucide-react";
 
 interface BookCallModalProps {
@@ -73,7 +74,7 @@ export default function BookCallModal({ isOpen, onClose, initialProduct = "" }: 
             <img
               src="/logo1.webp"
               alt="Outerstep"
-              className="h-10 sm:h-11 md:h-12 lg:h-[50px] w-auto object-contain transition-transform duration-200 group-hover:scale-105"
+              className="h-12 sm:h-14 md:h-[60px] lg:h-16 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
             />
           </a>
 
@@ -81,9 +82,9 @@ export default function BookCallModal({ isOpen, onClose, initialProduct = "" }: 
           <nav className="hidden md:flex items-center gap-8 lg:gap-10">
             {[
               { name: "How it Works", id: "how-it-works" },
-              { name: "The Platform", id: "platform" },
+              { name: "Pricing", id: "pricing" },
               { name: "Track Record", id: "track-record" },
-              { name: "Who it Fits", id: "fit" }
+              { name: "Who it's For", id: "fit" }
             ].map(
               (item) => (
                 <a
@@ -126,9 +127,9 @@ export default function BookCallModal({ isOpen, onClose, initialProduct = "" }: 
           <div className="md:hidden absolute top-full left-0 w-full bg-[#f2f4f2]/95 backdrop-blur-md border-b border-[#2a6369]/20 px-6 py-6 shadow-xl flex flex-col gap-4 z-50">
             {[
               { name: "How it Works", id: "how-it-works" },
-              { name: "The Platform", id: "platform" },
+              { name: "Pricing", id: "pricing" },
               { name: "Track Record", id: "track-record" },
-              { name: "Who it Fits", id: "fit" }
+              { name: "Who it's For", id: "fit" }
             ].map(
               (item) => (
                 <a
@@ -181,21 +182,13 @@ export default function BookCallModal({ isOpen, onClose, initialProduct = "" }: 
               <div className="flex gap-6 pb-6 border-b border-black/5">
                 <div className="font-mono-tech text-sm text-[#9ba9a8]">01</div>
                 <div className="text-[15px] leading-relaxed text-[#4a5f5e]">
-                  <span className="font-semibold text-[#0a3a40]">Twenty minutes.</span> What you make, where you ship, what a good order looks like.
+                  <span className="font-semibold text-[#0a3a40]">Fifteen minutes.</span> What you make, where you ship, what a good order looks like.
                 </div>
               </div>
 
               {/* Step 2 */}
               <div className="flex gap-6 pb-6 border-b border-black/5">
                 <div className="font-mono-tech text-sm text-[#9ba9a8]">02</div>
-                <div className="text-[15px] leading-relaxed text-[#4a5f5e]">
-                  <span className="font-semibold text-[#0a3a40]">We check the buyer universe.</span> Whether companies importing your grade can actually be identified from trade records.
-                </div>
-              </div>
-
-              {/* Step 3 */}
-              <div className="flex gap-6 pb-6 border-b border-black/5">
-                <div className="font-mono-tech text-sm text-[#9ba9a8]">03</div>
                 <div className="text-[15px] leading-relaxed text-[#4a5f5e]">
                   <span className="font-semibold text-[#0a3a40]">A straight answer.</span> Whether your category is open, and what it would cost. No retainer either way.
                 </div>
@@ -210,8 +203,7 @@ export default function BookCallModal({ isOpen, onClose, initialProduct = "" }: 
           {/* Right Side - Form Card */}
           <div className="w-full lg:w-[55%] max-w-[640px] flex-shrink-0">
             <div className="bg-white rounded-[24px] shadow-[0_12px_40px_rgba(0,0,0,0.04)] border border-black/[0.03] p-8 sm:p-10">
-              <h3 className="text-[22px] font-semibold text-[#0a3a40] mb-2 tracking-tight">Your enquiry</h3>
-              <p className="text-[14px] text-[#6b7b7a] mb-10">Takes a minute. We read every one.</p>
+              <h3 className="text-[22px] font-semibold text-[#0a3a40] mb-8 tracking-tight">Your enquiry</h3>
 
               <form onSubmit={handleSubmit} className="flex flex-col gap-6">
                 
@@ -334,7 +326,7 @@ export default function BookCallModal({ isOpen, onClose, initialProduct = "" }: 
 
                 <div className="border-t border-black/5 mt-4 pt-6">
                   <p className="text-[12px] text-[#869695]">
-                    We use this to answer your enquiry and nothing else. See our <a href="#" className="text-[#4a5f5e] underline underline-offset-2 hover:text-[#0a3a40]">privacy notice</a>.
+                    We use this to answer your enquiry. See our <Link href="/privacy" onClick={onClose} className="text-[#4a5f5e] underline underline-offset-2 hover:text-[#0a3a40]">privacy notice</Link>.
                   </p>
                 </div>
               </form>

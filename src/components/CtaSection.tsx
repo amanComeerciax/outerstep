@@ -39,7 +39,7 @@ export default function CtaSection() {
 
         <div style={{ position: "relative", zIndex: 10, textAlign: "center", maxWidth: "1000px", margin: "0 auto" }}>
           <h2 
-            className="font-headline text-white max-w-[800px] mx-auto mb-8 sm:mb-10 font-bold tracking-tight leading-[1.1]"
+            className="font-headline text-white max-w-[800px] mx-auto mb-8 sm:mb-10 font-normal tracking-tight leading-[1.1]"
             style={{ 
               fontSize: "clamp(32px, 5.5vw, 76px)", 
             }}
@@ -75,7 +75,7 @@ export default function CtaSection() {
               e.currentTarget.style.transform = "scale(1)";
             }}
           >
-            <span>Book a 15-min fit call</span>
+            <span>Book a 15-min call</span>
             <span>→</span>
           </button>
         </div>

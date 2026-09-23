@@ -33,7 +33,7 @@ export function AboutTeamSection() {
         {/* Centered Subtitle */}
         <div className="mt-6 sm:mt-8 space-y-2 text-[#2a6369] font-sans-clean text-base sm:text-lg leading-relaxed max-w-2xl">
           <p className="font-medium text-[#0a3a40]">
-            Outerstep is operated by Commercialica Infotech Pvt Ltd.
+            Outerstep is operated by CommerciaX Infotech Pvt Ltd.
           </p>
           <p className="text-[#36666c]">
             We are a small, focused team with a big belief that global trade

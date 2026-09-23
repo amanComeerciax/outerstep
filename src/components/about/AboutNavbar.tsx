@@ -36,7 +36,7 @@ export function AboutNavbar() {
           <img
             src="/logo1.webp"
             alt="Outerstep"
-            className="h-10 sm:h-11 md:h-12 lg:h-[50px] w-auto object-contain transition-transform duration-200 group-hover:scale-105"
+            className="h-12 sm:h-14 md:h-[60px] lg:h-16 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
           />
         </Link>
 
@@ -44,9 +44,9 @@ export function AboutNavbar() {
         <nav className="hidden md:flex items-center gap-8 lg:gap-10">
           {[
             { name: "How it Works", href: "/#how-it-works" },
-            { name: "The Platform", href: "/#platform" },
+            { name: "Pricing", href: "/#pricing" },
             { name: "Track Record", href: "/#track-record" },
-            { name: "Who it Fits", href: "/#fit" },
+            { name: "Who it's For", href: "/#fit" },
           ].map((item) => {
             const isActive = pathname === item.href;
             return (
@@ -93,9 +93,9 @@ export function AboutNavbar() {
         <div className="md:hidden absolute top-full left-0 w-full bg-[#edf2f2]/98 backdrop-blur-md border-b border-[#2a6369]/20 px-6 py-6 shadow-xl flex flex-col gap-4 z-50">
           {[
             { name: "How it Works", href: "/#how-it-works" },
-            { name: "The Platform", href: "/#platform" },
+            { name: "Pricing", href: "/#pricing" },
             { name: "Track Record", href: "/#track-record" },
-            { name: "Who it Fits", href: "/#fit" },
+            { name: "Who it's For", href: "/#fit" },
           ].map((item) => {
             const isActive = pathname === item.href;
             return (

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { ArrowRight, Copy, Check } from "lucide-react";
 import { useModal } from "@/components/ModalProvider";
 
@@ -201,7 +202,7 @@ export function ContactContent() {
                 OPERATING ENTITY
               </div>
               <div className="sm:col-span-8 font-sans-clean text-base font-medium text-[#0a3a40]">
-                Commercialica Infotech Pvt Ltd
+                CommerciaX Infotech Pvt Ltd
               </div>
             </div>
 
@@ -259,12 +260,12 @@ export function ContactContent() {
                 </a>{" "}
                 <span className="text-[#2a6369]">
                   (see the{" "}
-                  <button
-                    onClick={() => openModal()}
+                  <Link
+                    href="/privacy"
                     className="text-[#0a3a40] underline underline-offset-4 decoration-[#0a3a40]/30 hover:decoration-[#2dd4bf] hover:text-[#2a6369] transition-colors"
                   >
                     privacy notice
-                  </button>
+                  </Link>
                   )
                 </span>
               </div>

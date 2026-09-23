@@ -5,30 +5,43 @@ import { ArrowRight, Menu, X } from "lucide-react"
 import { Globe, Marker, Arc } from "@/components/ui/cobe-globe"
 import { useModal } from "@/components/ModalProvider"
 
+// Real export trade lanes, port to port
+const ports = {
+  alexandria: [31.2001, 29.9187],
+  puertoQuetzal: [13.9236, -90.7875],
+  antwerp: [51.2194, 4.4025],
+  casablanca: [33.5731, -7.5898],
+  jebelAli: [25.0118, 55.061],
+  mombasa: [-4.0435, 39.6682],
+} satisfies Record<string, [number, number]>
+
 const markers: Marker[] = [
-  { id: "sf", location: [37.7595, -122.4367], label: "San Francisco" },
-  { id: "nyc", location: [40.7128, -74.006], label: "New York" },
-  { id: "tokyo", location: [35.6762, 139.6503], label: "Tokyo" },
-  { id: "london", location: [51.5074, -0.1278], label: "London" },
-  { id: "sydney", location: [-33.8688, 151.2093], label: "Sydney" },
-  { id: "capetown", location: [-33.9249, 18.4241], label: "Cape Town" },
-  { id: "dubai", location: [25.2048, 55.2708], label: "Dubai" },
-  { id: "paris", location: [48.8566, 2.3522], label: "Paris" },
-  { id: "saopaulo", location: [-23.5505, -46.6333], label: "São Paulo" },
+  { id: "alexandria", location: ports.alexandria, label: "Alexandria" },
+  { id: "puerto-quetzal", location: ports.puertoQuetzal, label: "Puerto Quetzal" },
+  { id: "antwerp", location: ports.antwerp, label: "Antwerp" },
+  { id: "casablanca", location: ports.casablanca, label: "Casablanca" },
+  { id: "jebel-ali", location: ports.jebelAli, label: "Jebel Ali" },
+  { id: "mombasa", location: ports.mombasa, label: "Mombasa" },
 ]
 
 const arcs: Arc[] = [
   {
-    id: "sf-tokyo",
-    from: [37.7595, -122.4367],
-    to: [35.6762, 139.6503],
-    label: "SF → Tokyo",
+    id: "alexandria-puerto-quetzal",
+    from: ports.alexandria,
+    to: ports.puertoQuetzal,
+    label: "Alexandria → Puerto Quetzal",
   },
   {
-    id: "nyc-london",
-    from: [40.7128, -74.006],
-    to: [51.5074, -0.1278],
-    label: "NYC → London",
+    id: "antwerp-casablanca",
+    from: ports.antwerp,
+    to: ports.casablanca,
+    label: "Antwerp → Casablanca",
+  },
+  {
+    id: "jebel-ali-mombasa",
+    from: ports.jebelAli,
+    to: ports.mombasa,
+    label: "Jebel Ali → Mombasa",
   },
 ]
 
@@ -63,7 +76,7 @@ export function HeroSection() {
             <img
               src="/logo1.webp"
               alt="Outerstep"
-              className="h-10 sm:h-11 md:h-12 lg:h-[50px] w-auto object-contain transition-transform duration-200 group-hover:scale-105"
+              className="h-12 sm:h-14 md:h-[60px] lg:h-16 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
             />
           </a>
 
@@ -71,9 +84,9 @@ export function HeroSection() {
           <nav className="hidden md:flex items-center gap-8 lg:gap-10">
             {[
               { name: "How it Works", href: "#how-it-works" },
-              { name: "The Platform", href: "#platform" },
+              { name: "Pricing", href: "#pricing" },
               { name: "Track Record", href: "#track-record" },
-              { name: "Who it Fits", href: "#fit" },
+              { name: "Who it's For", href: "#fit" },
             ].map(
               (item) => (
                 <a
@@ -115,9 +128,9 @@ export function HeroSection() {
           <div className="md:hidden absolute top-full left-0 w-full bg-[#edf2f2]/95 backdrop-blur-md border-b border-[#2a6369]/20 px-6 py-6 shadow-xl flex flex-col gap-4 z-50">
             {[
               { name: "How it Works", href: "#how-it-works" },
-              { name: "The Platform", href: "#platform" },
+              { name: "Pricing", href: "#pricing" },
               { name: "Track Record", href: "#track-record" },
-              { name: "Who it Fits", href: "#fit" },
+              { name: "Who it's For", href: "#fit" },
             ].map(
               (item) => (
                 <a
@@ -162,11 +175,9 @@ export function HeroSection() {
 
           {/* Subtitle Description */}
           <p className="font-sans-clean text-base sm:text-lg md:text-[18px] text-[#2a6369] leading-relaxed max-w-2xl lg:max-w-3xl mt-5 sm:mt-7 font-normal">
-            We find companies already importing what you make, run the outreach,
-            <br className="hidden sm:inline" />
-            and hand you the ones who reply asking to buy, with the quantity, port and
-            <br className="hidden sm:inline" />
-            timeline already pulled out of their message.
+            We find companies already importing what you make, run the outreach, and
+            hand you the ones ready to buy, with the quantity, port and timeline already
+            pulled out, so you can focus on closing the deal.
           </p>
 
           {/* Dual Action Buttons */}
@@ -182,10 +193,10 @@ export function HeroSection() {
 
             {/* Secondary CTA */}
             <a
-              href="#platform"
+              href="#how-it-works"
               className="font-sans-clean text-sm sm:text-base font-medium px-8 py-3.5 rounded-full border border-[#2a6369]/35 bg-[#edf2f2]/60 hover:bg-white/80 hover:border-[#2a6369]/70 text-[#0a3a40] transition-all duration-200 active:scale-[0.98]"
             >
-              See the Platform
+              See how it works
             </a>
           </div>
         </div>

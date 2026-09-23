@@ -148,16 +148,14 @@ export function TrackRecordSection() {
           <div className="w-8 sm:w-12 h-[1px] bg-[#48b5a5]/50" />
         </div>
 
-        {/* Section Heading: The System, Already Proven. */}
-        <h2 data-reveal className="text-center font-headline text-3xl sm:text-4xl md:text-5xl lg:text-[54px] tracking-tight leading-[1.15] max-w-3xl mx-auto">
-          <span className="font-normal text-white">The System, </span>
-          <span className="font-bold text-white">Already </span>
-          <span className="font-bold text-[#48b5a5]">Proven.</span>
+        {/* Section Heading */}
+        <h2 data-reveal className="text-center font-headline font-normal text-white text-3xl sm:text-4xl md:text-5xl lg:text-[54px] tracking-tight leading-[1.15] max-w-3xl mx-auto">
+          What we did for our first client
         </h2>
 
         {/* Subtitle description */}
         <p data-reveal data-reveal-delay="0.1" className="text-center text-sm sm:text-base md:text-[16px] text-[#c2dfdf]/85 max-w-2xl mx-auto mt-5 leading-relaxed font-sans">
-          We ran this exact sequence for an Egyptian fertiliser and industrial chemicals exporter. Sourcing, outreach, replies read and qualified, deals closed. Same steps, now running continuously.
+          In spring 2026 we did this for a fertilizer exporter in Egypt. We found the buyers, contacted them, qualified the replies and helped close a $1M deal. We now do the same for each new client.
         </p>
 
         {/* 4 Stats Grid */}

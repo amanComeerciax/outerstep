@@ -163,7 +163,7 @@ export function PrivacyContent() {
               1. Who we are
             </h2>
             <p>
-              Outerstep is operated by Commercialica Infotech Pvt Ltd, which is the controller for the personal data described in this notice. Contact us at{" "}
+              Outerstep is operated by CommerciaX Infotech Pvt Ltd, which is the controller for the personal data described in this notice. Contact us at{" "}
               <a
                 href="mailto:hello@outerstep.com"
                 className="text-[#0a3a40] font-medium underline decoration-[#2dd4bf] decoration-2 underline-offset-2 hover:text-[#2dd4bf] transition-colors"

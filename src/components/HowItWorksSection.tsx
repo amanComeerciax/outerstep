@@ -704,29 +704,34 @@ export default function HowItWorksSection() {
         STICKY CONTAINER FOR ALL SCREENS (MOBILE & DESKTOP):
         Pins during vertical page scroll until Card 03 is completely revealed.
       */}
-      <div className="sticky top-0 h-[100dvh] w-full max-w-full overflow-hidden flex flex-col justify-center gap-6 sm:gap-12 pt-8 sm:pt-20 pb-6 sm:py-10 lg:py-14">
+      <div className="sticky top-0 h-[100dvh] w-full max-w-full overflow-hidden flex flex-col justify-center gap-4 sm:gap-8 pt-14 pb-6 sm:pt-24 sm:pb-10 lg:pt-28 lg:pb-12">
         {/* =========================================================================
             HEADER SECTION (Fluid clamp typography)
            ========================================================================= */}
         <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 w-full shrink-0">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-1 sm:gap-4 mb-1.5 sm:mb-8 lg:mb-10">
-            <div className="max-w-3xl">
-              <p className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.24em] text-[#637C73] mb-0.5 sm:mb-3">
-                HOW IT WORKS
-              </p>
+          <div className="flex flex-col items-center text-center gap-2 sm:gap-4">
+            <div className="max-w-3xl flex flex-col items-center">
+              {/* Top Tagline: — HOW IT WORKS — */}
+              <div className="flex items-center justify-center gap-4 mb-2 sm:mb-4">
+                <div className="w-8 sm:w-12 h-[1px] bg-[#2a6369]/40" />
+                <span className="font-mono-tech text-[11px] sm:text-xs tracking-[0.25em] text-[#5e8286] uppercase">
+                  HOW IT WORKS
+                </span>
+                <div className="w-8 sm:w-12 h-[1px] bg-[#2a6369]/40" />
+              </div>
 
-              <h2 className="font-serif-editorial text-[clamp(1.5rem,3.5vw,4.75rem)] font-normal text-[#082F28] leading-[1.12] mb-0.5 sm:mb-3">
-                You touch it three times.
+              <h2 className="font-headline text-[clamp(1.75rem,3.5vw,3.5rem)] font-normal tracking-tight text-[#0a3a40] leading-[1.12] mb-1 sm:mb-3">
+                Your part: three steps
               </h2>
 
-              <p className="text-[clamp(0.75rem,1vw,1.25rem)] text-[#5D756D] leading-relaxed max-w-xl line-clamp-2 sm:line-clamp-none">
+              <p className="text-[clamp(0.75rem,1vw,1.125rem)] text-[#5D756D] leading-relaxed max-w-xl line-clamp-2 sm:line-clamp-none">
                 Three actions from you. Everything between them runs on our side,
                 continuously, without a single approval to give.
               </p>
             </div>
 
             {/* Step Counter Indicator */}
-            <div className="flex items-center gap-2 sm:gap-3 shrink-0 pt-0.5 md:pt-0">
+            <div className="flex items-center gap-2 sm:gap-3 shrink-0">
               <div className="px-2.5 py-0.5 sm:px-3.5 sm:py-1.5 rounded-full bg-[#082F28]/8 text-[#082F28] text-[10px] sm:text-xs font-mono font-semibold tracking-wider flex items-center gap-1.5 sm:gap-2">
                 <span>0{activeStep + 1}</span>
                 <span className="text-[#082F28]/35">/</span>
@@ -773,7 +778,7 @@ export default function HowItWorksSection() {
                     01
                   </span>
                   <span className="text-[11px] font-medium tracking-[0.18em] uppercase text-[#6C857C]">
-                    ABOUT FORTY MINUTES, ONCE
+                    30 MINUTES, ONE TIME
                   </span>
                 </div>
 
@@ -786,12 +791,12 @@ export default function HowItWorksSection() {
               <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-center">
                 {/* Left Text */}
                 <div className="md:col-span-6 space-y-3.5">
-                  <h3 className="font-serif-editorial text-[clamp(1.75rem,2.5vw,2.75rem)] text-[#082F28] font-normal leading-[1.15]">
+                  <h3 className="font-headline text-[clamp(1.75rem,2.5vw,2.75rem)] text-[#082F28] font-normal leading-[1.15]">
                     Tell us what you sell
                   </h3>
 
                   <p className="text-xs sm:text-sm text-[#5C756C] leading-relaxed">
-                    Grades, capacity, minimum order, certifications and loading ports. The detail a buyer asks for before they quote.
+                    Grades, capacity, minimum order, certifications and loading ports. The details a buyer asks before requesting a quote.
                   </p>
                 </div>
 
@@ -846,12 +851,12 @@ export default function HowItWorksSection() {
               <div className="grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-6 lg:gap-8 items-center">
                 {/* Left Text */}
                 <div className="md:col-span-6 space-y-2 sm:space-y-3.5">
-                  <h3 className="font-serif-editorial text-[clamp(1.5rem,2.5vw,2.75rem)] text-white font-normal leading-[1.15]">
-                    We find them, write to them, and read what comes back
+                  <h3 className="font-headline text-[clamp(1.5rem,2.5vw,2.75rem)] text-white font-normal leading-[1.15]">
+                    We find buyers, contact them and read their replies
                   </h3>
 
                   <p className="text-xs sm:text-sm text-white/75 leading-relaxed">
-                    Companies that already import your product. Four touches in their language, about your actual spec. Every reply classified, with the quantity, port and timeline pulled out.
+                    Companies that already import your product. Outreach in their language, about your actual spec. Every reply classified, with the quantity, port and timeline pulled out.
                   </p>
                 </div>
 
@@ -881,7 +886,7 @@ export default function HowItWorksSection() {
                   <div className="w-5 h-5 rounded-full border border-white/20 bg-white/5 flex items-center justify-center text-white/80">
                     <Bell className="w-2.5 h-2.5" />
                   </div>
-                  <span>No mailbox to warm</span>
+                  <span>No expensive tool to set up</span>
                 </div>
               </div>
             </article>
@@ -906,7 +911,7 @@ export default function HowItWorksSection() {
               <div className="grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-6 lg:gap-8 items-center">
                 {/* Left Text */}
                 <div className="md:col-span-6 space-y-2 sm:space-y-3.5">
-                  <h3 className="font-serif-editorial text-[clamp(1.5rem,2.5vw,2.75rem)] text-[#082F28] font-normal leading-[1.15]">
+                  <h3 className="font-headline text-[clamp(1.5rem,2.5vw,2.75rem)] text-[#082F28] font-normal leading-[1.15]">
                     Answer the buyer
                   </h3>
 

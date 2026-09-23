@@ -43,7 +43,7 @@ const systems: SystemItem[] = [
     id: "outreach",
     number: "03",
     title: "Outreach",
-    metric: "4 touches each",
+    metric: "610 contacted",
     description:
       "Multi-channel outbound sequences tailored to regional decision makers. Cold introductions, spec sheets, pricing indicators, and follow-ups calibrated across time zones.",
     tag: "CALIBRATED",
@@ -65,7 +65,7 @@ const systems: SystemItem[] = [
     title: "Classification",
     metric: "9 intents",
     description:
-      "AI categorisation filters out out-of-office notes, pricing inquiries, sample requests, and procurement RFQs into prioritized action streams.",
+      "Out-of-office replies are filtered out. Pricing inquiries, sample requests and procurement RFQs are prioritised.",
     tag: "TRIAGE",
     tagSubtitle: "Structured intent queues",
   },
@@ -343,20 +343,22 @@ export function SixSystemsSection() {
       */}
       <div className="sticky top-0 h-screen w-full max-w-full flex flex-col justify-center py-6 sm:py-8 lg:py-10 px-6 sm:px-10 lg:px-16 overflow-hidden select-none">
         <div className="max-w-4xl mx-auto w-full">
-          {/* Header Tagline */}
-          <div className="mb-2">
+          {/* Header Tagline: — BEHIND THE SCENES — */}
+          <div className="flex items-center justify-center gap-4 mb-2 sm:mb-3">
+            <div className="w-8 sm:w-12 h-[1px] bg-[#2a6369]/40" />
             <span className="font-mono-tech text-[11px] sm:text-xs tracking-[0.25em] text-[#5e8286] uppercase font-medium">
-              UNDERNEATH
+              BEHIND THE SCENES
             </span>
+            <div className="w-8 sm:w-12 h-[1px] bg-[#2a6369]/40" />
           </div>
 
           {/* Main Section Heading */}
-          <h2 className="font-headline text-3xl sm:text-4xl md:text-[38px] font-bold text-[#0a3a40] tracking-tight leading-tight mb-2">
-            Six systems you never have to think about.
+          <h2 className="text-center font-headline text-3xl sm:text-4xl md:text-[42px] font-normal text-[#0a3a40] tracking-tight leading-tight mb-2">
+            The six steps we do in the background
           </h2>
 
           {/* Subtitle Paragraph */}
-          <p className="font-sans text-xs sm:text-sm md:text-base text-[#4a7277] max-w-2xl leading-relaxed mb-4 sm:mb-6">
+          <p className="text-center mx-auto font-sans text-xs sm:text-sm md:text-base text-[#4a7277] max-w-2xl leading-relaxed mb-4 sm:mb-6">
             Three screens and a queue for you. This is everything between them, and
             where 2,400 companies become the handful worth your time.
           </p>
