@@ -87,7 +87,7 @@ const ANIM_END_PROGRESS = 0.82
 // Activation thresholds with hysteresis for smooth bidirectional scrolling
 // Calibrated so each bullet opens just as the glowing traveling dot arrives at it
 const THRESHOLDS = [
-  { open: 0.0, close: 0.0 }, // Bullet 01 stays open as the base anchor
+  { open: 0.0, close: 0.0 }, // Bullet 01 is open at the start
   { open: 0.13, close: 0.10 }, // Bullet 02 (dot arrives at ~0.164)
   { open: 0.29, close: 0.26 }, // Bullet 03 (dot arrives at ~0.328)
   { open: 0.45, close: 0.42 }, // Bullet 04 (dot arrives at ~0.492)
@@ -193,7 +193,6 @@ export function SixSystemsSection() {
   // Close item smoothly (scroll up)
   const closeItem = useCallback(
     (idx: number) => {
-      if (idx === 0) return // Bullet 01 stays open as root anchor
       if (!openedStateRef.current[idx]) return
       openedStateRef.current[idx] = false
 
@@ -227,17 +226,35 @@ export function SixSystemsSection() {
     [updateVisuals]
   )
 
-  // Bidirectional threshold checker
+  // Index of the step the traveling dot is on
+  const activeIdxRef = useRef(0)
+
+  // Only the active step stays open, so the section never grows taller than
+  // the viewport. Separate open/close thresholds stop it flickering at the edges.
   const handleThresholds = useCallback(
     (progress: number) => {
-      THRESHOLDS.forEach((thresh, idx) => {
-        if (idx === 0) return
+      let active = activeIdxRef.current
+      while (active < THRESHOLDS.length - 1 && progress >= THRESHOLDS[active + 1].open) active++
+      while (active > 0 && progress < THRESHOLDS[active].close) active--
+      if (active === activeIdxRef.current) return
+      activeIdxRef.current = active
 
-        if (progress >= thresh.open) {
-          openItem(idx)
-        } else if (progress < thresh.close) {
-          closeItem(idx)
-        }
+      THRESHOLDS.forEach((_, idx) => {
+        if (idx === active) openItem(idx)
+        else closeItem(idx)
+
+        // Dots the traveling dot has reached stay lit, even though their text has closed
+        const dotEl = dotRefs.current[idx]
+        if (!dotEl) return
+        const lit = idx <= active
+        gsap.killTweensOf(dotEl)
+        gsap.to(dotEl, {
+          backgroundColor: lit ? "#48b5a5" : "#edf2f2",
+          borderColor: lit ? "#48b5a5" : "#b6d0d2",
+          boxShadow: lit ? "0 0 10px rgba(72, 181, 165, 0.7)" : "none",
+          duration: 0.1,
+          ease: "power1.out",
+        })
       })
     },
     [openItem, closeItem]
