@@ -111,8 +111,14 @@ export function HeroSection() {
             )}
           </nav>
 
-          {/* Right CTA Button */}
-          <div className="hidden md:flex items-center">
+          {/* Right: Log in + CTA Button */}
+          <div className="hidden md:flex items-center gap-5 lg:gap-6">
+            <a
+              href="https://outerstep.com/login"
+              className="font-sans-clean text-sm font-semibold text-[#0a3a40] hover:text-[#2a6369] transition-colors duration-200"
+            >
+              Log in
+            </a>
             <button
               onClick={() => openModal()}
               className="group font-sans-clean text-sm font-semibold px-5 py-2.5 rounded-full bg-[#0a3a40] text-white hover:bg-[#072a2e] transition-all duration-200 shadow-sm hover:shadow flex items-center gap-2"
@@ -164,6 +170,13 @@ export function HeroSection() {
               <span>Book a Call</span>
               <ArrowRight className="w-4 h-4" />
             </button>
+            <a
+              href="https://outerstep.com/login"
+              onClick={() => setMobileMenuOpen(false)}
+              className="w-full font-sans-clean text-sm font-semibold px-5 py-3 rounded-full border border-[#0a3a40]/25 text-[#0a3a40] hover:bg-white/70 transition-colors flex items-center justify-center"
+            >
+              Log in
+            </a>
           </div>
         )}
       </header>
