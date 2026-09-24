@@ -149,7 +149,7 @@ export function TrackRecordSection() {
         </div>
 
         {/* Section Heading */}
-        <h2 data-reveal className="text-center font-headline font-normal text-white text-3xl sm:text-4xl md:text-5xl lg:text-[54px] tracking-tight leading-[1.15] max-w-3xl mx-auto">
+        <h2 data-reveal className="section-title text-center text-white max-w-3xl mx-auto">
           What we did for our first client
         </h2>
 

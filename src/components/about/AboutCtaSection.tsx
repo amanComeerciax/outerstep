@@ -10,18 +10,16 @@ export function AboutCtaSection() {
 
   return (
     <section className="relative w-full max-w-full bg-[#0a3a40] border-t border-[#2a6369]/20 text-white py-16 sm:py-20 md:py-24 px-6 sm:px-10 lg:px-16 overflow-hidden">
-      {/* Cinematic Luminous Banner Background from public/banner.png */}
+      {/* Real port photo, tinted to the brand teal so the text stays readable */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/banner.png"
-          alt="Outerstep Banner"
+          src="/shipping-containers.jpg"
+          alt=""
           fill
-          priority
-          quality={95}
+          sizes="100vw"
           className="object-cover object-center pointer-events-none select-none"
         />
-        {/* Subtle vignette */}
-        <div className="absolute inset-0 bg-[#0a3a40]/10 pointer-events-none" />
+        <div className="absolute inset-0 bg-[#0a3a40]/75 pointer-events-none" />
       </div>
 
       <div className="max-w-4xl mx-auto relative z-10 text-center flex flex-col items-center">
@@ -38,8 +36,7 @@ export function AboutCtaSection() {
           </h2>
         </div>
 
-        {/* MIDDLE CLEARANCE GAP - spans across the glowing horizon line */}
-        <div className="h-14 sm:h-18 md:h-22 pointer-events-none" />
+        <div className="h-6 sm:h-8" />
 
         {/* BOTTOM GLOBE CONTENT */}
         <div className="flex flex-col items-center">

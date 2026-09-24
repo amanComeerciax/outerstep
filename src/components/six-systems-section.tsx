@@ -353,7 +353,7 @@ export function SixSystemsSection() {
           </div>
 
           {/* Main Section Heading */}
-          <h2 className="text-center font-headline text-3xl sm:text-4xl md:text-[42px] font-normal text-[#0a3a40] tracking-tight leading-tight mb-2">
+          <h2 className="section-title text-center text-[#0a3a40] mb-2">
             The six steps we do in the background
           </h2>
 

@@ -53,17 +53,6 @@ export function AboutVisionSection() {
 
           {/* RIGHT COLUMN: Description at Top-Right, Seamless World Map Below */}
           <div className="lg:col-span-7 flex flex-col justify-between relative">
-            {/* Top Right Marketplace Description */}
-            <div className="flex justify-start lg:justify-end mb-6 lg:mb-4">
-              <p className="font-sans-clean text-sm sm:text-base text-white/80 leading-relaxed max-w-sm lg:text-left">
-                A truly open global marketplace
-                <br className="hidden sm:inline" />
-                where quality products reach the people
-                <br className="hidden sm:inline" />
-                who need them effortlessly
-              </p>
-            </div>
-
             {/* Seamless World Map with Realistic, Non-Intersecting Trade Corridors */}
             <div className="relative w-full flex-1 flex flex-col justify-center my-auto">
               <WorldMap

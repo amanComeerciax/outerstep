@@ -72,7 +72,7 @@ export function TermsContent() {
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1 font-mono-tech text-xs tracking-wider text-[#2a6369]/70 uppercase pt-2">
           <span>VERSION 1.0</span>
           <span className="text-[#2a6369]/30">·</span>
-          <span>EFFECTIVE 11 NOVEMBER 2024</span>
+          <span>EFFECTIVE 1 SEPTEMBER 2026</span>
         </div>
       </div>
 

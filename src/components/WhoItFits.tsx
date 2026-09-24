@@ -54,7 +54,7 @@ export default function WhoItFits() {
           </span>
           <div className="w-8 sm:w-12 h-[1px] bg-[#2a6369]/40" />
         </div>
-        <h2 className="font-headline font-normal text-3xl sm:text-4xl md:text-5xl lg:text-[54px] tracking-tight leading-[1.15] text-[#0a3a40]">
+        <h2 className="section-title text-[#0a3a40]">
           Exporters doing $1M to $50M a year
         </h2>
       </div>

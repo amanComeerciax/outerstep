@@ -39,10 +39,7 @@ export default function CtaSection() {
 
         <div style={{ position: "relative", zIndex: 10, textAlign: "center", maxWidth: "1000px", margin: "0 auto" }}>
           <h2 
-            className="font-headline text-white max-w-[800px] mx-auto mb-8 sm:mb-10 font-normal tracking-tight leading-[1.1]"
-            style={{ 
-              fontSize: "clamp(32px, 5.5vw, 76px)", 
-            }}
+            className="section-title text-white max-w-[800px] mx-auto mb-8 sm:mb-10"
           >
             Let's find your buyers.
           </h2>

@@ -68,7 +68,7 @@ export default function PricingSection() {
             <div className="w-8 sm:w-12 h-[1px] bg-[#48b5a5]/50" />
           </div>
 
-          <h2 className="font-headline font-normal text-white text-3xl sm:text-4xl md:text-5xl lg:text-[54px] tracking-tight leading-[1.15] max-w-3xl mx-auto">
+          <h2 className="section-title text-white max-w-3xl mx-auto">
             You pay when we bring you buyers
           </h2>
 

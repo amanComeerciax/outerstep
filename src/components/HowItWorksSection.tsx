@@ -720,7 +720,7 @@ export default function HowItWorksSection() {
                 <div className="w-8 sm:w-12 h-[1px] bg-[#2a6369]/40" />
               </div>
 
-              <h2 className="font-headline text-[clamp(1.75rem,3.5vw,3.5rem)] font-normal tracking-tight text-[#0a3a40] leading-[1.12] mb-1 sm:mb-3">
+              <h2 className="section-title text-[#0a3a40] mb-1 sm:mb-3">
                 Your part: three steps
               </h2>
 

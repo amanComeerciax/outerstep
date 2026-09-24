@@ -22,7 +22,7 @@ export default function Footer() {
               />
             </Link>
             <p className="font-sans-clean text-sm text-white/60 leading-relaxed max-w-xs">
-              Automated Buyer Inquiries for Exporters
+              You bring the product. We bring the buyers.
             </p>
           </div>
 

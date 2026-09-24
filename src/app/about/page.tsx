@@ -6,7 +6,6 @@ import { AboutVisionSection } from "@/components/about/AboutVisionSection";
 import { AboutNameSection } from "@/components/about/AboutNameSection";
 import { AboutProblemSection } from "@/components/about/AboutProblemSection";
 import { AboutApproachSection } from "@/components/about/AboutApproachSection";
-import { AboutImpactSection } from "@/components/about/AboutImpactSection";
 import { AboutTeamSection } from "@/components/about/AboutTeamSection";
 import { AboutCtaSection } from "@/components/about/AboutCtaSection";
 import { AboutFooter } from "@/components/about/AboutFooter";
@@ -39,9 +38,6 @@ export default function AboutPage() {
 
         {/* Section 4: THE APPROACH */}
         <AboutApproachSection />
-
-        {/* Section 5: OUR IMPACT */}
-        <AboutImpactSection />
 
         {/* Section 6: THE PEOPLE BEHIND OUTERSTEP */}
         <AboutTeamSection />
