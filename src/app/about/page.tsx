@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { AboutNavbar } from "@/components/about/AboutNavbar";
 import { AboutHeroSection } from "@/components/about/AboutHeroSection";
 import { AboutVisionSection } from "@/components/about/AboutVisionSection";
+import { AboutNameSection } from "@/components/about/AboutNameSection";
 import { AboutProblemSection } from "@/components/about/AboutProblemSection";
 import { AboutApproachSection } from "@/components/about/AboutApproachSection";
 import { AboutImpactSection } from "@/components/about/AboutImpactSection";
@@ -29,6 +30,9 @@ export default function AboutPage() {
 
         {/* Section 2: OUR VISION */}
         <AboutVisionSection />
+
+        {/* Section 2b: WHAT THE NAME MEANS */}
+        <AboutNameSection />
 
         {/* Section 3: THE PROBLEM */}
         <AboutProblemSection />

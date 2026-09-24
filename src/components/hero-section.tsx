@@ -5,31 +5,36 @@ import { ArrowRight, Menu, X } from "lucide-react"
 import { Globe, Marker, Arc } from "@/components/ui/cobe-globe"
 import { useModal } from "@/components/ModalProvider"
 
-// Real export trade lanes, port to port
+// Real export trade lanes, port to port. Only the northern part of the globe
+// shows above the fold, so every port here sits north of ~30°N.
 const ports = {
   alexandria: [31.2001, 29.9187],
-  puertoQuetzal: [13.9236, -90.7875],
+  genoa: [44.4056, 8.9463],
   antwerp: [51.2194, 4.4025],
   casablanca: [33.5731, -7.5898],
-  jebelAli: [25.0118, 55.061],
-  mombasa: [-4.0435, 39.6682],
+  valencia: [39.4502, -0.3232],
+  newYork: [40.6840, -74.0419],
+  busan: [35.1028, 129.0403],
+  vancouver: [49.2888, -123.1111],
 } satisfies Record<string, [number, number]>
 
 const markers: Marker[] = [
   { id: "alexandria", location: ports.alexandria, label: "Alexandria" },
-  { id: "puerto-quetzal", location: ports.puertoQuetzal, label: "Puerto Quetzal" },
+  { id: "genoa", location: ports.genoa, label: "Genoa" },
   { id: "antwerp", location: ports.antwerp, label: "Antwerp" },
   { id: "casablanca", location: ports.casablanca, label: "Casablanca" },
-  { id: "jebel-ali", location: ports.jebelAli, label: "Jebel Ali" },
-  { id: "mombasa", location: ports.mombasa, label: "Mombasa" },
+  { id: "valencia", location: ports.valencia, label: "Valencia" },
+  { id: "new-york", location: ports.newYork, label: "New York" },
+  { id: "busan", location: ports.busan, label: "Busan" },
+  { id: "vancouver", location: ports.vancouver, label: "Vancouver" },
 ]
 
 const arcs: Arc[] = [
   {
-    id: "alexandria-puerto-quetzal",
+    id: "alexandria-genoa",
     from: ports.alexandria,
-    to: ports.puertoQuetzal,
-    label: "Alexandria → Puerto Quetzal",
+    to: ports.genoa,
+    label: "Alexandria → Genoa",
   },
   {
     id: "antwerp-casablanca",
@@ -38,10 +43,16 @@ const arcs: Arc[] = [
     label: "Antwerp → Casablanca",
   },
   {
-    id: "jebel-ali-mombasa",
-    from: ports.jebelAli,
-    to: ports.mombasa,
-    label: "Jebel Ali → Mombasa",
+    id: "valencia-new-york",
+    from: ports.valencia,
+    to: ports.newYork,
+    label: "Valencia → New York",
+  },
+  {
+    id: "busan-vancouver",
+    from: ports.busan,
+    to: ports.vancouver,
+    label: "Busan → Vancouver",
   },
 ]
 
