@@ -43,7 +43,7 @@ const systems: SystemItem[] = [
     id: "outreach",
     number: "03",
     title: "Outreach",
-    metric: "610 contacted",
+    metric: "540 contacted",
     description:
       "Multi-channel outbound sequences tailored to regional decision makers. Cold introductions, spec sheets, pricing indicators, and follow-ups calibrated across time zones.",
     tag: "CALIBRATED",
@@ -63,7 +63,7 @@ const systems: SystemItem[] = [
     id: "classification",
     number: "05",
     title: "Classification",
-    metric: "9 intents",
+    metric: "34 with intent",
     description:
       "Out-of-office replies are filtered out. Pricing inquiries, sample requests and procurement RFQs are prioritised.",
     tag: "TRIAGE",
